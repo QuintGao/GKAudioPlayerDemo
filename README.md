@@ -1,0 +1,2 @@
+# GKAudioPlayerDemo
+iOS使用MobileVLCKit实现仿网易云音乐播放音乐
