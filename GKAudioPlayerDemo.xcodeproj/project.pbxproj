@@ -1,0 +1,830 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		46C86ABF451B7E717C2D513B /* Pods_GKAudioPlayerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145F56B6D079C3AEBBFD834F /* Pods_GKAudioPlayerDemo.framework */; };
+		7902D9571F619C6F00EDDA40 /* GKWYMusicListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7902D9531F619C6F00EDDA40 /* GKWYMusicListViewCell.m */; };
+		7902D9581F619C6F00EDDA40 /* GKWYMusicListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7902D9541F619C6F00EDDA40 /* GKWYMusicListViewCell.xib */; };
+		7902D9591F619C6F00EDDA40 /* GKWYMusicListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7902D9561F619C6F00EDDA40 /* GKWYMusicListView.m */; };
+		7902D9931F623EDD00EDDA40 /* UIViewController+GKWYCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7902D9921F623EDD00EDDA40 /* UIViewController+GKWYCategory.m */; };
+		79219BCD1F60E3F00009A781 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 79219BCC1F60E3F00009A781 /* main.m */; };
+		79219BD01F60E3F00009A781 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 79219BCF1F60E3F00009A781 /* AppDelegate.m */; };
+		79219BD81F60E3F00009A781 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79219BD71F60E3F00009A781 /* Assets.xcassets */; };
+		79219BDB1F60E3F00009A781 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79219BD91F60E3F00009A781 /* LaunchScreen.storyboard */; };
+		79219BE61F60E3F00009A781 /* GKAudioPlayerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79219BE51F60E3F00009A781 /* GKAudioPlayerDemoTests.m */; };
+		79219BF11F60E3F00009A781 /* GKAudioPlayerDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79219BF01F60E3F00009A781 /* GKAudioPlayerDemoUITests.m */; };
+		79219C041F60FC3C0009A781 /* GKPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79219C031F60FC3C0009A781 /* GKPlayer.m */; };
+		794486221F6109FD0062F1C4 /* GKLyricParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486211F6109FD0062F1C4 /* GKLyricParser.m */; };
+		794486251F610A070062F1C4 /* GKLyricModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486241F610A070062F1C4 /* GKLyricModel.m */; };
+		794486281F610BCC0062F1C4 /* GKTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486271F610BCC0062F1C4 /* GKTool.m */; };
+		7944862D1F61112B0062F1C4 /* audio.json in Resources */ = {isa = PBXBuildFile; fileRef = 7944862C1F61112B0062F1C4 /* audio.json */; };
+		794486381F6113E70062F1C4 /* GKWYMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486371F6113E70062F1C4 /* GKWYMusicViewController.m */; };
+		7944863B1F6113F00062F1C4 /* GKWYPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7944863A1F6113F00062F1C4 /* GKWYPlayerViewController.m */; };
+		7944863E1F6116020062F1C4 /* GKWYMusicListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7944863D1F6116020062F1C4 /* GKWYMusicListCell.m */; };
+		794486411F61173E0062F1C4 /* GKWYMusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486401F61173E0062F1C4 /* GKWYMusicModel.m */; };
+		794486451F611E3A0062F1C4 /* GKSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486441F611E3A0062F1C4 /* GKSliderView.m */; };
+		794486481F611EC30062F1C4 /* GKWYMusicControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486471F611EC30062F1C4 /* GKWYMusicControlView.m */; };
+		799FF3411F628D20004F132B /* GKWYMusicVolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 799FF3401F628D20004F132B /* GKWYMusicVolumeView.m */; };
+		79CB4E7B1F616BC500A3E496 /* GKWYMusicTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CB4E7A1F616BC500A3E496 /* GKWYMusicTool.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		79219BE21F60E3F00009A781 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79219BC01F60E3F00009A781 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 79219BC71F60E3F00009A781;
+			remoteInfo = GKAudioPlayerDemo;
+		};
+		79219BED1F60E3F00009A781 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79219BC01F60E3F00009A781 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 79219BC71F60E3F00009A781;
+			remoteInfo = GKAudioPlayerDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		145F56B6D079C3AEBBFD834F /* Pods_GKAudioPlayerDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GKAudioPlayerDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7902D9521F619C6F00EDDA40 /* GKWYMusicListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYMusicListViewCell.h; sourceTree = "<group>"; };
+		7902D9531F619C6F00EDDA40 /* GKWYMusicListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicListViewCell.m; sourceTree = "<group>"; };
+		7902D9541F619C6F00EDDA40 /* GKWYMusicListViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GKWYMusicListViewCell.xib; sourceTree = "<group>"; };
+		7902D9551F619C6F00EDDA40 /* GKWYMusicListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYMusicListView.h; sourceTree = "<group>"; };
+		7902D9561F619C6F00EDDA40 /* GKWYMusicListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicListView.m; sourceTree = "<group>"; };
+		7902D9911F623EDD00EDDA40 /* UIViewController+GKWYCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+GKWYCategory.h"; sourceTree = "<group>"; };
+		7902D9921F623EDD00EDDA40 /* UIViewController+GKWYCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+GKWYCategory.m"; sourceTree = "<group>"; };
+		79219BC81F60E3F00009A781 /* GKAudioPlayerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GKAudioPlayerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		79219BCC1F60E3F00009A781 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		79219BCE1F60E3F00009A781 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		79219BCF1F60E3F00009A781 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		79219BD71F60E3F00009A781 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		79219BDA1F60E3F00009A781 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		79219BDC1F60E3F00009A781 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79219BE11F60E3F00009A781 /* GKAudioPlayerDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GKAudioPlayerDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		79219BE51F60E3F00009A781 /* GKAudioPlayerDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GKAudioPlayerDemoTests.m; sourceTree = "<group>"; };
+		79219BE71F60E3F00009A781 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79219BEC1F60E3F00009A781 /* GKAudioPlayerDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GKAudioPlayerDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		79219BF01F60E3F00009A781 /* GKAudioPlayerDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GKAudioPlayerDemoUITests.m; sourceTree = "<group>"; };
+		79219BF21F60E3F00009A781 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79219C011F60FB750009A781 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		79219C021F60FC3C0009A781 /* GKPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKPlayer.h; sourceTree = "<group>"; };
+		79219C031F60FC3C0009A781 /* GKPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKPlayer.m; sourceTree = "<group>"; };
+		794486201F6109FD0062F1C4 /* GKLyricParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLyricParser.h; sourceTree = "<group>"; };
+		794486211F6109FD0062F1C4 /* GKLyricParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLyricParser.m; sourceTree = "<group>"; };
+		794486231F610A070062F1C4 /* GKLyricModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLyricModel.h; sourceTree = "<group>"; };
+		794486241F610A070062F1C4 /* GKLyricModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLyricModel.m; sourceTree = "<group>"; };
+		794486261F610BCC0062F1C4 /* GKTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKTool.h; sourceTree = "<group>"; };
+		794486271F610BCC0062F1C4 /* GKTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKTool.m; sourceTree = "<group>"; };
+		7944862C1F61112B0062F1C4 /* audio.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = audio.json; sourceTree = "<group>"; };
+		794486361F6113E70062F1C4 /* GKWYMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYMusicViewController.h; sourceTree = "<group>"; };
+		794486371F6113E70062F1C4 /* GKWYMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicViewController.m; sourceTree = "<group>"; };
+		794486391F6113F00062F1C4 /* GKWYPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYPlayerViewController.h; sourceTree = "<group>"; };
+		7944863A1F6113F00062F1C4 /* GKWYPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYPlayerViewController.m; sourceTree = "<group>"; };
+		7944863C1F6116020062F1C4 /* GKWYMusicListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYMusicListCell.h; sourceTree = "<group>"; };
+		7944863D1F6116020062F1C4 /* GKWYMusicListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicListCell.m; sourceTree = "<group>"; };
+		7944863F1F61173E0062F1C4 /* GKWYMusicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYMusicModel.h; sourceTree = "<group>"; };
+		794486401F61173E0062F1C4 /* GKWYMusicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicModel.m; sourceTree = "<group>"; };
+		794486431F611E3A0062F1C4 /* GKSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKSliderView.h; sourceTree = "<group>"; };
+		794486441F611E3A0062F1C4 /* GKSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKSliderView.m; sourceTree = "<group>"; };
+		794486461F611EC30062F1C4 /* GKWYMusicControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYMusicControlView.h; sourceTree = "<group>"; };
+		794486471F611EC30062F1C4 /* GKWYMusicControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicControlView.m; sourceTree = "<group>"; };
+		799FF33F1F628D20004F132B /* GKWYMusicVolumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYMusicVolumeView.h; sourceTree = "<group>"; };
+		799FF3401F628D20004F132B /* GKWYMusicVolumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicVolumeView.m; sourceTree = "<group>"; };
+		79CB4E791F616BC500A3E496 /* GKWYMusicTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYMusicTool.h; sourceTree = "<group>"; };
+		79CB4E7A1F616BC500A3E496 /* GKWYMusicTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicTool.m; sourceTree = "<group>"; };
+		7A586AF8F9B22A8DF98D6CF6 /* Pods-GKAudioPlayerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GKAudioPlayerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-GKAudioPlayerDemo/Pods-GKAudioPlayerDemo.release.xcconfig"; sourceTree = "<group>"; };
+		C3FA0734EFFC9EF90AC73814 /* Pods-GKAudioPlayerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GKAudioPlayerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GKAudioPlayerDemo/Pods-GKAudioPlayerDemo.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		79219BC51F60E3F00009A781 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46C86ABF451B7E717C2D513B /* Pods_GKAudioPlayerDemo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79219BDE1F60E3F00009A781 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79219BE91F60E3F00009A781 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1E03EC484382D0769929D87D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C3FA0734EFFC9EF90AC73814 /* Pods-GKAudioPlayerDemo.debug.xcconfig */,
+				7A586AF8F9B22A8DF98D6CF6 /* Pods-GKAudioPlayerDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		721744EB056628DAFD9F80FE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				145F56B6D079C3AEBBFD834F /* Pods_GKAudioPlayerDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7902D9901F623ECC00EDDA40 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				7902D9911F623EDD00EDDA40 /* UIViewController+GKWYCategory.h */,
+				7902D9921F623EDD00EDDA40 /* UIViewController+GKWYCategory.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		79219BBF1F60E3F00009A781 = {
+			isa = PBXGroup;
+			children = (
+				79219BCA1F60E3F00009A781 /* GKAudioPlayerDemo */,
+				79219BE41F60E3F00009A781 /* GKAudioPlayerDemoTests */,
+				79219BEF1F60E3F00009A781 /* GKAudioPlayerDemoUITests */,
+				79219BC91F60E3F00009A781 /* Products */,
+				1E03EC484382D0769929D87D /* Pods */,
+				721744EB056628DAFD9F80FE /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		79219BC91F60E3F00009A781 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				79219BC81F60E3F00009A781 /* GKAudioPlayerDemo.app */,
+				79219BE11F60E3F00009A781 /* GKAudioPlayerDemoTests.xctest */,
+				79219BEC1F60E3F00009A781 /* GKAudioPlayerDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		79219BCA1F60E3F00009A781 /* GKAudioPlayerDemo */ = {
+			isa = PBXGroup;
+			children = (
+				79219BCE1F60E3F00009A781 /* AppDelegate.h */,
+				79219BCF1F60E3F00009A781 /* AppDelegate.m */,
+				79219BFE1F60FB690009A781 /* Classes */,
+				79219BCB1F60E3F00009A781 /* Supporting Files */,
+			);
+			path = GKAudioPlayerDemo;
+			sourceTree = "<group>";
+		};
+		79219BCB1F60E3F00009A781 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7944862C1F61112B0062F1C4 /* audio.json */,
+				79219BCC1F60E3F00009A781 /* main.m */,
+				79219BD71F60E3F00009A781 /* Assets.xcassets */,
+				79219BD91F60E3F00009A781 /* LaunchScreen.storyboard */,
+				79219BDC1F60E3F00009A781 /* Info.plist */,
+				79219C011F60FB750009A781 /* PrefixHeader.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		79219BE41F60E3F00009A781 /* GKAudioPlayerDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				79219BE51F60E3F00009A781 /* GKAudioPlayerDemoTests.m */,
+				79219BE71F60E3F00009A781 /* Info.plist */,
+			);
+			path = GKAudioPlayerDemoTests;
+			sourceTree = "<group>";
+		};
+		79219BEF1F60E3F00009A781 /* GKAudioPlayerDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				79219BF01F60E3F00009A781 /* GKAudioPlayerDemoUITests.m */,
+				79219BF21F60E3F00009A781 /* Info.plist */,
+			);
+			path = GKAudioPlayerDemoUITests;
+			sourceTree = "<group>";
+		};
+		79219BFE1F60FB690009A781 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				7944862E1F6113910062F1C4 /* Main */,
+				7944862F1F6113B60062F1C4 /* GKWYMusic */,
+				79219C001F60FB690009A781 /* GKPlayer */,
+				7902D9901F623ECC00EDDA40 /* Category */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		79219C001F60FB690009A781 /* GKPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				79219C021F60FC3C0009A781 /* GKPlayer.h */,
+				79219C031F60FC3C0009A781 /* GKPlayer.m */,
+				794486421F611E200062F1C4 /* GKSliderView */,
+				7944861D1F6109B10062F1C4 /* GKTools */,
+			);
+			path = GKPlayer;
+			sourceTree = "<group>";
+		};
+		7944861D1F6109B10062F1C4 /* GKTools */ = {
+			isa = PBXGroup;
+			children = (
+				7944861E1F6109EB0062F1C4 /* GKLyricParser */,
+				7944861F1F6109EB0062F1C4 /* GKTool */,
+			);
+			path = GKTools;
+			sourceTree = "<group>";
+		};
+		7944861E1F6109EB0062F1C4 /* GKLyricParser */ = {
+			isa = PBXGroup;
+			children = (
+				794486201F6109FD0062F1C4 /* GKLyricParser.h */,
+				794486211F6109FD0062F1C4 /* GKLyricParser.m */,
+				794486231F610A070062F1C4 /* GKLyricModel.h */,
+				794486241F610A070062F1C4 /* GKLyricModel.m */,
+			);
+			path = GKLyricParser;
+			sourceTree = "<group>";
+		};
+		7944861F1F6109EB0062F1C4 /* GKTool */ = {
+			isa = PBXGroup;
+			children = (
+				794486261F610BCC0062F1C4 /* GKTool.h */,
+				794486271F610BCC0062F1C4 /* GKTool.m */,
+			);
+			path = GKTool;
+			sourceTree = "<group>";
+		};
+		7944862E1F6113910062F1C4 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		7944862F1F6113B60062F1C4 /* GKWYMusic */ = {
+			isa = PBXGroup;
+			children = (
+				794486301F6113C80062F1C4 /* Controller */,
+				794486331F6113C80062F1C4 /* Model */,
+				794486341F6113C80062F1C4 /* View */,
+			);
+			path = GKWYMusic;
+			sourceTree = "<group>";
+		};
+		794486301F6113C80062F1C4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				794486361F6113E70062F1C4 /* GKWYMusicViewController.h */,
+				794486371F6113E70062F1C4 /* GKWYMusicViewController.m */,
+				794486391F6113F00062F1C4 /* GKWYPlayerViewController.h */,
+				7944863A1F6113F00062F1C4 /* GKWYPlayerViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		794486331F6113C80062F1C4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7944863F1F61173E0062F1C4 /* GKWYMusicModel.h */,
+				794486401F61173E0062F1C4 /* GKWYMusicModel.m */,
+				79CB4E791F616BC500A3E496 /* GKWYMusicTool.h */,
+				79CB4E7A1F616BC500A3E496 /* GKWYMusicTool.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		794486341F6113C80062F1C4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7944863C1F6116020062F1C4 /* GKWYMusicListCell.h */,
+				7944863D1F6116020062F1C4 /* GKWYMusicListCell.m */,
+				799FF33F1F628D20004F132B /* GKWYMusicVolumeView.h */,
+				799FF3401F628D20004F132B /* GKWYMusicVolumeView.m */,
+				794486461F611EC30062F1C4 /* GKWYMusicControlView.h */,
+				794486471F611EC30062F1C4 /* GKWYMusicControlView.m */,
+				7902D9551F619C6F00EDDA40 /* GKWYMusicListView.h */,
+				7902D9561F619C6F00EDDA40 /* GKWYMusicListView.m */,
+				7902D9521F619C6F00EDDA40 /* GKWYMusicListViewCell.h */,
+				7902D9531F619C6F00EDDA40 /* GKWYMusicListViewCell.m */,
+				7902D9541F619C6F00EDDA40 /* GKWYMusicListViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		794486421F611E200062F1C4 /* GKSliderView */ = {
+			isa = PBXGroup;
+			children = (
+				794486431F611E3A0062F1C4 /* GKSliderView.h */,
+				794486441F611E3A0062F1C4 /* GKSliderView.m */,
+			);
+			path = GKSliderView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		79219BC71F60E3F00009A781 /* GKAudioPlayerDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79219BF51F60E3F00009A781 /* Build configuration list for PBXNativeTarget "GKAudioPlayerDemo" */;
+			buildPhases = (
+				9EBFE19F107F13DBC2A626D5 /* [CP] Check Pods Manifest.lock */,
+				79219BC41F60E3F00009A781 /* Sources */,
+				79219BC51F60E3F00009A781 /* Frameworks */,
+				79219BC61F60E3F00009A781 /* Resources */,
+				B61B13438DD48B7AD39C0F04 /* [CP] Embed Pods Frameworks */,
+				6C2181CF9525F774BE9123F8 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GKAudioPlayerDemo;
+			productName = GKAudioPlayerDemo;
+			productReference = 79219BC81F60E3F00009A781 /* GKAudioPlayerDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		79219BE01F60E3F00009A781 /* GKAudioPlayerDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79219BF81F60E3F00009A781 /* Build configuration list for PBXNativeTarget "GKAudioPlayerDemoTests" */;
+			buildPhases = (
+				79219BDD1F60E3F00009A781 /* Sources */,
+				79219BDE1F60E3F00009A781 /* Frameworks */,
+				79219BDF1F60E3F00009A781 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				79219BE31F60E3F00009A781 /* PBXTargetDependency */,
+			);
+			name = GKAudioPlayerDemoTests;
+			productName = GKAudioPlayerDemoTests;
+			productReference = 79219BE11F60E3F00009A781 /* GKAudioPlayerDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		79219BEB1F60E3F00009A781 /* GKAudioPlayerDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79219BFB1F60E3F00009A781 /* Build configuration list for PBXNativeTarget "GKAudioPlayerDemoUITests" */;
+			buildPhases = (
+				79219BE81F60E3F00009A781 /* Sources */,
+				79219BE91F60E3F00009A781 /* Frameworks */,
+				79219BEA1F60E3F00009A781 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				79219BEE1F60E3F00009A781 /* PBXTargetDependency */,
+			);
+			name = GKAudioPlayerDemoUITests;
+			productName = GKAudioPlayerDemoUITests;
+			productReference = 79219BEC1F60E3F00009A781 /* GKAudioPlayerDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		79219BC01F60E3F00009A781 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "高坤";
+				TargetAttributes = {
+					79219BC71F60E3F00009A781 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 9J2ZLU6Z7U;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
+					79219BE01F60E3F00009A781 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 85SKD6C7ZZ;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 79219BC71F60E3F00009A781;
+					};
+					79219BEB1F60E3F00009A781 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 85SKD6C7ZZ;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 79219BC71F60E3F00009A781;
+					};
+				};
+			};
+			buildConfigurationList = 79219BC31F60E3F00009A781 /* Build configuration list for PBXProject "GKAudioPlayerDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 79219BBF1F60E3F00009A781;
+			productRefGroup = 79219BC91F60E3F00009A781 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				79219BC71F60E3F00009A781 /* GKAudioPlayerDemo */,
+				79219BE01F60E3F00009A781 /* GKAudioPlayerDemoTests */,
+				79219BEB1F60E3F00009A781 /* GKAudioPlayerDemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		79219BC61F60E3F00009A781 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7902D9581F619C6F00EDDA40 /* GKWYMusicListViewCell.xib in Resources */,
+				79219BDB1F60E3F00009A781 /* LaunchScreen.storyboard in Resources */,
+				79219BD81F60E3F00009A781 /* Assets.xcassets in Resources */,
+				7944862D1F61112B0062F1C4 /* audio.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79219BDF1F60E3F00009A781 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79219BEA1F60E3F00009A781 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6C2181CF9525F774BE9123F8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GKAudioPlayerDemo/Pods-GKAudioPlayerDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9EBFE19F107F13DBC2A626D5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GKAudioPlayerDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B61B13438DD48B7AD39C0F04 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-GKAudioPlayerDemo/Pods-GKAudioPlayerDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/GKCover/GKCover.framework",
+				"${BUILT_PRODUCTS_DIR}/GKNavigationBarViewController/GKNavigationBarViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GKCover.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GKNavigationBarViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYModel.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GKAudioPlayerDemo/Pods-GKAudioPlayerDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		79219BC41F60E3F00009A781 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7902D9931F623EDD00EDDA40 /* UIViewController+GKWYCategory.m in Sources */,
+				794486451F611E3A0062F1C4 /* GKSliderView.m in Sources */,
+				799FF3411F628D20004F132B /* GKWYMusicVolumeView.m in Sources */,
+				794486411F61173E0062F1C4 /* GKWYMusicModel.m in Sources */,
+				794486221F6109FD0062F1C4 /* GKLyricParser.m in Sources */,
+				79219BD01F60E3F00009A781 /* AppDelegate.m in Sources */,
+				794486481F611EC30062F1C4 /* GKWYMusicControlView.m in Sources */,
+				794486251F610A070062F1C4 /* GKLyricModel.m in Sources */,
+				7944863B1F6113F00062F1C4 /* GKWYPlayerViewController.m in Sources */,
+				7944863E1F6116020062F1C4 /* GKWYMusicListCell.m in Sources */,
+				79CB4E7B1F616BC500A3E496 /* GKWYMusicTool.m in Sources */,
+				79219BCD1F60E3F00009A781 /* main.m in Sources */,
+				79219C041F60FC3C0009A781 /* GKPlayer.m in Sources */,
+				794486381F6113E70062F1C4 /* GKWYMusicViewController.m in Sources */,
+				7902D9591F619C6F00EDDA40 /* GKWYMusicListView.m in Sources */,
+				7902D9571F619C6F00EDDA40 /* GKWYMusicListViewCell.m in Sources */,
+				794486281F610BCC0062F1C4 /* GKTool.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79219BDD1F60E3F00009A781 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79219BE61F60E3F00009A781 /* GKAudioPlayerDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79219BE81F60E3F00009A781 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79219BF11F60E3F00009A781 /* GKAudioPlayerDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		79219BE31F60E3F00009A781 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 79219BC71F60E3F00009A781 /* GKAudioPlayerDemo */;
+			targetProxy = 79219BE21F60E3F00009A781 /* PBXContainerItemProxy */;
+		};
+		79219BEE1F60E3F00009A781 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 79219BC71F60E3F00009A781 /* GKAudioPlayerDemo */;
+			targetProxy = 79219BED1F60E3F00009A781 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		79219BD91F60E3F00009A781 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				79219BDA1F60E3F00009A781 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		79219BF31F60E3F00009A781 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		79219BF41F60E3F00009A781 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		79219BF61F60E3F00009A781 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3FA0734EFFC9EF90AC73814 /* Pods-GKAudioPlayerDemo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				DEVELOPMENT_TEAM = 9J2ZLU6Z7U;
+				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = GKAudioPlayerDemo/PrefixHeader.pch;
+				INFOPLIST_FILE = GKAudioPlayerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jvtalking.wymusic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ccbba57f-97f6-4ffe-9154-b8a209a7d9cd";
+				PROVISIONING_PROFILE_SPECIFIER = "jvtalking___test";
+			};
+			name = Debug;
+		};
+		79219BF71F60E3F00009A781 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A586AF8F9B22A8DF98D6CF6 /* Pods-GKAudioPlayerDemo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				DEVELOPMENT_TEAM = 9J2ZLU6Z7U;
+				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = GKAudioPlayerDemo/PrefixHeader.pch;
+				INFOPLIST_FILE = GKAudioPlayerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jvtalking.wymusic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ccbba57f-97f6-4ffe-9154-b8a209a7d9cd";
+				PROVISIONING_PROFILE_SPECIFIER = "jvtalking___test";
+			};
+			name = Release;
+		};
+		79219BF91F60E3F00009A781 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 85SKD6C7ZZ;
+				INFOPLIST_FILE = GKAudioPlayerDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.maserati.swift.GKAudioPlayerDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GKAudioPlayerDemo.app/GKAudioPlayerDemo";
+			};
+			name = Debug;
+		};
+		79219BFA1F60E3F00009A781 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 85SKD6C7ZZ;
+				INFOPLIST_FILE = GKAudioPlayerDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.maserati.swift.GKAudioPlayerDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GKAudioPlayerDemo.app/GKAudioPlayerDemo";
+			};
+			name = Release;
+		};
+		79219BFC1F60E3F00009A781 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 85SKD6C7ZZ;
+				INFOPLIST_FILE = GKAudioPlayerDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.maserati.swift.GKAudioPlayerDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = GKAudioPlayerDemo;
+			};
+			name = Debug;
+		};
+		79219BFD1F60E3F00009A781 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 85SKD6C7ZZ;
+				INFOPLIST_FILE = GKAudioPlayerDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.maserati.swift.GKAudioPlayerDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = GKAudioPlayerDemo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		79219BC31F60E3F00009A781 /* Build configuration list for PBXProject "GKAudioPlayerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79219BF31F60E3F00009A781 /* Debug */,
+				79219BF41F60E3F00009A781 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79219BF51F60E3F00009A781 /* Build configuration list for PBXNativeTarget "GKAudioPlayerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79219BF61F60E3F00009A781 /* Debug */,
+				79219BF71F60E3F00009A781 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79219BF81F60E3F00009A781 /* Build configuration list for PBXNativeTarget "GKAudioPlayerDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79219BF91F60E3F00009A781 /* Debug */,
+				79219BFA1F60E3F00009A781 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79219BFB1F60E3F00009A781 /* Build configuration list for PBXNativeTarget "GKAudioPlayerDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79219BFC1F60E3F00009A781 /* Debug */,
+				79219BFD1F60E3F00009A781 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 79219BC01F60E3F00009A781 /* Project object */;
+}

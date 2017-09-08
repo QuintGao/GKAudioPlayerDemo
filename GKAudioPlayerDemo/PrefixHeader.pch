@@ -1,0 +1,38 @@
+//
+//  PrefixHeader.pch
+//  GKAudioPlayerDemo
+//
+//  Created by QuintGao on 2017/9/7.
+//  Copyright © 2017年 高坤. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import <GKNavigationBarViewController/GKNavigationBarViewController.h>
+#import <AFNetworking/AFNetworking.h>
+#import <YYModel/YYModel.h>
+#import <GKCover/GKCover.h>
+#import <Masonry/Masonry.h>
+
+#import "UIViewController+GKWYCategory.h"
+#import "GKWYMusicTool.h"
+
+
+#define kScreenW [UIScreen mainScreen].bounds.size.width
+#define kScreenH [UIScreen mainScreen].bounds.size.height
+
+// 播放器的循环类型
+#define kPlayerPlayStyleKey   @"PlayerPlayStyleKey"
+// 播放器上一次播放的音频的id
+#define kPlayerLastPlayIDKey  @"PlayerLastPlayIDKey"
+
+/*********************************颜色相关*************************************/
+
+#define GKColorRGBA(r, g, b, a) [UIColor colorWithRed:(r / 255.0) green:(g / 255.0) blue:(b / 255.0) alpha:a]
+#define GKColorRGB(r, g, b)     GKColorRGBA(r, g, b, 1.0)
+#define GKColorGray(v)          GKColorRGB(v, v, v)
+//#define GKColorHex(_hex_)       [UIColor colorWithHexString:((__bridge NSString *)CFSTR(#_hex_))]
+#define GKColorRandom           GKColorRGB(arc4random() % 255, arc4random() % 255, arc4random() % 255)
+
+#endif /* PrefixHeader_pch */
