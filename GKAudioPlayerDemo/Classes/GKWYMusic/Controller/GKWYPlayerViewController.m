@@ -385,6 +385,27 @@
 
 - (void)setupLockScreenControlInfo {
     MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+    
+    [commandCenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        
+        [self playMusic];
+        
+        return MPRemoteCommandHandlerStatusSuccess;
+    }];
+    
+    [commandCenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+       
+        [self pauseMusic];
+        
+        return MPRemoteCommandHandlerStatusSuccess;
+    }];
+    
+    [commandCenter.stopCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        [self pauseMusic];
+        
+        return MPRemoteCommandHandlerStatusSuccess;
+    }];
+    
     // 喜欢按钮
     MPFeedbackCommand *likeCommand = commandCenter.likeCommand;
     likeCommand.enabled        = YES;
@@ -708,26 +729,6 @@
             
         default:
             break;
-    }
-}
-
-#pragma mark - EventControls
-- (void)remoteControlReceivedWithEvent:(UIEvent *)event {
-    if (event.type == UIEventTypeRemoteControl) {
-        switch (event.subtype) {
-            case UIEventSubtypeRemoteControlPlay:
-                [self playMusic];
-                break;
-            case UIEventSubtypeRemoteControlPause:
-                [self pauseMusic];
-                break;
-            case UIEventSubtypeRemoteControlStop:
-                [self stopMusic];
-                break;
-                
-            default:
-                break;
-        }
     }
 }
 
