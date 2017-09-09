@@ -146,3 +146,7 @@ if ([UIDevice currentDevice].systemVersion.doubleValue >= 9.0) {
 
 ![播放列表](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_list.png)
 
+![锁屏图片](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_lock.png)
+
+![锁屏控制](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_lock_control.png)
+
