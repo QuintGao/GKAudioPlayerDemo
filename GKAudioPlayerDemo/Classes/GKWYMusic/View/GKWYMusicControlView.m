@@ -308,6 +308,7 @@
         _slider.minimumTrackImage = [UIImage imageNamed:@"cm2_fm_playbar_curr"];
         _slider.bufferTrackImage  = [UIImage imageNamed:@"cm2_fm_playbar_ready"];
         _slider.delegate = self;
+        _slider.sliderHeight = 2;
     }
     return _slider;
 }

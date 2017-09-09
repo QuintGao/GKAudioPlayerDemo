@@ -38,6 +38,7 @@
     [self loadData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"WYMusicLovedMusicNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"WYPlayerChangeMusicNotification" object:nil];
 }
 
 - (void)loadData {
@@ -56,6 +57,7 @@
     GKWYMusicListCell *cell = [tableView dequeueReusableCellWithIdentifier:kWYMusicListCellID forIndexPath:indexPath];
     
     cell.row   = indexPath.row;
+    
     cell.model = self.listArr[indexPath.row];
     
     cell.likeClicked = ^(GKWYMusicModel *model) {

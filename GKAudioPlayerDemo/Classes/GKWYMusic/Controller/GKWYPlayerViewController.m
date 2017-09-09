@@ -140,20 +140,9 @@
     [self setupUI];
     
     [self addNotifications];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     
+    // 设置播放器的代理
     kPlayer.delegate = self;
-    
-    [self gkPlayer:kPlayer statusChanged:kPlayer.status];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    kPlayer.delegate = nil;
 }
 
 - (void)dealloc {
@@ -171,6 +160,8 @@
         
         // 记录播放的id
         [[NSUserDefaults standardUserDefaults] setValue:model.music_id forKey:kPlayerLastPlayIDKey];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"WYPlayerChangeMusicNotification" object:nil];
         
         self.model = model;
         

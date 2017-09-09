@@ -7,6 +7,7 @@
 //
 
 #import "GKWYMusicListViewCell.h"
+#import "GKWYPlayerViewController.h"
 
 @interface GKWYMusicListViewCell()
 
@@ -46,7 +47,7 @@
     
     self.loveBtn.selected = model.isLike;
     
-    if (model.isPlaying) {
+    if (model.isPlaying && kWYPlayerVC.isPlaying) {
         self.noPlayCon.active  = NO;
         self.playingCon.active = YES;
         
@@ -70,7 +71,6 @@
         self.playingBtn.imageView.animationImages = images;
         self.playingBtn.imageView.animationDuration = 0.85;
         [self.playingBtn.imageView startAnimating];
-        
     }else {
         self.playingCon.active = NO;
         self.noPlayCon.active  = YES;

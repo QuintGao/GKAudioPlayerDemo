@@ -18,7 +18,7 @@
 }
 
 - (BOOL)isPlaying {
-    return [self.music_id isEqualToString:kWYPlayerVC.currentMusicId];
+    return [self.music_id isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kPlayerLastPlayIDKey]];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {

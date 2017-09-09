@@ -73,12 +73,22 @@
     self.artistLabel.text = model.music_artist;
     
     self.likeBtn.selected = model.isLike;
-}
-
-- (void)setRow:(NSInteger)row {
-    NSString *num = [NSString stringWithFormat:@"%02zd", row + 1];
     
-    [self.numberBtn setTitle:num forState:UIControlStateNormal];
+    if (model.isPlaying) {
+        [self.numberBtn setImage:[UIImage imageNamed:@"cm2_icn_volume"] forState:UIControlStateNormal];
+        [self.numberBtn setTitle:nil forState:UIControlStateNormal];
+        
+        self.nameLabel.textColor = GKColorRGB(200, 38, 39);
+        self.artistLabel.textColor = GKColorRGB(200, 38, 39);
+    }else {
+        NSString *num = [NSString stringWithFormat:@"%02zd", self.row + 1];
+        
+        [self.numberBtn setTitle:num forState:UIControlStateNormal];
+        [self.numberBtn setImage:nil forState:UIControlStateNormal];
+        
+        self.nameLabel.textColor = [UIColor blackColor];
+        self.artistLabel.textColor = [UIColor grayColor];
+    }
 }
 
 - (void)likeBtnClick:(id)sender {
