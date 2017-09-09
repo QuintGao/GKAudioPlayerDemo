@@ -140,3 +140,9 @@ if ([UIDevice currentDevice].systemVersion.doubleValue >= 9.0) {
 
 ## 部分界面截图
 
+![我的音乐](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_home.png)
+
+![播放界面](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_player.png)
+
+![播放列表](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_list.png)
+
