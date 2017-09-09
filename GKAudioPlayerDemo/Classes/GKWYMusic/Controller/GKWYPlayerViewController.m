@@ -479,6 +479,8 @@
     nextCommand.enabled = YES;
     [nextCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
         
+        self.isAutoPlay = NO;
+        
         [self playNextMusic];
         
         return MPRemoteCommandHandlerStatusSuccess;
@@ -975,6 +977,8 @@
 }
 
 - (void)controlView:(GKWYMusicControlView *)controlView didClickNext:(UIButton *)nextBtn {
+    self.isAutoPlay = NO;
+    
     [self playNextMusic];
 }
 
