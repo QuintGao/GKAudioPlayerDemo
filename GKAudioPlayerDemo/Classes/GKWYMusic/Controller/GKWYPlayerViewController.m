@@ -385,18 +385,14 @@
 
 - (void)setupLockScreenControlInfo {
     MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
-    
+    // 锁屏播放
     [commandCenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-        
         [self playMusic];
-        
         return MPRemoteCommandHandlerStatusSuccess;
     }];
-    
+    // 锁屏暂停
     [commandCenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-       
         [self pauseMusic];
-        
         return MPRemoteCommandHandlerStatusSuccess;
     }];
     
@@ -451,14 +447,16 @@
         return MPRemoteCommandHandlerStatusSuccess;
     }];
     
-    // 播放和暂停按钮
+    // 播放和暂停按钮（耳机控制）
     MPRemoteCommand *playPauseCommand = commandCenter.togglePlayPauseCommand;
     playPauseCommand.enabled = YES;
     [playPauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
        
         if (self.isPlaying) {
+            NSLog(@"暂停哦哦哦");
             [self pauseMusic];
         }else {
+            NSLog(@"播放哦哦哦");
             [self playMusic];
         }
         
@@ -766,6 +764,7 @@
             break;
         case GKPlayerStatusStopped:
         {
+            NSLog(@"播放停止了");
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.controlView setupPauseBtn];
             });
@@ -774,6 +773,7 @@
             break;
         case GKPlayerStatusEnded:
         {
+            NSLog(@"播放结束了");
             if (self.isPlaying) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.controlView setupPauseBtn];
@@ -798,6 +798,7 @@
             break;
         case GKPlayerStatusError:
         {
+            NSLog(@"播放出错了");
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.controlView setupPauseBtn];
             });

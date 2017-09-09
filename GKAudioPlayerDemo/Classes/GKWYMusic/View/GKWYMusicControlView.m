@@ -206,7 +206,7 @@
 }
 
 - (void)sliderTapped:(float)value {
-    if ([self.delegate respondsToSelector:@selector(sliderTapped:)]) {
+    if ([self.delegate respondsToSelector:@selector(controlView:didSliderTapped:)]) {
         [self.delegate controlView:self didSliderTapped:value];
     }
 }
