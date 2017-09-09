@@ -20,6 +20,15 @@
 + (NSArray *)lyricParserWithUrl:(NSString *)url;
 
 /**
+ 解析歌词
+
+ @param url 歌词的url
+ @param isDelBlank 是否去掉空白行歌词
+ @return 包含歌词模型的数组
+ */
++ (NSArray *)lyricParserWithUrl:(NSString *)url isDelBlank:(BOOL)isDelBlank;
+
+/**
  歌词解析
 
  @param str 所有歌词的字符串

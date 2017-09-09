@@ -353,7 +353,7 @@
         });
         
         // 解析歌词
-        self.lyricList = [GKLyricParser lyricParserWithUrl:songDic[@"lrcLink"]];
+        self.lyricList = [GKLyricParser lyricParserWithUrl:songDic[@"lrcLink"] isDelBlank:YES];
         
         if (self.lyricList.count == 0) {
             self.tipsLabel.text = @"纯音乐，无歌词";

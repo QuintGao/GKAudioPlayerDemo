@@ -20,7 +20,20 @@
 + (NSArray *)lyricParserWithUrl:(NSString *)url {
     // 根据歌词文件的url获取歌词内容
     NSString *lyricStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:url] encoding:NSUTF8StringEncoding error:nil];
-    return [self lyricParaseWithLyricString:lyricStr];
+    return [self lyricParaseWithLyricString:lyricStr isDelBlank:NO];
+}
+
+/**
+ 解析歌词
+ 
+ @param url 歌词的url
+ @param isDelBlank 是否去掉空白行歌词
+ @return 包含歌词模型的数组
+ */
++ (NSArray *)lyricParserWithUrl:(NSString *)url isDelBlank:(BOOL)isDelBlank {
+    // 根据歌词文件的url获取歌词内容
+    NSString *lyricStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:url] encoding:NSUTF8StringEncoding error:nil];
+    return [self lyricParaseWithLyricString:lyricStr isDelBlank:isDelBlank];
 }
 
 /**
@@ -30,7 +43,7 @@
  @return 包含歌词模型的数组
  */
 + (NSArray *)lyricParserWithStr:(NSString *)str {
-    return [self lyricParaseWithLyricString:str];
+    return [self lyricParaseWithLyricString:str isDelBlank:NO];
 }
 
 
@@ -38,9 +51,10 @@
  解析歌词方法
  
  @param lyricString 歌词对应的字符串
+ @param isDelBlank  是否去掉空白行歌词
  @return 歌词解析后的模型数组
  */
-+ (NSArray *)lyricParaseWithLyricString:(NSString *)lyricString {
++ (NSArray *)lyricParaseWithLyricString:(NSString *)lyricString isDelBlank:(BOOL)isDelBlank {
     // 1. 以\n分割歌词
     NSArray *linesArray = [lyricString componentsSeparatedByString:@"\n"];
     
@@ -92,6 +106,15 @@
             lyricModel.timeString   = [GKTool timeStrWithMsTime:time];
             [modelArray addObject:lyricModel];
         }
+    }
+    
+    // 去掉空白行歌词
+    if (isDelBlank) {
+        [modelArray enumerateObjectsUsingBlock:^(GKLyricModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (!obj.content || [obj.content isEqualToString:@""]) {
+                [modelArray removeObject:obj];
+            }
+        }];
     }
     
     // 数组根据时间进行排序 时间（time）
