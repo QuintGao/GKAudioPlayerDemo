@@ -137,3 +137,6 @@ if ([UIDevice currentDevice].systemVersion.doubleValue >= 9.0) {
 }
 
 ```
+
+## 部分界面截图
+
