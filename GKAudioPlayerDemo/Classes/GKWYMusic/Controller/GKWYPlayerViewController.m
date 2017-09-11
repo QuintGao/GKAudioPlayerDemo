@@ -149,6 +149,10 @@
     [self removeNotifications];
 }
 
+- (void)didReceiveMemoryWarning {
+    NSLog(@"didReceiveMemoryWarning");
+}
+
 #pragma mark - Public Methods
 - (void)playMusicWithIndex:(NSInteger)index list:(NSArray *)list {
     self.musicList = list;
@@ -171,11 +175,7 @@
 
 - (void)playMusic {
     if (kPlayer.status != GKPlayerStatusPaused) {
-        if (kPlayer.status == GKPlayerStatusStopped) {
-            [kPlayer play];
-        }else {
-            [kPlayer pause];
-        }
+        [kPlayer play];
     }else {
         [kPlayer resume];
     }
@@ -738,19 +738,15 @@
     switch (status) {
         case GKPlayerStatusBuffering:
         {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.controlView hideLoadingAnim];
-                [self.controlView setupPlayBtn];
-            });
-            self.isPlaying = YES;
+            [self.controlView setupPauseBtn];
+            
+            self.isPlaying = NO;
         }
             break;
         case GKPlayerStatusPlaying:
         {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.controlView hideLoadingAnim];
-                [self.controlView setupPlayBtn];
-            });
+            [self.controlView hideLoadingAnim];
+            [self.controlView setupPlayBtn];
             self.isPlaying = YES;
         }
             break;
@@ -765,9 +761,7 @@
         case GKPlayerStatusStopped:
         {
             NSLog(@"播放停止了");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.controlView setupPauseBtn];
-            });
+            [self.controlView setupPauseBtn];
             self.isPlaying = NO;
         }
             break;
@@ -775,9 +769,7 @@
         {
             NSLog(@"播放结束了");
             if (self.isPlaying) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.controlView setupPauseBtn];
-                });
+                [self.controlView setupPauseBtn];
                 self.isPlaying = NO;
                 
                 self.controlView.currentTime = self.controlView.totalTime;
@@ -789,9 +781,7 @@
                     [self playNextMusic];
                 });
             }else {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.controlView setupPauseBtn];
-                });
+                [self.controlView setupPauseBtn];
                 self.isPlaying = NO;
             }
         }
@@ -799,9 +789,7 @@
         case GKPlayerStatusError:
         {
             NSLog(@"播放出错了");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.controlView setupPauseBtn];
-            });
+            [self.controlView setupPauseBtn];
             self.isPlaying = NO;
         }
             break;
@@ -878,7 +866,7 @@
     self.isScrolling = YES;
     // 显示分割线和时间
     self.timeLineView.hidden = NO;
-    self.timeLabel.hidden = NO;
+    self.timeLabel.hidden    = NO;
 }
 // 拖拽结束，是否需要减速
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {

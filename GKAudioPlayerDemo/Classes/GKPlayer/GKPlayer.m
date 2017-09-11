@@ -79,7 +79,9 @@
 }
 
 - (void)pause {
-    [self.player pause];
+    if (self.status != GKPlayerStatusPaused) {
+        [self.player pause];
+    }
 }
 
 - (void)resume {
@@ -99,29 +101,60 @@
     switch (self.player.mediaPlayer.state) {
         case VLCMediaPlayerStateBuffering:
             self.status = GKPlayerStatusBuffering;
+            NSLog(@"缓冲中。。。");
             break;
         case VLCMediaPlayerStatePlaying:
             self.status = GKPlayerStatusPlaying;
+            NSLog(@"播放中。。。");
             break;
         case VLCMediaPlayerStatePaused:
             self.status = GKPlayerStatusPaused;
+            NSLog(@"暂停中。。。");
             break;
         case VLCMediaPlayerStateStopped:
             self.status = GKPlayerStatusStopped;
+            NSLog(@"停止了。。。");
             break;
         case VLCMediaPlayerStateEnded:
             self.status = GKPlayerStatusEnded;
+            NSLog(@"结束了。。。");
             break;
         case VLCMediaPlayerStateOpening:
             NSLog(@"stream opening");
             break;
         case VLCMediaPlayerStateError:
             self.status = GKPlayerStatusError;
+            NSLog(@"错误了。。。");
             break;
             
         default:
             break;
     }
+    
+    NSLog(@"%d", self.player.mediaPlayer.isPlaying);
+    
+    if (self.player.mediaPlayer.isPlaying) {
+        self.status = GKPlayerStatusPlaying;
+    }
+    
+    switch (self.player.mediaPlayer.media.state) {
+        case VLCMediaStateBuffering:
+            NSLog(@"media缓冲中");
+            break;
+        case VLCMediaStatePlaying:
+            NSLog(@"media播放中");
+            break;
+        case VLCMediaStateNothingSpecial:
+            NSLog(@"media nothing special");
+            break;
+        case VLCMediaStateError:
+            NSLog(@"media error");
+            break;
+            
+        default:
+            break;
+    }
+    
     if ([self.delegate respondsToSelector:@selector(gkPlayer:statusChanged:)]) {
         [self.delegate gkPlayer:self statusChanged:self.status];
     }
@@ -169,7 +202,8 @@
 #pragma mark - 懒加载
 - (VLCMediaListPlayer *)player {
     if (!_player) {
-        NSArray *optionArr = @[@"--extraintf="]; // 去掉vlc的log
+//        NSArray *optionArr = @[@"--extraintf="]; // 去掉vlc的log
+        NSArray *optionArr = @[@"-vvvv"];
         _player = [[VLCMediaListPlayer alloc] initWithOptions:optionArr];
         _player.repeatMode = VLCDoNotRepeat;
         _player.mediaPlayer.delegate = self;
