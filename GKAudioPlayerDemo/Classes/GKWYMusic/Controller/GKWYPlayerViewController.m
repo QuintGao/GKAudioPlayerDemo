@@ -962,7 +962,11 @@
 }
 
 - (void)controlView:(GKWYMusicControlView *)controlView didClickPlay:(UIButton *)playBtn {
-    [self playMusic];
+    if (self.isPlaying) {
+        [self pauseMusic];
+    }else {
+        [self playMusic];
+    }
 }
 
 - (void)controlView:(GKWYMusicControlView *)controlView didClickNext:(UIButton *)nextBtn {

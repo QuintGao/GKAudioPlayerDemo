@@ -15,7 +15,7 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - GKCover (2.4.3)
-  - GKNavigationBarViewController (1.2.3)
+  - GKNavigationBarViewController (1.2.5)
   - Masonry (1.0.2)
   - MobileVLCKit-unstable (3.0.0a36)
   - SDWebImage (4.1.0):
@@ -35,7 +35,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   GKCover: d42da8b6d32f1df3abc9c45507ade99f79a4dc7e
-  GKNavigationBarViewController: 8ada4212d9e172db778334c040ee35e218fe583c
+  GKNavigationBarViewController: 63a45bf3e58f10e73f5e7d7bd25e66012a179f35
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MobileVLCKit-unstable: 7c94264c2463dd1dec7845c7689370f6554f0ee5
   SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
