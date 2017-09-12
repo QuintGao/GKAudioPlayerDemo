@@ -409,27 +409,18 @@
     likeCommand.localizedTitle = self.model.isLike ? @"取消喜欢" : @"喜欢";
     [likeCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
         
-        if (self.model.isLike) {
-            [self.musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if (obj.music_id == self.model.music_id) {
-                    obj.isLike = NO;
-                    self.model = obj;
-                    *stop = YES;
-                }
-            }];
-            [GKWYMusicTool saveMusicList:self.musicList];
-        }else {
-            [self.musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if (obj.music_id == self.model.music_id) {
-                    obj.isLike = YES;
-                    self.model = obj;
-                    *stop = YES;
-                }
-            }];
-            [GKWYMusicTool saveMusicList:self.musicList];
-            
-            [self setupLockScreenControlInfo];
-        }
+        [self.musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj.music_id isEqualToString:self.model.music_id]) {
+                obj.isLike = !obj.isLike;
+                self.model = obj;
+                *stop      = YES;
+            }
+        }];
+        
+        [GKWYMusicTool saveMusicList:self.musicList];
+        
+        [self setupLockScreenControlInfo];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:@"WYMusicLovedMusicNotification" object:nil];
         
         return MPRemoteCommandHandlerStatusSuccess;
@@ -1028,6 +1019,10 @@
     model.isLike = !model.isLike;
     
     [GKWYMusicTool saveMusicList:self.musicList];
+    
+    listView.listArr = self.musicList;
+    
+    [self setupLockScreenControlInfo];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"WYMusicLovedMusicNotification" object:nil];
 }
