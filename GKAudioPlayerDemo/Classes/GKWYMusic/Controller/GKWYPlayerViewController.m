@@ -1098,10 +1098,10 @@
 
 - (UILabel *)timeLabel {
     if (!_timeLabel) {
-        _timeLabel = [UILabel new];
+        _timeLabel           = [UILabel new];
         _timeLabel.textColor = [UIColor whiteColor];
-        _timeLabel.font = [UIFont systemFontOfSize:13.0];
-        _timeLabel.hidden = YES;
+        _timeLabel.font      = [UIFont systemFontOfSize:13.0];
+        _timeLabel.hidden    = YES;
     }
     return _timeLabel;
 }
