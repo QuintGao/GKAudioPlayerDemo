@@ -136,6 +136,14 @@
     self.slider.value = value;
 }
 
+- (void)setupInitialData {
+    self.value       = 0;
+    self.currentTime = @"00:00";
+    self.totalTime   = @"00:00";
+    
+    [self showLoadingAnim];
+}
+
 - (void)showLoadingAnim {
     [self.slider showLoading];
 }

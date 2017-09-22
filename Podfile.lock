@@ -15,9 +15,8 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - GKCover (2.4.3)
-  - GKNavigationBarViewController (1.2.5)
   - Masonry (1.0.2)
-  - MobileVLCKit-unstable (3.0.0a36)
+  - MobileVLCKit-unstable (3.0.0a40)
   - SDWebImage (4.1.0):
     - SDWebImage/Core (= 4.1.0)
   - SDWebImage/Core (4.1.0)
@@ -26,21 +25,19 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - GKCover
-  - GKNavigationBarViewController
   - Masonry
-  - MobileVLCKit-unstable (~> 3.0.0a36)
+  - MobileVLCKit-unstable (~> 3.0.0a40)
   - SDWebImage
   - YYModel
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   GKCover: d42da8b6d32f1df3abc9c45507ade99f79a4dc7e
-  GKNavigationBarViewController: 63a45bf3e58f10e73f5e7d7bd25e66012a179f35
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
-  MobileVLCKit-unstable: 7c94264c2463dd1dec7845c7689370f6554f0ee5
+  MobileVLCKit-unstable: 23b5d951a8bd7ca8ded2a8b8795ddaa512afeeeb
   SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 9b54fd25c3ee24aeb91e4bab1139f2e08d5432f7
+PODFILE CHECKSUM: a5f8225c9587e78c1b4a702f67383b8273a320e7
 
 COCOAPODS: 1.3.1

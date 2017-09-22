@@ -36,6 +36,8 @@
 @property (nonatomic, copy) NSString *totalTime;
 @property (nonatomic, assign) float value;
 
+- (void)setupInitialData;
+
 - (void)showLoadingAnim;
 - (void)hideLoadingAnim;
 

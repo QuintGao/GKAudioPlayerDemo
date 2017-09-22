@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) UIButton *playBtn;
 
+@property (nonatomic, assign) BOOL isFirstLaunch;
+
 - (void)showPlayBtn;
 - (void)hidePlayBtn;
 

@@ -13,13 +13,16 @@
 #import "GKWYMusicTool.h"
 #import "UIImageView+WebCache.h"
 
+#import "GKWYMusicLyricView.h"
 #import "GKWYMusicListView.h"
-#import "GKWYMusicVolumeView.h"
+#import "GKWYMusicCoverView.h"
 
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 
-@interface GKWYPlayerViewController ()<UITableViewDataSource, UITableViewDelegate, GKWYMusicControlViewDelegate, GKPlayerDelegate, GKWYMusicListViewDelegate, GKWYMusicVolumeViewDelegate>
+#import "AppDelegate.h"
+
+@interface GKWYPlayerViewController ()<GKWYMusicControlViewDelegate, GKPlayerDelegate, GKWYMusicListViewDelegate>
 
 /*****************UI**********************/
 @property (nonatomic, strong) UIView *titleView;
@@ -28,17 +31,12 @@
 
 @property (nonatomic, strong) UIImageView *bgImageView;
 
+@property (nonatomic, strong) GKWYMusicCoverView *coverImgView;
+
+/** 歌词视图 */
+@property (nonatomic, strong) GKWYMusicLyricView *lyricView;
+
 @property (nonatomic, strong) GKWYMusicControlView *controlView;
-@property (nonatomic, strong) GKWYMusicVolumeView *volumeView;
-
-@property (nonatomic, strong) UITableView *lyricTable;
-
-@property (nonatomic, strong) UIImageView *maskImageView;
-
-@property (nonatomic, strong) UILabel *tipsLabel;
-
-@property (nonatomic, strong) UIView *timeLineView;
-@property (nonatomic, strong) UILabel *timeLabel;
 
 @property (nonatomic, strong) GKWYMusicListView *listView;
 
@@ -50,20 +48,18 @@
 
 @property (nonatomic, assign) GKWYPlayerPlayStyle playStyle; // 循环类型
 
-@property (nonatomic, strong) NSArray *lyricList;  // 歌词列表
-@property (nonatomic, assign) NSInteger lyricIndex; // 歌词索引
-
 @property (nonatomic, assign) BOOL isAutoPlay;   // 是否自动播放
 @property (nonatomic, assign) BOOL isDraging;    // 是否正在拖拽
 @property (nonatomic, assign) BOOL isSeeking;    // 是否在快进快退
-@property (nonatomic, assign) BOOL isScrolling;  // 是否在滚动歌词
-@property (nonatomic, assign) BOOL isWillDraging; // 是否将要开始拖拽歌词
 
 @property (nonatomic, assign) NSTimeInterval duration;      // 总时间
 @property (nonatomic, assign) NSTimeInterval currentTime;   // 当前时间
 @property (nonatomic, assign) NSTimeInterval positionTime;  // 锁屏时的滑杆时间
 
 @property (nonatomic, strong) NSTimer *seekTimer;  // 快进、快退定时器
+
+/** 是否立即播放 */
+@property (nonatomic, assign) BOOL ifNowPlay;
 
 @end
 
@@ -83,53 +79,29 @@
     if (self = [super init]) {
         
         [self.view addSubview:self.bgImageView];
-        [self.view addSubview:self.lyricTable];
-        [self.lyricTable addSubview:self.tipsLabel];
-        [self.view addSubview:self.maskImageView];
-        [self.view addSubview:self.volumeView];
+        [self.view addSubview:self.coverImgView];
+        [self.view addSubview:self.lyricView];
         [self.view addSubview:self.controlView];
-        
-        [self.view addSubview:self.timeLineView];
-        [self.view addSubview:self.timeLabel];
-        
-        [self.volumeView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(self.view);
-            make.top.equalTo(self.view).offset(64);
-            make.height.mas_equalTo(34);
-        }];
-//        self.volumeView.backgroundColor = [UIColor redColor];
         
         [self.controlView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.bottom.equalTo(self.view);
             make.height.mas_equalTo(150);
         }];
         
-        [self.lyricTable mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.coverImgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
-            make.top.equalTo(self.volumeView.mas_bottom).offset(10);
-            make.bottom.equalTo(self.controlView.mas_top);
+            make.top.equalTo(self.view).offset(64);
+            make.bottom.equalTo(self.controlView.mas_top).offset(0);
         }];
         
-        [self.maskImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+        [self.lyricView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(self.view);
+            make.top.equalTo(self.view).offset(64);
+            make.bottom.equalTo(self.controlView.mas_top).offset(0);
         }];
         
-        [self.tipsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self.lyricTable);
-        }];
-        
-        [self.timeLineView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.view).offset(50);
-            make.right.equalTo(self.view).offset(-50);
-            make.center.equalTo(self.lyricTable);
-            make.height.mas_equalTo(0.5);
-        }];
-        
-        [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.timeLineView.mas_right).offset(25);
-            make.centerY.equalTo(self.timeLineView.mas_centerY);
-        }];
-        
+        [self.coverImgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLyricView)]];
+        [self.lyricView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showCoverView)]];
     }
     return self;
 }
@@ -154,6 +126,7 @@
 }
 
 #pragma mark - Public Methods
+
 - (void)playMusicWithIndex:(NSInteger)index list:(NSArray *)list {
     self.musicList = list;
     
@@ -162,9 +135,41 @@
     if (![model.music_id isEqualToString:self.currentMusicId]) {
         self.currentMusicId = model.music_id;
         
+        self.ifNowPlay = YES;
+        
         // 记录播放的id
         [[NSUserDefaults standardUserDefaults] setValue:model.music_id forKey:kPlayerLastPlayIDKey];
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"WYPlayerChangeMusicNotification" object:nil];
+        
+        self.model = model;
+        
+        [self getMusicInfo];
+    }else {
+        self.ifNowPlay = YES;
+        
+        if (self.isPlaying) {
+            return;
+        }
+        
+        if (self.model) {
+            [kPlayer play];
+        }
+    }
+}
+
+- (void)loadMusicWithIndex:(NSInteger)index list:(NSArray *)list {
+    self.musicList = list;
+    
+    GKWYMusicModel *model = list[index];
+    
+    if (![model.music_id isEqualToString:self.currentMusicId]) {
+        self.currentMusicId = model.music_id;
+        
+        self.ifNowPlay = NO;
+        
+        // 记录播放的id
+        [[NSUserDefaults standardUserDefaults] setValue:model.music_id forKey:kPlayerLastPlayIDKey];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"WYPlayerChangeMusicNotification" object:nil];
         
         self.model = model;
@@ -275,35 +280,58 @@
 
 #pragma mark - Private Methods
 - (void)setupUI {
-    self.view.backgroundColor  = [UIColor whiteColor];
+    self.view.backgroundColor  = [UIColor redColor];
     
     self.gk_navBackgroundColor = [UIColor clearColor];
+//    self.gk_navBarAlpha = 0.0;
     
     // 获取播放方式，并设置
     self.playStyle = [[NSUserDefaults standardUserDefaults] integerForKey:kPlayerPlayStyleKey];
     self.controlView.style = self.playStyle;
     
     // 设置titleview
-    self.titleView = [UIView new];
-    self.titleView.frame = CGRectMake(0, 0, 80, 44);
+    self.titleView       = [UIView new];
+    self.titleView.frame = CGRectMake(0, 0, 160, 44);
     self.gk_navTitleView = self.titleView;
     
-    self.nameLabel = [UILabel new];
-    self.nameLabel.textColor = [UIColor whiteColor];
-    self.nameLabel.font = [UIFont systemFontOfSize:16.0];
+    self.nameLabel              = [UILabel new];
+    self.nameLabel.textColor    = [UIColor whiteColor];
+    self.nameLabel.font         = [UIFont systemFontOfSize:16.0];
     [self.titleView addSubview:self.nameLabel];
-    [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.titleView).offset(3);
-        make.centerX.equalTo(self.titleView);
-    }];
     
-    self.artistLabel = [UILabel new];
-    self.artistLabel.textColor = [UIColor whiteColor];
-    self.artistLabel.font = [UIFont systemFontOfSize:14.0];
+    self.artistLabel            = [UILabel new];
+    self.artistLabel.textColor  = [UIColor whiteColor];
+    self.artistLabel.font       = [UIFont systemFontOfSize:14.0];
     [self.titleView addSubview:self.artistLabel];
-    [self.artistLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.nameLabel.mas_bottom).offset(2);
-        make.centerX.equalTo(self.titleView);
+    
+    self.nameLabel.gk_y         = 3;
+    self.artistLabel.gk_y       = self.nameLabel.gk_bottom + 2;
+}
+
+- (void)showLyricView {
+    
+    self.lyricView.hidden = NO;
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        self.lyricView.alpha    = 1.0;
+        
+        self.coverImgView.alpha = 0.0;
+    }completion:^(BOOL finished) {
+        self.lyricView.hidden    = NO;
+        self.coverImgView.hidden = YES;
+    }];
+}
+
+- (void)showCoverView {
+    self.coverImgView.hidden = NO;
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        self.lyricView.alpha     = 0.0;
+        
+        self.coverImgView.alpha  = 1.0;
+    }completion:^(BOOL finished) {
+        self.lyricView.hidden    = YES;
+        self.coverImgView.hidden = NO;
     }];
 }
 
@@ -311,21 +339,25 @@
     self.nameLabel.text   = self.model.music_name;
     self.artistLabel.text = self.model.music_artist;
     
+    [self.nameLabel sizeToFit];
+    self.nameLabel.gk_centerX = self.titleView.gk_width * 0.5;
+    
+    [self.artistLabel sizeToFit];
+    self.artistLabel.gk_y       = self.nameLabel.gk_bottom + 2;
+    self.artistLabel.gk_centerX = self.titleView.gk_width * 0.5;
+    
     if (self.isPlaying) {
         self.isPlaying = NO;
         [kPlayer stop];
     }
+    
+    self.bgImageView.image = [UIImage imageNamed:@"cm2_fm_bg-ip6"];
+        
     // 初始化数据
-    self.lyricList = nil;
-    [self.lyricTable reloadData];
+    self.lyricView.lyrics = nil;
     
-    self.tipsLabel.hidden  = NO;
-    self.tipsLabel.text    = @"歌词加载中，请稍后...";
+    [self.controlView setupInitialData];
     
-    self.controlView.value       = 0;
-    self.controlView.currentTime = @"00:00";
-    self.controlView.totalTime   = @"00:00";
-    [self.controlView showLoadingAnim];
     // 重新设置锁屏控制界面
     [self setupLockScreenControlInfo];
     
@@ -336,9 +368,10 @@
     manager.requestSerializer     = [AFJSONRequestSerializer serializer];
     manager.responseSerializer    = [AFHTTPResponseSerializer serializer];
     
-    NSString *url = [NSString stringWithFormat:@"http://music.baidu.com/data/music/links?songIds=%@", self.model.music_id];
+//    NSString *url = [NSString stringWithFormat:@"http://music.baidu.com/data/music/links?songIds={%@}", self.model.music_id];
+    NSString *url = @"http://music.baidu.com/data/music/links";
     
-    [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager GET:url parameters:@{@"songIds": self.model.music_id} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
         NSDictionary *songDic = [dic[@"data"][@"songList"] firstObject];
@@ -346,24 +379,21 @@
         
         // 背景图
         [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:songDic[@"songPicRadio"]] placeholderImage:[UIImage imageNamed:@"cm2_fm_bg-ip6"]];
+        
+        [self.coverImgView.imgView sd_setImageWithURL:[NSURL URLWithString:songDic[@"songPicRadio"]] placeholderImage:[UIImage imageNamed:@"cm2_fm_bg-ip6"]];
+        
         // 设置播放地址
         kPlayer.playUrlStr = songDic[@"songLink"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [kPlayer play];
+            
+            if (self.ifNowPlay) {
+                [kPlayer play];
+            }
         });
         
         // 解析歌词
-        self.lyricList = [GKLyricParser lyricParserWithUrl:songDic[@"lrcLink"] isDelBlank:YES];
+        self.lyricView.lyrics = [GKLyricParser lyricParserWithUrl:songDic[@"lrcLink"] isDelBlank:YES];
         
-        if (self.lyricList.count == 0) {
-            self.tipsLabel.text = @"纯音乐，无歌词";
-        }else {
-            self.tipsLabel.hidden = YES;
-            [self.lyricTable reloadData];
-           
-            // 显示第一句
-            [self.lyricTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求失败");
     }];
@@ -387,12 +417,19 @@
     MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
     // 锁屏播放
     [commandCenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        
+        if (!self.isPlaying) {
+            [self playMusic];
+        }
+        
         [self playMusic];
         return MPRemoteCommandHandlerStatusSuccess;
     }];
     // 锁屏暂停
     [commandCenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-        [self pauseMusic];
+        if (self.isPlaying) {
+            [self pauseMusic];
+        }
         return MPRemoteCommandHandlerStatusSuccess;
     }];
     
@@ -576,24 +613,6 @@
     playingCenter.nowPlayingInfo = playingInfo;
 }
 
-- (void)scrollLyricWithCurrentTime:(NSTimeInterval)currentTime {
-    if (self.lyricList.count == 0) self.lyricIndex = 0;
-    
-    for (NSInteger i = 0; i < self.lyricList.count; i++) {
-        GKLyricModel *currentLyric = self.lyricList[i];
-        GKLyricModel *nextLyric = nil;
-        if (i < self.lyricList.count - 1) {
-            nextLyric = self.lyricList[i + 1];
-        }
-        if ((self.lyricIndex != i && currentTime >= currentLyric.msTime) && (!nextLyric || currentTime < nextLyric.msTime)) {
-            self.lyricIndex = i;
-            
-            [self.lyricTable reloadData];
-            [self.lyricTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:(self.lyricIndex + 5) inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-        }
-    }
-}
-
 #pragma mark - 快进快退方法
 
 // 快进开始
@@ -732,6 +751,8 @@
             [self.controlView setupPauseBtn];
             
             self.isPlaying = NO;
+            
+            [self.coverImgView pausedWithAnimated:YES];
         }
             break;
         case GKPlayerStatusPlaying:
@@ -739,6 +760,8 @@
             [self.controlView hideLoadingAnim];
             [self.controlView setupPlayBtn];
             self.isPlaying = YES;
+            
+            [self.coverImgView playedWithAnimated:YES];
         }
             break;
         case GKPlayerStatusPaused:
@@ -747,6 +770,8 @@
                 [self.controlView setupPauseBtn];
             });
             self.isPlaying = NO;
+            
+            [self.coverImgView pausedWithAnimated:YES];
         }
             break;
         case GKPlayerStatusStopped:
@@ -754,6 +779,8 @@
             NSLog(@"播放停止了");
             [self.controlView setupPauseBtn];
             self.isPlaying = NO;
+            
+            [self.coverImgView pausedWithAnimated:YES];
         }
             break;
         case GKPlayerStatusEnded:
@@ -762,6 +789,8 @@
             if (self.isPlaying) {
                 [self.controlView setupPauseBtn];
                 self.isPlaying = NO;
+                
+                [self.coverImgView pausedWithAnimated:YES];
                 
                 self.controlView.currentTime = self.controlView.totalTime;
                 
@@ -774,6 +803,8 @@
             }else {
                 [self.controlView setupPauseBtn];
                 self.isPlaying = NO;
+                
+                [self.coverImgView pausedWithAnimated:YES];
             }
         }
             break;
@@ -782,6 +813,8 @@
             NSLog(@"播放出错了");
             [self.controlView setupPauseBtn];
             self.isPlaying = NO;
+            
+            [self.coverImgView pausedWithAnimated:YES];
         }
             break;
             
@@ -803,126 +836,14 @@
     
     // 滚动歌词
     if (!self.isPlaying) return;
-    if (self.isScrolling) return;
     
-    [self scrollLyricWithCurrentTime:currentTime];
+    [self.lyricView scrollLyricWithCurrentTime:currentTime totalTime:totalTime];
 }
 
 - (void)gkPlayer:(GKPlayer *)player duration:(NSTimeInterval)duration {
     self.controlView.totalTime = [GKTool timeStrWithMsTime:duration];
     
     self.duration = duration;
-}
-
-#pragma mark - UITableViewDataSource & UITableViewDelegate
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.lyricList.count + 10;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LyricCell" forIndexPath:indexPath];
-    cell.textLabel.textColor = [UIColor grayColor];
-    cell.textLabel.textAlignment = NSTextAlignmentCenter;
-    cell.textLabel.numberOfLines = 0;
-    cell.selectedBackgroundView  = [UIView new];
-    cell.backgroundColor = [UIColor clearColor];
-    cell.textLabel.font  = [UIFont systemFontOfSize:16.0];
-    cell.textLabel.alpha = 1.0;
-    
-    if (indexPath.row < 5 || indexPath.row > self.lyricList.count + 4) {
-        cell.textLabel.textColor = [UIColor clearColor];
-        cell.textLabel.text = @"";
-    }else {
-        cell.textLabel.text = [self.lyricList[indexPath.row - 5] content];
-        if (indexPath.row == self.lyricIndex + 5) {
-            cell.textLabel.textColor = [UIColor whiteColor];
-            cell.textLabel.font = [UIFont systemFontOfSize:18.0];
-        }else {
-            cell.textLabel.textColor = [UIColor grayColor];
-            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
-        }
-    }
-    
-    return cell;
-}
-
-#pragma mark - UIScrollViewDelegate
-// 将要开始拖拽
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    self.isWillDraging = YES;
-    // 取消前面的延时操作
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    
-    self.isScrolling = YES;
-    // 显示分割线和时间
-    self.timeLineView.hidden = NO;
-    self.timeLabel.hidden    = NO;
-}
-// 拖拽结束，是否需要减速
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (!decelerate) {
-        self.isWillDraging = NO;
-        
-        [self performSelector:@selector(endedScroll) withObject:nil afterDelay:1.0];
-    }
-}
-
-// 将要开始减速，上面的decelerate为yes时触发
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    
-}
-
-// 减速停止
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    self.isWillDraging = NO;
-    
-    [self performSelector:@selector(endedScroll) withObject:nil afterDelay:1.0];
-}
-
-// scrollView滑动时
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    if (!self.isScrolling) return; // 不是由拖拽产生的滚动
-    
-    // 获取滚动距离
-    CGFloat offsetY  = scrollView.contentOffset.y;
-    
-    // 根据跟单距离计算行数（滚动距离 + tableview高度的一半）/ 行高 + 5 - 1
-    NSInteger index = (offsetY + self.lyricTable.frame.size.height * 0.5) / 44 - 5 + 1;
-    
-    // 根据对应的索引取出歌词模型
-    GKLyricModel *model = nil;
-    if (index < 0) {
-        model = self.lyricList.firstObject;
-    }else if (index > self.lyricList.count - 1) {
-        model = nil;
-    }else {
-        model = self.lyricList[index];
-    }
-    // 设置对应的时间
-    if (model) {
-        self.timeLabel.text   = [GKTool timeStrWithSecTime:model.secTime];
-        self.timeLabel.hidden = NO;
-    }else {
-        self.timeLabel.text   = @"";
-        self.timeLabel.hidden = YES;
-    }
-}
-
-- (void)endedScroll {
-    if (self.isWillDraging) return;
-    self.timeLineView.hidden = YES;
-    self.timeLabel.hidden    = YES;
-    
-    // 4秒后继续滚动歌词
-    [self performSelector:@selector(endScrolling) withObject:nil afterDelay:4.0];
-}
-
-- (void)endScrolling {
-    if (self.isWillDraging) return;
-    
-    self.isScrolling = NO;
 }
 
 #pragma mark - GKWYMusicVolumeViewDelegate
@@ -990,7 +911,7 @@
     self.gk_fullScreenPopDisabled = NO;
     
     // 滚动歌词到对应位置
-    [self scrollLyricWithCurrentTime:(self.duration * value)];
+    [self.lyricView scrollLyricWithCurrentTime:(self.duration * value) totalTime:self.duration];
 }
 
 - (void)controlView:(GKWYMusicControlView *)controlView didSliderValueChange:(float)value {
@@ -1002,7 +923,8 @@
     self.controlView.currentTime = [GKTool timeStrWithMsTime:(self.duration * value)];
     kPlayer.progress = value;
     
-    [self scrollLyricWithCurrentTime:(self.duration * value)];
+    // 滚动歌词到对应位置
+    [self.lyricView scrollLyricWithCurrentTime:(self.duration * value) totalTime:self.duration];
 }
 
 #pragma mark - GKWYMusicListViewDelegate
@@ -1031,7 +953,11 @@
 - (UIImageView *)bgImageView {
     if (!_bgImageView) {
         _bgImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+        _bgImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _bgImageView.userInteractionEnabled = NO;
+        _bgImageView.clipsToBounds = YES;
         // 添加模糊效果
+        
         UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
         UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blur];
         effectView.frame = _bgImageView.bounds;
@@ -1040,12 +966,27 @@
     return _bgImageView;
 }
 
-- (GKWYMusicVolumeView *)volumeView {
-    if (!_volumeView) {
-        _volumeView = [GKWYMusicVolumeView new];
-        _volumeView.delegate = self;
+- (GKWYMusicCoverView *)coverImgView {
+    if (!_coverImgView) {
+        _coverImgView = [GKWYMusicCoverView new];
     }
-    return _volumeView;
+    return _coverImgView;
+}
+
+- (GKWYMusicLyricView *)lyricView {
+    if (!_lyricView) {
+        _lyricView = [GKWYMusicLyricView new];
+        _lyricView.backgroundColor = [UIColor clearColor];
+        
+        __weak typeof(self) weakSelf = self;
+        
+        _lyricView.volumeViewSliderBlock = ^(BOOL isBegan) {
+            weakSelf.gk_fullScreenPopDisabled = isBegan;
+        };
+        
+        _lyricView.hidden = YES;
+    }
+    return _lyricView;
 }
 
 - (GKWYMusicControlView *)controlView {
@@ -1054,56 +995,6 @@
         _controlView.delegate = self;
     }
     return _controlView;
-}
-
-- (UITableView *)lyricTable {
-    if (!_lyricTable) {
-        _lyricTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        _lyricTable.dataSource      = self;
-        _lyricTable.delegate        = self;
-        _lyricTable.separatorStyle  = UITableViewCellSeparatorStyleNone;
-        _lyricTable.backgroundColor = [UIColor clearColor];
-        [_lyricTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"LyricCell"];
-    }
-    return _lyricTable;
-}
-
-- (UIImageView *)maskImageView {
-    if (!_maskImageView) {
-        _maskImageView = [UIImageView new];
-//        _maskImageView.backgroundColor = [UIColor redColor];
-//        _maskImageView.image = [UIImage imageNamed:@"cm2_act_cover_mask"];
-    }
-    return _maskImageView;
-}
-
-- (UILabel *)tipsLabel {
-    if (!_tipsLabel) {
-        _tipsLabel = [UILabel new];
-        _tipsLabel.textColor = [UIColor whiteColor];
-        _tipsLabel.font = [UIFont systemFontOfSize:17.0];
-        _tipsLabel.hidden = YES;
-    }
-    return _tipsLabel;
-}
-
-- (UIView *)timeLineView {
-    if (!_timeLineView) {
-        _timeLineView = [UIView new];
-        _timeLineView.backgroundColor = [UIColor darkGrayColor];
-        _timeLineView.hidden = YES;
-    }
-    return _timeLineView;
-}
-
-- (UILabel *)timeLabel {
-    if (!_timeLabel) {
-        _timeLabel           = [UILabel new];
-        _timeLabel.textColor = [UIColor whiteColor];
-        _timeLabel.font      = [UIFont systemFontOfSize:13.0];
-        _timeLabel.hidden    = YES;
-    }
-    return _timeLabel;
 }
 
 - (GKWYMusicListView *)listView {

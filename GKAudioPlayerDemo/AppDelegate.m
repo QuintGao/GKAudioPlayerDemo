@@ -32,7 +32,11 @@
     
     [self.window makeKeyAndVisible];
     
+    self.isFirstLaunch = YES;
+    
     [self setupPlayBtn];
+    
+    [self loadMusicList];
     
     return YES;
 }
@@ -41,16 +45,24 @@
     // 设置导航栏风格
     [GKConfigure setupCustomConfigure:^(GKNavigationBarConfigure *configure) {
         // 导航栏背景色
-        configure.backgroundColor = [UIColor blackColor];
+        configure.backgroundColor   = [UIColor blackColor];
         // 标题文字颜色
-        configure.titleColor = [UIColor whiteColor];
+        configure.titleColor        = [UIColor whiteColor];
         // 标题文字字体
-        configure.titleFont = [UIFont systemFontOfSize:18.0];
+        configure.titleFont         = [UIFont systemFontOfSize:18.0];
         // 导航栏风格
-        configure.statusBarStyle = UIStatusBarStyleLightContent;
+        configure.statusBarStyle    = UIStatusBarStyleLightContent;
         // 返回按钮
-        configure.backStyle = GKNavigationBarBackStyleWhite;
+        configure.backStyle         = GKNavigationBarBackStyleWhite;
     }];
+}
+
+- (void)loadMusicList {
+    NSString *currentMusicID = [[NSUserDefaults standardUserDefaults] objectForKey:kPlayerLastPlayIDKey];
+    
+    NSInteger index = [GKWYMusicTool indexFromID:currentMusicID];
+    
+    [kWYPlayerVC loadMusicWithIndex:index list:[GKWYMusicTool musicList]];
 }
 
 - (void)setupPlayBtn {
@@ -70,12 +82,6 @@
 }
 
 - (void)topbarPlayBtnAction:(id)sender {
-    NSString *currentMusicID = [[NSUserDefaults standardUserDefaults] objectForKey:kPlayerLastPlayIDKey];
-    
-    NSInteger index = [GKWYMusicTool indexFromID:currentMusicID];
-    
-    [kWYPlayerVC playMusicWithIndex:index list:[GKWYMusicTool musicList]];
-    
     [[GKWYMusicTool visibleViewController].navigationController pushViewController:kWYPlayerVC animated:YES];
 }
 

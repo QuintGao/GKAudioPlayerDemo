@@ -9,6 +9,7 @@
 #import "GKWYMusicTool.h"
 #import "GKWYMusicModel.h"
 #import "AppDelegate.h"
+#import <Accelerate/Accelerate.h>
 
 #define kDataPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"audio.json"]
 
@@ -59,6 +60,28 @@
     AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     [delegate hidePlayBtn];
+}
+
++ (UIImage *)imageWithColor:(UIColor *)color {
+    return [self imageWithColor:color size:CGSizeMake(1.0, 1.0)];
+}
+
++ (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size {
+    CGRect rect = CGRectMake(0, 0, size.width, size.height);
+    
+    UIGraphicsBeginImageContext(size);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 @end

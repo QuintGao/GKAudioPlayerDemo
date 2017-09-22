@@ -6,7 +6,7 @@
 //  Copyright © 2017年 高坤. All rights reserved.
 //
 
-#import <GKNavigationBarViewController/GKNavigationBarViewController.h>
+#import "GKNavigationBarViewController.h"
 
 @interface GKWYMusicViewController : GKNavigationBarViewController
 

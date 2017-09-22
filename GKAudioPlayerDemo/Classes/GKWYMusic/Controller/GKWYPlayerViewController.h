@@ -12,7 +12,7 @@ typedef NS_ENUM(NSUInteger, GKWYPlayerPlayStyle) {
     GKWYPlayerPlayStyleRandom       // 随机播放
 };
 
-#import <GKNavigationBarViewController/GKNavigationBarViewController.h>
+#import "GKNavigationBarViewController.h"
 
 #define kWYPlayerVC         [GKWYPlayerViewController sharedInstance]
 
@@ -31,6 +31,14 @@ typedef NS_ENUM(NSUInteger, GKWYPlayerPlayStyle) {
  @param list 列表
  */
 - (void)playMusicWithIndex:(NSInteger)index list:(NSArray *)list;
+
+/**
+ 加载音乐列表，不播放
+
+ @param index 列表中的索引
+ @param list 列表
+ */
+- (void)loadMusicWithIndex:(NSInteger)index list:(NSArray *)list;
 
 - (void)playMusic;
 - (void)pauseMusic;
