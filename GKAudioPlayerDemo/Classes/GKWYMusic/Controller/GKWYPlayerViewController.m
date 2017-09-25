@@ -871,11 +871,8 @@
 - (void)controlView:(GKWYMusicControlView *)controlView didClickLove:(UIButton *)loveBtn {
     [self lovedCurrentMusic];
     if (self.model.isLike) {
-//        [GKMessageTool showSuccess:@"已添加到我喜欢的音乐" toView:self.view imageName:@"cm2_play_icn_loved"];
         [GKMessageTool showSuccess:@"已添加到我喜欢的音乐" toView:self.view imageName:@"cm2_play_icn_loved" bgColor:[UIColor clearColor]];
     }else {
-//        [GKMessageTool showSuccess:@"已取消喜欢" toView:self.view imageName:nil];
-
         [GKMessageTool showText:@"已取消喜欢" toView:self.view bgColor:[UIColor clearColor]];
     }
 }
