@@ -12,5 +12,7 @@ target 'GKAudioPlayerDemo' do
   pod 'GKCover'
   pod 'SDWebImage'
   pod 'Masonry'
+  
+  pod 'MBProgressHUD'
 
 end

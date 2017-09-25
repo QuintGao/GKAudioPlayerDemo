@@ -46,6 +46,8 @@
 		79A8A3501F74E22600649469 /* GKPopTransitionAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8A3421F74E22600649469 /* GKPopTransitionAnimation.m */; };
 		79A8A3511F74E22600649469 /* GKPushTransitionAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8A3441F74E22600649469 /* GKPushTransitionAnimation.m */; };
 		79CB4E7B1F616BC500A3E496 /* GKWYMusicTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CB4E7A1F616BC500A3E496 /* GKWYMusicTool.m */; };
+		79E89A101F78B23700CAD6BD /* GKMessageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E89A0F1F78B18300CAD6BD /* GKMessageTool.m */; };
+		79E89A111F78B24D00CAD6BD /* GKMessageTool.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 79E89A0D1F78B18300CAD6BD /* GKMessageTool.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +145,9 @@
 		79A8A3441F74E22600649469 /* GKPushTransitionAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKPushTransitionAnimation.m; sourceTree = "<group>"; };
 		79CB4E791F616BC500A3E496 /* GKWYMusicTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYMusicTool.h; sourceTree = "<group>"; };
 		79CB4E7A1F616BC500A3E496 /* GKWYMusicTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicTool.m; sourceTree = "<group>"; };
+		79E89A0D1F78B18300CAD6BD /* GKMessageTool.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GKMessageTool.bundle; sourceTree = "<group>"; };
+		79E89A0E1F78B18300CAD6BD /* GKMessageTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKMessageTool.h; sourceTree = "<group>"; };
+		79E89A0F1F78B18300CAD6BD /* GKMessageTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GKMessageTool.m; sourceTree = "<group>"; };
 		7A586AF8F9B22A8DF98D6CF6 /* Pods-GKAudioPlayerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GKAudioPlayerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-GKAudioPlayerDemo/Pods-GKAudioPlayerDemo.release.xcconfig"; sourceTree = "<group>"; };
 		C3FA0734EFFC9EF90AC73814 /* Pods-GKAudioPlayerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GKAudioPlayerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GKAudioPlayerDemo/Pods-GKAudioPlayerDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -271,6 +276,7 @@
 				79219C001F60FB690009A781 /* GKPlayer */,
 				7902D9901F623ECC00EDDA40 /* Category */,
 				79A8A3281F74E22600649469 /* GKNavigationBarViewController */,
+				79E89A0C1F78B18300CAD6BD /* GKMessageTool */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -434,6 +440,16 @@
 			path = TransitionAnimation;
 			sourceTree = "<group>";
 		};
+		79E89A0C1F78B18300CAD6BD /* GKMessageTool */ = {
+			isa = PBXGroup;
+			children = (
+				79E89A0D1F78B18300CAD6BD /* GKMessageTool.bundle */,
+				79E89A0E1F78B18300CAD6BD /* GKMessageTool.h */,
+				79E89A0F1F78B18300CAD6BD /* GKMessageTool.m */,
+			);
+			path = GKMessageTool;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -551,6 +567,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79E89A111F78B24D00CAD6BD /* GKMessageTool.bundle in Resources */,
 				79A8A34D1F74E22600649469 /* GKNavigationBarViewController.bundle in Resources */,
 				7902D9581F619C6F00EDDA40 /* GKWYMusicListViewCell.xib in Resources */,
 				79219BDB1F60E3F00009A781 /* LaunchScreen.storyboard in Resources */,
@@ -618,6 +635,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-GKAudioPlayerDemo/Pods-GKAudioPlayerDemo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/GKCover/GKCover.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework",
@@ -626,6 +644,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GKCover.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYModel.framework",
@@ -642,6 +661,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79E89A101F78B23700CAD6BD /* GKMessageTool.m in Sources */,
 				79A8A34E1F74E22600649469 /* GKNavigationBarViewController.m in Sources */,
 				79A8A3501F74E22600649469 /* GKPopTransitionAnimation.m in Sources */,
 				7902D9931F623EDD00EDDA40 /* UIViewController+GKWYCategory.m in Sources */,

@@ -11,6 +11,11 @@
 
 @interface GKWYMusicControlView()<GKSliderViewDelegate>
 
+@property (nonatomic, strong) UIButton *loveBtn;
+@property (nonatomic, strong) UIButton *downloadBtn;
+@property (nonatomic, strong) UIButton *commentBtn;
+@property (nonatomic, strong) UIButton *moreBtn;
+
 @property (nonatomic, strong) UIButton *playBtn;
 @property (nonatomic, strong) UIButton *loopBtn;
 @property (nonatomic, strong) UIButton *prevBtn;
@@ -31,20 +36,65 @@
         
         self.backgroundColor = [UIColor clearColor];
         
+        // 顶部
+        [self addSubview:self.topView];
+        [self.topView addSubview:self.loveBtn];
+        [self.topView addSubview:self.downloadBtn];
+        [self.topView addSubview:self.commentBtn];
+        [self.topView addSubview:self.moreBtn];
+
+        // 滑杆
+        [self addSubview:self.sliderView];
+        [self.sliderView addSubview:self.currentLabel];
+        [self.sliderView addSubview:self.slider];
+        [self.sliderView addSubview:self.totalLabel];
+        
+        // 底部
         [self addSubview:self.playBtn];
         [self addSubview:self.loopBtn];
         [self addSubview:self.prevBtn];
         [self addSubview:self.nextBtn];
         [self addSubview:self.listBtn];
         
-        [self addSubview:self.sliderView];
-        [self.sliderView addSubview:self.currentLabel];
-        [self.sliderView addSubview:self.slider];
-        [self.sliderView addSubview:self.totalLabel];
+        //
+        [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.top.right.equalTo(self);
+            make.height.mas_equalTo(50);
+        }];
+        
+        // 计算按钮位置
+        CGFloat btnWH  = 50;
+        CGFloat leftM  = 50;
+        CGFloat margin = (KScreenW - 4 * btnWH - 2 * leftM) / 3;
+        
+        [self.loveBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.bottom.equalTo(self.topView);
+            make.left.equalTo(self.topView).offset(leftM);
+            make.width.mas_equalTo(btnWH);
+        }];
+        
+        [self.downloadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.bottom.equalTo(self.topView);
+            make.left.equalTo(self.loveBtn.mas_right).offset(margin);
+            make.width.mas_equalTo(btnWH);
+        }];
+        
+        [self.commentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.bottom.equalTo(self.topView);
+            make.left.equalTo(self.downloadBtn.mas_right).offset(margin);
+            make.width.mas_equalTo(btnWH);
+        }];
+        
+        [self.moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.bottom.equalTo(self.topView);
+            make.left.equalTo(self.commentBtn.mas_right).offset(margin);
+            make.width.mas_equalTo(btnWH);
+        }];
         
         [self.sliderView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self);
-            make.top.equalTo(self).offset(30);
+//            make.top.equalTo(self).offset(30);
+            make.top.equalTo(self.topView.mas_bottom);
             make.height.mas_equalTo(30);
         }];
         
@@ -136,6 +186,16 @@
     self.slider.value = value;
 }
 
+- (void)setIs_love:(BOOL)is_love {
+    _is_love = is_love;
+    
+    if (is_love) {
+        [self setupLovedBtn];
+    }else {
+        [self setupLoveBtn];
+    }
+}
+
 - (void)setupInitialData {
     self.value       = 0;
     self.currentTime = @"00:00";
@@ -162,7 +222,41 @@
     [self.playBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_play_prs"] forState:UIControlStateHighlighted];
 }
 
+- (void)setupLoveBtn {
+    [self.loveBtn setImage:[UIImage imageNamed:@"cm2_play_icn_love"] forState:UIControlStateNormal];
+    [self.loveBtn setImage:[UIImage imageNamed:@"cm2_play_icn_love_prs"] forState:UIControlStateHighlighted];
+}
+
+- (void)setupLovedBtn {
+    [self.loveBtn setImage:[UIImage imageNamed:@"cm2_play_icn_loved"] forState:UIControlStateNormal];
+    [self.loveBtn setImage:[UIImage imageNamed:@"cm2_play_icn_loved_prs"] forState:UIControlStateHighlighted];
+}
+
 #pragma mark - UserAction
+- (void)loveBtnClick:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(controlView:didClickLove:)]) {
+        [self.delegate controlView:self didClickLove:sender];
+    }
+}
+
+- (void)downloadBtnClick:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(controlView:didClickDownload:)]) {
+        [self.delegate controlView:self didClickDownload:sender];
+    }
+}
+
+- (void)commentBtnClick:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(controlView:didClickComment:)]) {
+        [self.delegate controlView:self didClickComment:sender];
+    }
+}
+
+- (void)moreBtnClick:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(controlView:didClickMore:)]) {
+        [self.delegate controlView:self didClickMore:sender];
+    }
+}
+
 - (void)playBtnClick:(id)sender {
     self.playBtn.selected = !self.playBtn.selected;
     if (self.playBtn.selected) {
@@ -226,6 +320,54 @@
 }
 
 #pragma mark - 懒加载
+- (UIView *)topView {
+    if (!_topView) {
+        _topView = [UIView new];
+        _topView.backgroundColor = [UIColor clearColor];
+    }
+    return _topView;
+}
+
+- (UIButton *)loveBtn {
+    if (!_loveBtn) {
+        _loveBtn = [UIButton new];
+        [_loveBtn setImage:[UIImage imageNamed:@"cm2_play_icn_love"] forState:UIControlStateNormal];
+        [_loveBtn setImage:[UIImage imageNamed:@"cm2_play_icn_love_prs"] forState:UIControlStateHighlighted];
+        [_loveBtn addTarget:self action:@selector(loveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _loveBtn;
+}
+
+- (UIButton *)downloadBtn {
+    if (!_downloadBtn) {
+        _downloadBtn = [UIButton new];
+        [_downloadBtn setImage:[UIImage imageNamed:@"cm2_icn_dld"] forState:UIControlStateNormal];
+        [_downloadBtn setImage:[UIImage imageNamed:@"cm2_icn_dld_prs"] forState:UIControlStateHighlighted];
+        [_downloadBtn addTarget:self action:@selector(downloadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _downloadBtn;
+}
+
+- (UIButton *)commentBtn {
+    if (!_commentBtn) {
+        _commentBtn = [UIButton new];
+        [_commentBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_cmt"] forState:UIControlStateNormal];
+        [_commentBtn setImage:[UIImage imageNamed:@"cm2_fm_btn_cmt_prs"] forState:UIControlStateHighlighted];
+        [_commentBtn addTarget:self action:@selector(commentBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _commentBtn;
+}
+
+- (UIButton *)moreBtn {
+    if (!_moreBtn) {
+        _moreBtn = [UIButton new];
+        [_moreBtn setImage:[UIImage imageNamed:@"cm2_play_icn_more"] forState:UIControlStateNormal];
+        [_moreBtn setImage:[UIImage imageNamed:@"cm2_play_icn_more_prs"] forState:UIControlStateHighlighted];
+        [_moreBtn addTarget:self action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _moreBtn;
+}
+
 - (UIButton *)playBtn {
     if (!_playBtn) {
         _playBtn = [UIButton new];

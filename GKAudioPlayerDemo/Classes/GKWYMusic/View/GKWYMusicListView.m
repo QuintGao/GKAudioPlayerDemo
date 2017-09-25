@@ -188,6 +188,12 @@
         _listTable.delegate   = self;
         _listTable.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_listTable registerNib:[UINib nibWithNibName:NSStringFromClass([GKWYMusicListViewCell class]) bundle:nil] forCellReuseIdentifier:@"ListCell"];
+        _listTable.rowHeight = 44;
+        if (@available(iOS 11.0, *)) {
+            _listTable.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        } else {
+            // Fallback on earlier versions
+        }
     }
     return _listTable;
 }

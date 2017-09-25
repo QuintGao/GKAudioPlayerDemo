@@ -20,6 +20,9 @@
 
 @property (nonatomic, strong) CADisplayLink *displayLink;
 
+/** 是否正在动画 */
+@property (nonatomic, assign) BOOL isAnimation;
+
 @end
 
 @implementation GKWYMusicCoverView
@@ -56,7 +59,7 @@
         self.coverView.layer.borderWidth = 10;
         self.coverView.layer.cornerRadius = (KScreenW - 75) * 0.5;
         
-        [self addSubview:self.imgView];
+        [self.imageView addSubview:self.imgView];
         
         CGFloat imgWH = KScreenW - 80 - 100;
         
@@ -81,7 +84,13 @@
     [self pausedWithAnimated:NO];
 }
 
+// 播放音乐时，指针恢复，图片旋转
 - (void)playedWithAnimated:(BOOL)animated {
+    
+    if (self.isAnimation) return;
+    
+    self.isAnimation = YES;
+    
     [self setAnchorPoint:CGPointMake(25.0/97, 25.0/153) forView:self.needleView];
     
     if (animated) {
@@ -98,23 +107,29 @@
     [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
-- (void)animation {
-    self.imgView.transform = CGAffineTransformRotate(self.imgView.transform, M_PI_4 / 100);
-}
-
+// 停止音乐时，指针旋转-30°，图片停止旋转
 - (void)pausedWithAnimated:(BOOL)animated {
+    
+    if (!self.isAnimation) return;
+    
+    self.isAnimation = NO;
     
     [self setAnchorPoint:CGPointMake(25.0/97, 25.0/153) forView:self.needleView];
     
     if (animated) {
         [UIView animateWithDuration:0.5 animations:^{
-            self.needleView.transform = CGAffineTransformMakeRotation(-M_PI_4);
+            self.needleView.transform = CGAffineTransformMakeRotation(-M_PI_2 / 3);
         }];
     }else {
         self.needleView.transform = CGAffineTransformMakeRotation(-M_PI_4);
     }
     
     [self.displayLink invalidate];
+}
+
+// 图片旋转
+- (void)animation {
+    self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, M_PI_4 / 100);
 }
 
 - (void)setAnchorPoint:(CGPoint)anchorPoint forView:(UIView *)view

@@ -16,6 +16,7 @@ PODS:
     - AFNetworking/NSURLSession
   - GKCover (2.4.3)
   - Masonry (1.0.2)
+  - MBProgressHUD (1.0.0)
   - MobileVLCKit-unstable (3.0.0a40)
   - SDWebImage (4.1.0):
     - SDWebImage/Core (= 4.1.0)
@@ -26,6 +27,7 @@ DEPENDENCIES:
   - AFNetworking
   - GKCover
   - Masonry
+  - MBProgressHUD
   - MobileVLCKit-unstable (~> 3.0.0a40)
   - SDWebImage
   - YYModel
@@ -34,10 +36,11 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   GKCover: d42da8b6d32f1df3abc9c45507ade99f79a4dc7e
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MobileVLCKit-unstable: 23b5d951a8bd7ca8ded2a8b8795ddaa512afeeeb
   SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: a5f8225c9587e78c1b4a702f67383b8273a320e7
+PODFILE CHECKSUM: 28e59582867c8ace92e4145d6144ab63b2e6460f
 
 COCOAPODS: 1.3.1

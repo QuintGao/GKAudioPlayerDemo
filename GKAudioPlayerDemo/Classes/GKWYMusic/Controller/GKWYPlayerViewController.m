@@ -85,19 +85,20 @@
         
         [self.controlView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.bottom.equalTo(self.view);
-            make.height.mas_equalTo(150);
+//            make.height.mas_equalTo(150);
+            make.height.mas_equalTo(170);
         }];
         
         [self.coverImgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
             make.top.equalTo(self.view).offset(64);
-            make.bottom.equalTo(self.controlView.mas_top).offset(0);
+            make.bottom.equalTo(self.controlView.mas_top).offset(20);
         }];
         
         [self.lyricView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
             make.top.equalTo(self.view).offset(64);
-            make.bottom.equalTo(self.controlView.mas_top).offset(0);
+            make.bottom.equalTo(self.controlView.mas_top).offset(20);
         }];
         
         [self.coverImgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLyricView)]];
@@ -313,25 +314,30 @@
     self.lyricView.hidden = NO;
     
     [UIView animateWithDuration:0.5 animations:^{
-        self.lyricView.alpha    = 1.0;
+        self.lyricView.alpha            = 1.0;
         
-        self.coverImgView.alpha = 0.0;
+        self.coverImgView.alpha         = 0.0;
+        self.controlView.topView.alpha  = 0.0;
     }completion:^(BOOL finished) {
-        self.lyricView.hidden    = NO;
-        self.coverImgView.hidden = YES;
+        self.lyricView.hidden           = NO;
+        self.coverImgView.hidden        = YES;
+        self.controlView.topView.hidden = YES;
     }];
 }
 
 - (void)showCoverView {
-    self.coverImgView.hidden = NO;
+    self.coverImgView.hidden        = NO;
+    self.controlView.topView.hidden = NO;
     
     [UIView animateWithDuration:0.5 animations:^{
-        self.lyricView.alpha     = 0.0;
+        self.lyricView.alpha            = 0.0;
         
-        self.coverImgView.alpha  = 1.0;
+        self.coverImgView.alpha         = 1.0;
+        self.controlView.topView.alpha  = 1.0;
     }completion:^(BOOL finished) {
-        self.lyricView.hidden    = YES;
-        self.coverImgView.hidden = NO;
+        self.lyricView.hidden           = YES;
+        self.coverImgView.hidden        = NO;
+        self.controlView.topView.hidden = NO;
     }];
 }
 
@@ -357,6 +363,7 @@
     self.lyricView.lyrics = nil;
     
     [self.controlView setupInitialData];
+    self.controlView.is_love = self.model.isLike;
     
     // 重新设置锁屏控制界面
     [self setupLockScreenControlInfo];
@@ -446,19 +453,7 @@
     likeCommand.localizedTitle = self.model.isLike ? @"取消喜欢" : @"喜欢";
     [likeCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
         
-        [self.musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj.music_id isEqualToString:self.model.music_id]) {
-                obj.isLike = !obj.isLike;
-                self.model = obj;
-                *stop      = YES;
-            }
-        }];
-        
-        [GKWYMusicTool saveMusicList:self.musicList];
-        
-        [self setupLockScreenControlInfo];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"WYMusicLovedMusicNotification" object:nil];
+        [self lovedCurrentMusic];
         
         return MPRemoteCommandHandlerStatusSuccess;
     }];
@@ -611,6 +606,23 @@
         playingInfo[MPNowPlayingInfoPropertyPlaybackProgress] = [NSNumber numberWithFloat:self.controlView.value];
     }
     playingCenter.nowPlayingInfo = playingInfo;
+}
+
+- (void)lovedCurrentMusic {
+    [self.musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.music_id isEqualToString:self.model.music_id]) {
+            obj.isLike = !obj.isLike;
+            self.model = obj;
+            *stop      = YES;
+        }
+    }];
+    
+    [GKWYMusicTool saveMusicList:self.musicList];
+    self.controlView.is_love = self.model.isLike;
+    
+    [self setupLockScreenControlInfo];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"WYMusicLovedMusicNotification" object:nil];
 }
 
 #pragma mark - 快进快退方法
@@ -856,6 +868,30 @@
 }
 
 #pragma mark - GKWYMusicControlViewDelegate
+- (void)controlView:(GKWYMusicControlView *)controlView didClickLove:(UIButton *)loveBtn {
+    [self lovedCurrentMusic];
+    if (self.model.isLike) {
+//        [GKMessageTool showSuccess:@"已添加到我喜欢的音乐" toView:self.view imageName:@"cm2_play_icn_loved"];
+        [GKMessageTool showSuccess:@"已添加到我喜欢的音乐" toView:self.view imageName:@"cm2_play_icn_loved" bgColor:[UIColor clearColor]];
+    }else {
+//        [GKMessageTool showSuccess:@"已取消喜欢" toView:self.view imageName:nil];
+
+        [GKMessageTool showText:@"已取消喜欢" toView:self.view bgColor:[UIColor clearColor]];
+    }
+}
+
+- (void)controlView:(GKWYMusicControlView *)controlView didClickDownload:(UIButton *)downloadBtn {
+    NSLog(@"下载");
+}
+
+- (void)controlView:(GKWYMusicControlView *)controlView didClickComment:(UIButton *)commentBtn {
+    NSLog(@"评论");
+}
+
+- (void)controlView:(GKWYMusicControlView *)controlView didClickMore:(UIButton *)moreBtn {
+    NSLog(@"更多");
+}
+
 - (void)controlView:(GKWYMusicControlView *)controlView didClickLoop:(UIButton *)loopBtn {
     if (self.playStyle == GKWYPlayerPlayStyleLoop) {  // 循环->单曲
         self.playStyle = GKWYPlayerPlayStyleOne;
@@ -941,6 +977,10 @@
     model.isLike = !model.isLike;
     
     [GKWYMusicTool saveMusicList:self.musicList];
+    if ([model.music_id isEqualToString:self.model.music_id]) {
+        self.model = model;
+        self.controlView.is_love = model.isLike;
+    }
     
     listView.listArr = self.musicList;
     

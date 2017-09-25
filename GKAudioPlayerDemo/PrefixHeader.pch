@@ -17,6 +17,7 @@
 #import <Masonry/Masonry.h>
 
 #import "UIViewController+GKWYCategory.h"
+#import "GKMessageTool.h"
 #import "GKWYMusicTool.h"
 
 

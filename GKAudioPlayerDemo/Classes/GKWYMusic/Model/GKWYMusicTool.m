@@ -23,11 +23,15 @@
 
 + (NSArray *)musicList {
     NSArray *musics = [NSKeyedUnarchiver unarchiveObjectWithFile:kDataPath];
-    if (!musics) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"audio" ofType:@"json"];
-        
-        musics = [NSArray yy_modelArrayWithClass:[GKWYMusicModel class] json:[NSData dataWithContentsOfFile:path]];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"audio" ofType:@"json"];
+    
+    NSArray *localMusics = [NSArray yy_modelArrayWithClass:[GKWYMusicModel class] json:[NSData dataWithContentsOfFile:path]];
+    
+    if (musics.count != localMusics.count) {
+        musics = localMusics;
     }
+    
     return musics;
 }
 
