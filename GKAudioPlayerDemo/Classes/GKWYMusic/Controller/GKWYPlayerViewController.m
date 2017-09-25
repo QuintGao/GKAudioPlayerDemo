@@ -724,33 +724,22 @@
 
 - (void)audioSessionInterruption:(NSNotification *)notify {
     NSDictionary *interuptionDict = notify.userInfo;
-    NSInteger interuptionType = [[interuptionDict valueForKey:AVAudioSessionInterruptionTypeKey] integerValue];
-    NSInteger secoundReason = [[interuptionDict valueForKey:AVAudioSessionInterruptionOptionKey] integerValue];
     
-    switch (interuptionType) {
-        case AVAudioSessionInterruptionTypeBegan:
-        {
-            NSLog(@"收到播放中断通知，暂停音频播放");
-            if (self.isPlaying) {
-                [self pauseMusic];
-            }
+    NSInteger interruptionType = [interuptionDict[AVAudioSessionInterruptionTypeKey] integerValue];
+    NSInteger interruptionOption = [interuptionDict[AVAudioSessionInterruptionOptionKey] integerValue];
+    
+    if (interruptionType == AVAudioSessionInterruptionTypeBegan) {
+        // 收到播放中断的通知，暂停播放
+        if (self.isPlaying) {
+            [self pauseMusic];
         }
-            break;
-        case AVAudioSessionInterruptionTypeEnded:
-        {
+    }else {
+        // 中断结束，判断是否需要恢复播放
+        if (interruptionOption == AVAudioSessionInterruptionOptionShouldResume) {
             if (!self.isPlaying) {
                 [self playMusic];
             }
         }
-            break;
-    }
-    switch (secoundReason) {
-        case AVAudioSessionInterruptionOptionShouldResume:
-            NSLog(@"恢复音频播放");
-            break;
-            
-        default:
-            break;
     }
 }
 
@@ -871,9 +860,9 @@
 - (void)controlView:(GKWYMusicControlView *)controlView didClickLove:(UIButton *)loveBtn {
     [self lovedCurrentMusic];
     if (self.model.isLike) {
-        [GKMessageTool showSuccess:@"已添加到我喜欢的音乐" toView:self.view imageName:@"cm2_play_icn_loved" bgColor:[UIColor clearColor]];
+        [GKMessageTool showSuccess:@"已添加到我喜欢的音乐" toView:self.view imageName:@"cm2_play_icn_loved" bgColor:[UIColor blackColor]];
     }else {
-        [GKMessageTool showText:@"已取消喜欢" toView:self.view bgColor:[UIColor clearColor]];
+        [GKMessageTool showText:@"已取消喜欢" toView:self.view bgColor:[UIColor blackColor]];
     }
 }
 
