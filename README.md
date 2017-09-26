@@ -150,3 +150,5 @@ if ([UIDevice currentDevice].systemVersion.doubleValue >= 9.0) {
 
 ![锁屏控制](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_lock_control.png)
 
+![转盘唱片](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_disk.gif)
+
