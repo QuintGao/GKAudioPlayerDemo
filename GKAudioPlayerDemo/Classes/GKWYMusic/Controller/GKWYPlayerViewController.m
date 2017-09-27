@@ -22,6 +22,8 @@
 
 #import "AppDelegate.h"
 
+#import <FXBlurView/FXBlurView.h>
+
 @interface GKWYPlayerViewController ()<GKWYMusicControlViewDelegate, GKPlayerDelegate, GKWYMusicListViewDelegate>
 
 /*****************UI**********************/
@@ -41,6 +43,8 @@
 @property (nonatomic, strong) GKWYMusicListView *listView;
 
 /**********************data*************************/
+
+@property (nonatomic, strong) UIImage *coverImage;
 /** 音乐播放列表 */
 @property (nonatomic, strong) NSArray *musicList;
 @property (nonatomic, strong) GKWYMusicModel *model;
@@ -91,13 +95,13 @@
         
         [self.coverImgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
-            make.top.equalTo(self.view).offset(64);
+            make.top.equalTo(self.gk_navigationBar.mas_bottom);
             make.bottom.equalTo(self.controlView.mas_top).offset(20);
         }];
         
         [self.lyricView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
-            make.top.equalTo(self.view).offset(64);
+            make.top.equalTo(self.gk_navigationBar.mas_bottom);
             make.bottom.equalTo(self.controlView.mas_top).offset(20);
         }];
         
@@ -386,6 +390,13 @@
         
         // 背景图
         [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:songDic[@"songPicRadio"]] placeholderImage:[UIImage imageNamed:@"cm2_fm_bg-ip6"]];
+        
+//        [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:songDic[@"songPicRadio"]] placeholderImage:[UIImage imageNamed:@"cm2_fm_bg-ip6"] options:SDWebImageRetryFailed progress:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+//            // 记录封面图
+//            self.coverImage = image;
+//
+//            self.bgImageView.image = [image blurredImageWithRadius:80.0 iterations:5 tintColor:GKColorHEX(0x000000, 1)];
+//        }];
         
         [self.coverImgView.imgView sd_setImageWithURL:[NSURL URLWithString:songDic[@"songPicRadio"]] placeholderImage:[UIImage imageNamed:@"cm2_fm_bg-ip6"]];
         
@@ -983,7 +994,6 @@
         _bgImageView.userInteractionEnabled = NO;
         _bgImageView.clipsToBounds = YES;
         // 添加模糊效果
-        
         UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
         UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blur];
         effectView.frame = _bgImageView.bounds;

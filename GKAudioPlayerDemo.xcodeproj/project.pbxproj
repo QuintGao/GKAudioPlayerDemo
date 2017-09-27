@@ -634,6 +634,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-GKAudioPlayerDemo/Pods-GKAudioPlayerDemo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework",
 				"${BUILT_PRODUCTS_DIR}/GKCover/GKCover.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
@@ -643,6 +644,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FXBlurView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GKCover.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
@@ -856,7 +858,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jvtalking.wymusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "ccbba57f-97f6-4ffe-9154-b8a209a7d9cd";
-				PROVISIONING_PROFILE_SPECIFIER = "jvtalking___test";
+				PROVISIONING_PROFILE_SPECIFIER = jvtalking___test;
 			};
 			name = Debug;
 		};
@@ -875,7 +877,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jvtalking.wymusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "ccbba57f-97f6-4ffe-9154-b8a209a7d9cd";
-				PROVISIONING_PROFILE_SPECIFIER = "jvtalking___test";
+				PROVISIONING_PROFILE_SPECIFIER = jvtalking___test;
 			};
 			name = Release;
 		};

@@ -31,7 +31,7 @@
     [self.view addSubview:self.listTable];
     [self.listTable mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
-        make.top.equalTo(self.view).offset(64);
+        make.top.equalTo(self.gk_navigationBar.mas_bottom);
         make.bottom.equalTo(self.view);
     }];
     

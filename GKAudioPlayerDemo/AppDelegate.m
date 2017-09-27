@@ -55,6 +55,14 @@
         // 返回按钮
         configure.backStyle         = GKNavigationBarBackStyleWhite;
     }];
+    
+    // 适配iOS11
+    if (@available(iOS 11.0, *)) {
+        [UIScrollView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        [UITableView appearance].estimatedRowHeight = 0;
+        [UITableView appearance].estimatedSectionFooterHeight = 0;
+        [UITableView appearance].estimatedSectionHeaderHeight = 0;
+    }
 }
 
 - (void)loadMusicList {
@@ -72,8 +80,10 @@
     [self.playBtn addTarget:self action:@selector(topbarPlayBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.window addSubview:self.playBtn];
     
+    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+    
     [self.playBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.window).offset(28);
+        make.top.equalTo(self.window).offset(statusBarFrame.size.height + 8);
         make.right.equalTo(self.window).offset(-12);
         make.width.height.mas_equalTo(28);
     }];

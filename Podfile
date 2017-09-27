@@ -14,5 +14,7 @@ target 'GKAudioPlayerDemo' do
   pod 'Masonry'
   
   pod 'MBProgressHUD'
+  
+  pod 'FXBlurView'
 
 end

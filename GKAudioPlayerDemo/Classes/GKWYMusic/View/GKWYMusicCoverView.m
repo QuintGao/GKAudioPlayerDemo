@@ -45,13 +45,13 @@
         
         [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self);
-            make.centerY.equalTo(self).offset(-12);
+//            make.centerY.equalTo(self).offset(-12);
+            make.top.equalTo(self).offset(66);
             make.width.height.mas_equalTo(KScreenW - 80);
         }];
         
         [self.coverView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self);
-            make.centerY.equalTo(self).offset(-12);
+            make.center.equalTo(self.imageView);
             make.width.height.mas_equalTo(KScreenW - 75);
         }];
         
