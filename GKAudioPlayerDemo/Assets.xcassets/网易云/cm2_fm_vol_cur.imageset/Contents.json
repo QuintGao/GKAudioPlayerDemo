@@ -1,16 +1,49 @@
 {
   "images" : [
     {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1
+        },
+        "cap-insets" : {
+          "right" : 1,
+          "left" : 1
+        }
+      },
       "idiom" : "universal",
       "filename" : "cm2_fm_vol_cur.png",
       "scale" : "1x"
     },
     {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 3
+        },
+        "cap-insets" : {
+          "right" : 1,
+          "left" : 1
+        }
+      },
       "idiom" : "universal",
       "filename" : "cm2_fm_vol_cur@2x.png",
       "scale" : "2x"
     },
     {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 2
+        },
+        "cap-insets" : {
+          "right" : 1,
+          "left" : 1
+        }
+      },
       "idiom" : "universal",
       "filename" : "cm2_fm_vol_cur@3x.png",
       "scale" : "3x"

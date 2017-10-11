@@ -6,7 +6,7 @@ target 'GKAudioPlayerDemo' do
   use_frameworks!
 
   pod 'MobileVLCKit-unstable', '~> 3.0.0a40'
-#  pod 'GKNavigationBarViewController'
+  pod 'GKNavigationBarViewController', '~> 1.3.0'
   pod 'YYModel'
   pod 'AFNetworking'
   pod 'GKCover'
@@ -15,6 +15,8 @@ target 'GKAudioPlayerDemo' do
   
   pod 'MBProgressHUD'
   
-  pod 'FXBlurView'
+#  pod 'SDCycleScrollView', '~> 1.73'
+
+#  pod 'FXBlurView'
 
 end

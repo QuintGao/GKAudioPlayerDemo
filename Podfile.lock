@@ -14,20 +14,20 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - FXBlurView (1.6.4)
   - GKCover (2.4.3)
+  - GKNavigationBarViewController (1.2.9)
   - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
   - MobileVLCKit-unstable (3.0.0a40)
-  - SDWebImage (4.1.0):
-    - SDWebImage/Core (= 4.1.0)
-  - SDWebImage/Core (4.1.0)
+  - SDWebImage (4.1.1):
+    - SDWebImage/Core (= 4.1.1)
+  - SDWebImage/Core (4.1.1)
   - YYModel (1.0.4)
 
 DEPENDENCIES:
   - AFNetworking
-  - FXBlurView
   - GKCover
+  - GKNavigationBarViewController (~> 1.2.9)
   - Masonry
   - MBProgressHUD
   - MobileVLCKit-unstable (~> 3.0.0a40)
@@ -36,14 +36,14 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GKCover: d42da8b6d32f1df3abc9c45507ade99f79a4dc7e
+  GKNavigationBarViewController: 055d8ec32f1d14bc810fa564ef3924911fb0c274
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MobileVLCKit-unstable: 23b5d951a8bd7ca8ded2a8b8795ddaa512afeeeb
-  SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
+  SDWebImage: caf91ee75671c95eb7b3073cd90649d25f852a88
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: e2b25596ceac188715743f4e7fa40803fd04dcb7
+PODFILE CHECKSUM: 0fc3ac81931fe41cc8975f9ae7819ca9728e3f6b
 
 COCOAPODS: 1.4.0.beta.1

@@ -47,7 +47,10 @@
 
 @property (nonatomic, assign) CGFloat sliderHeight;
 
+// 设置滑块的属性
+// 滑块背景
 - (void)setBackgroundImage:(UIImage *)image forState:(UIControlState)state;
+// 滑块图片
 - (void)setThumbImage:(UIImage *)image forState:(UIControlState)state;
 
 - (void)showLoading;

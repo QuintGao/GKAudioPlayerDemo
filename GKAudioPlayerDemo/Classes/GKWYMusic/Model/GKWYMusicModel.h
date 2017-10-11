@@ -16,6 +16,8 @@
 
 @property (nonatomic, copy) NSString *music_artist;
 
+@property (nonatomic, copy) NSString *music_cover;
+
 /** 是否正在播放 */
 @property (nonatomic, assign) BOOL isPlaying;
 

@@ -31,4 +31,7 @@
  */
 - (void)scrollLyricWithCurrentTime:(NSTimeInterval)currentTime totalTime:(NSTimeInterval)totalTime;
 
+- (void)hideSystemVolumeView;
+- (void)showSystemVolumeView;
+
 @end

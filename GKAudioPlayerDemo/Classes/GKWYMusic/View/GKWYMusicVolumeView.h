@@ -19,4 +19,7 @@
 
 @property (nonatomic, assign) id<GKWYMusicVolumeViewDelegate> delegate;
 
+- (void)hideSystemVolumeView;
+- (void)showSystemVolumeView;
+
 @end

@@ -7,13 +7,35 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GKWYMusicModel.h"
+
+typedef void(^finished)(void);
+
+@protocol GKWYMusicCoverViewDelegate<NSObject>
+
+@optional
+- (void)scrollDidScroll;
+
+- (void)scrollWillChangeModel:(GKWYMusicModel *)model;
+
+- (void)scrollDidChangeModel:(GKWYMusicModel *)model;
+
+@end
 
 @interface GKWYMusicCoverView : UIView
 
-@property (nonatomic, strong) UIImageView *imgView;
+@property (nonatomic, weak) id<GKWYMusicCoverViewDelegate> delegate;
+
+//@property (nonatomic, strong) NSArray *musics;
+- (void)setupMusicList:(NSArray *)musics idx:(NSInteger)currentIndex;
+
+// 滑动切换歌曲
+- (void)scrollChangeIsNext:(BOOL)isNext Finished:(finished)finished;
 
 - (void)playedWithAnimated:(BOOL)animated;
 
 - (void)pausedWithAnimated:(BOOL)animated;
+
+- (void)resetCover;
 
 @end

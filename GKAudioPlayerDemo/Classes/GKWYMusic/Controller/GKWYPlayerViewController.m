@@ -22,9 +22,9 @@
 
 #import "AppDelegate.h"
 
-#import <FXBlurView/FXBlurView.h>
+//#import <FXBlurView/FXBlurView.h>
 
-@interface GKWYPlayerViewController ()<GKWYMusicControlViewDelegate, GKPlayerDelegate, GKWYMusicListViewDelegate>
+@interface GKWYPlayerViewController ()<GKWYMusicControlViewDelegate, GKPlayerDelegate, GKWYMusicListViewDelegate, GKWYMusicCoverViewDelegate>
 
 /*****************UI**********************/
 @property (nonatomic, strong) UIView *titleView;
@@ -33,7 +33,7 @@
 
 @property (nonatomic, strong) UIImageView *bgImageView;
 
-@property (nonatomic, strong) GKWYMusicCoverView *coverImgView;
+@property (nonatomic, strong) GKWYMusicCoverView *coverView;
 
 /** 歌词视图 */
 @property (nonatomic, strong) GKWYMusicLyricView *lyricView;
@@ -55,6 +55,8 @@
 @property (nonatomic, assign) BOOL isAutoPlay;   // 是否自动播放
 @property (nonatomic, assign) BOOL isDraging;    // 是否正在拖拽
 @property (nonatomic, assign) BOOL isSeeking;    // 是否在快进快退
+@property (nonatomic, assign) BOOL isChanged;    // 是否正在切换歌曲
+@property (nonatomic, assign) BOOL isCoverScroll; // 是否转盘在滑动
 
 @property (nonatomic, assign) NSTimeInterval duration;      // 总时间
 @property (nonatomic, assign) NSTimeInterval currentTime;   // 当前时间
@@ -83,7 +85,7 @@
     if (self = [super init]) {
         
         [self.view addSubview:self.bgImageView];
-        [self.view addSubview:self.coverImgView];
+        [self.view addSubview:self.coverView];
         [self.view addSubview:self.lyricView];
         [self.view addSubview:self.controlView];
         
@@ -93,7 +95,7 @@
             make.height.mas_equalTo(170);
         }];
         
-        [self.coverImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.coverView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
             make.top.equalTo(self.gk_navigationBar.mas_bottom);
             make.bottom.equalTo(self.controlView.mas_top).offset(20);
@@ -105,7 +107,7 @@
             make.bottom.equalTo(self.controlView.mas_top).offset(20);
         }];
         
-        [self.coverImgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLyricView)]];
+        [self.coverView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLyricView)]];
         [self.lyricView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showCoverView)]];
     }
     return self;
@@ -120,6 +122,9 @@
     
     // 设置播放器的代理
     kPlayer.delegate = self;
+    
+    // 禁用全屏滑动返回手势
+    self.gk_fullScreenPopDisabled = YES;
 }
 
 - (void)dealloc {
@@ -138,6 +143,9 @@
     GKWYMusicModel *model = list[index];
     
     if (![model.music_id isEqualToString:self.currentMusicId]) {
+        
+        [self.coverView setupMusicList:list idx:index];
+        
         self.currentMusicId = model.music_id;
         
         self.ifNowPlay = YES;
@@ -169,6 +177,9 @@
     GKWYMusicModel *model = list[index];
     
     if (![model.music_id isEqualToString:self.currentMusicId]) {
+        
+        [self.coverView setupMusicList:list idx:index];
+        
         self.currentMusicId = model.music_id;
         
         self.ifNowPlay = NO;
@@ -203,6 +214,10 @@
     if (self.isPlaying) {
         [kPlayer stop];
     }
+    
+    // 重置封面
+    [self.coverView resetCover];
+    
     // 播放
     if (self.playStyle == GKWYPlayerPlayStyleLoop) {
         __block NSUInteger currentPlayIdx = 0;
@@ -248,6 +263,9 @@
     if (self.isPlaying) {
         [kPlayer stop];
     }
+    
+    // 重置封面
+    [self.coverView resetCover];
     
     // 播放
     if (self.playStyle == GKWYPlayerPlayStyleLoop) {
@@ -316,45 +334,39 @@
 - (void)showLyricView {
     
     self.lyricView.hidden = NO;
+    [self.lyricView hideSystemVolumeView];
     
     [UIView animateWithDuration:0.5 animations:^{
         self.lyricView.alpha            = 1.0;
         
-        self.coverImgView.alpha         = 0.0;
+        self.coverView.alpha            = 0.0;
         self.controlView.topView.alpha  = 0.0;
     }completion:^(BOOL finished) {
         self.lyricView.hidden           = NO;
-        self.coverImgView.hidden        = YES;
+        self.coverView.hidden           = YES;
         self.controlView.topView.hidden = YES;
     }];
 }
 
 - (void)showCoverView {
-    self.coverImgView.hidden        = NO;
+    self.coverView.hidden           = NO;
     self.controlView.topView.hidden = NO;
     
     [UIView animateWithDuration:0.5 animations:^{
         self.lyricView.alpha            = 0.0;
         
-        self.coverImgView.alpha         = 1.0;
+        self.coverView.alpha            = 1.0;
         self.controlView.topView.alpha  = 1.0;
     }completion:^(BOOL finished) {
         self.lyricView.hidden           = YES;
-        self.coverImgView.hidden        = NO;
+        [self.lyricView showSystemVolumeView];
+        self.coverView.hidden           = NO;
         self.controlView.topView.hidden = NO;
     }];
 }
 
 - (void)getMusicInfo {
-    self.nameLabel.text   = self.model.music_name;
-    self.artistLabel.text = self.model.music_artist;
-    
-    [self.nameLabel sizeToFit];
-    self.nameLabel.gk_centerX = self.titleView.gk_width * 0.5;
-    
-    [self.artistLabel sizeToFit];
-    self.artistLabel.gk_y       = self.nameLabel.gk_bottom + 2;
-    self.artistLabel.gk_centerX = self.titleView.gk_width * 0.5;
+    [self setupTitleWithModel:self.model];
     
     if (self.isPlaying) {
         self.isPlaying = NO;
@@ -374,6 +386,10 @@
     
     [self setupLockScreenMediaInfoNull];
     
+    if (self.ifNowPlay) {
+        [self.coverView playedWithAnimated:YES];
+    }
+    
     // 获取歌曲信息
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer     = [AFJSONRequestSerializer serializer];
@@ -391,15 +407,6 @@
         // 背景图
         [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:songDic[@"songPicRadio"]] placeholderImage:[UIImage imageNamed:@"cm2_fm_bg-ip6"]];
         
-//        [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:songDic[@"songPicRadio"]] placeholderImage:[UIImage imageNamed:@"cm2_fm_bg-ip6"] options:SDWebImageRetryFailed progress:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-//            // 记录封面图
-//            self.coverImage = image;
-//
-//            self.bgImageView.image = [image blurredImageWithRadius:80.0 iterations:5 tintColor:GKColorHEX(0x000000, 1)];
-//        }];
-        
-        [self.coverImgView.imgView sd_setImageWithURL:[NSURL URLWithString:songDic[@"songPicRadio"]] placeholderImage:[UIImage imageNamed:@"cm2_fm_bg-ip6"]];
-        
         // 设置播放地址
         kPlayer.playUrlStr = songDic[@"songLink"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -415,6 +422,18 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求失败");
     }];
+}
+
+- (void)setupTitleWithModel:(GKWYMusicModel *)model {
+    self.nameLabel.text   = model.music_name;
+    self.artistLabel.text = model.music_artist;
+    
+    [self.nameLabel sizeToFit];
+    self.nameLabel.gk_centerX = self.titleView.gk_width * 0.5;
+    
+    [self.artistLabel sizeToFit];
+    self.artistLabel.gk_y       = self.nameLabel.gk_bottom + 2;
+    self.artistLabel.gk_centerX = self.titleView.gk_width * 0.5;
 }
 
 - (void)addNotifications {
@@ -764,7 +783,7 @@
             
             self.isPlaying = NO;
             
-            [self.coverImgView pausedWithAnimated:YES];
+            [self.coverView playedWithAnimated:YES];
         }
             break;
         case GKPlayerStatusPlaying:
@@ -773,7 +792,7 @@
             [self.controlView setupPlayBtn];
             self.isPlaying = YES;
             
-            [self.coverImgView playedWithAnimated:YES];
+            [self.coverView playedWithAnimated:YES];
         }
             break;
         case GKPlayerStatusPaused:
@@ -783,7 +802,12 @@
             });
             self.isPlaying = NO;
             
-            [self.coverImgView pausedWithAnimated:YES];
+            if (self.isChanged) {
+                self.isChanged = NO;
+            }else {
+                [self.coverView pausedWithAnimated:YES];
+            }
+            [[AVAudioSession sharedInstance] setActive:YES error:nil];
         }
             break;
         case GKPlayerStatusStopped:
@@ -792,7 +816,11 @@
             [self.controlView setupPauseBtn];
             self.isPlaying = NO;
             
-            [self.coverImgView pausedWithAnimated:YES];
+            if (self.isChanged) {
+                self.isChanged = NO;
+            }else {
+                [self.coverView pausedWithAnimated:YES];
+            }
         }
             break;
         case GKPlayerStatusEnded:
@@ -802,7 +830,7 @@
                 [self.controlView setupPauseBtn];
                 self.isPlaying = NO;
                 
-                [self.coverImgView pausedWithAnimated:YES];
+                [self.coverView pausedWithAnimated:YES];
                 
                 self.controlView.currentTime = self.controlView.totalTime;
                 
@@ -816,7 +844,7 @@
                 [self.controlView setupPauseBtn];
                 self.isPlaying = NO;
                 
-                [self.coverImgView pausedWithAnimated:YES];
+                [self.coverView pausedWithAnimated:YES];
             }
         }
             break;
@@ -826,7 +854,7 @@
             [self.controlView setupPauseBtn];
             self.isPlaying = NO;
             
-            [self.coverImgView pausedWithAnimated:YES];
+            [self.coverView pausedWithAnimated:YES];
         }
             break;
             
@@ -860,11 +888,11 @@
 
 #pragma mark - GKWYMusicVolumeViewDelegate
 - (void)volumeSlideTouchBegan {
-    self.gk_fullScreenPopDisabled = YES;
+//    self.gk_fullScreenPopDisabled = YES;
 }
 
 - (void)volumeSlideTouchEnded {
-    self.gk_fullScreenPopDisabled = NO;
+//    self.gk_fullScreenPopDisabled = NO;
 }
 
 #pragma mark - GKWYMusicControlViewDelegate
@@ -903,7 +931,13 @@
 }
 
 - (void)controlView:(GKWYMusicControlView *)controlView didClickPrev:(UIButton *)prevBtn {
-    [self playPrevMusic];
+    if (self.isCoverScroll) return;
+    self.isChanged = YES;
+    
+    // 点击按钮切换歌曲时，先动画显示上一首
+    [self.coverView scrollChangeIsNext:NO Finished:^{
+        [self playPrevMusic];
+    }];
 }
 
 - (void)controlView:(GKWYMusicControlView *)controlView didClickPlay:(UIButton *)playBtn {
@@ -915,9 +949,13 @@
 }
 
 - (void)controlView:(GKWYMusicControlView *)controlView didClickNext:(UIButton *)nextBtn {
+    if (self.isCoverScroll) return;
     self.isAutoPlay = NO;
-    
-    [self playNextMusic];
+    self.isChanged  = YES;
+    // 点击按钮切换歌曲时，先动画显示下一首
+    [self.coverView scrollChangeIsNext:YES Finished:^{
+        [self playNextMusic];
+    }];
 }
 
 - (void)controlView:(GKWYMusicControlView *)controlView didClickList:(UIButton *)listBtn {
@@ -934,14 +972,14 @@
 
 - (void)controlView:(GKWYMusicControlView *)controlView didSliderTouchBegan:(float)value {
     self.isDraging = YES;
-    // 防止手势冲突
-    self.gk_fullScreenPopDisabled = YES;
+//    // 防止手势冲突
+//    self.gk_fullScreenPopDisabled = YES;
 }
 
 - (void)controlView:(GKWYMusicControlView *)controlView didSliderTouchEnded:(float)value {
     self.isDraging = NO;
     kPlayer.progress = value;
-    self.gk_fullScreenPopDisabled = NO;
+//    self.gk_fullScreenPopDisabled = NO;
     
     // 滚动歌词到对应位置
     [self.lyricView scrollLyricWithCurrentTime:(self.duration * value) totalTime:self.duration];
@@ -958,6 +996,43 @@
     
     // 滚动歌词到对应位置
     [self.lyricView scrollLyricWithCurrentTime:(self.duration * value) totalTime:self.duration];
+}
+
+#pragma mark - GKWYMusicCoverViewDelegate
+- (void)scrollDidScroll {
+    self.isCoverScroll = YES;
+}
+
+- (void)scrollWillChangeModel:(GKWYMusicModel *)model {
+//    NSLog(@"%@", model.music_name);
+    [self setupTitleWithModel:model];
+}
+
+- (void)scrollDidChangeModel:(GKWYMusicModel *)model {
+//    NSLog(@"%@", model.music_name);
+    self.isCoverScroll = NO;
+    
+    if (self.isChanged) return;
+    
+    [self setupTitleWithModel:model];
+    
+    if ([model.music_id isEqualToString:self.model.music_id]) {
+        if (self.isPlaying) {
+            [self.coverView playedWithAnimated:YES];
+        }
+    }else {
+        __block NSInteger index = 0;
+        
+        [self.musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj.music_id isEqualToString:model.music_id]) {
+                index = idx;
+            }
+        }];
+        
+        self.isChanged = YES;
+        
+        [self playMusicWithIndex:index list:self.musicList];
+    }
 }
 
 #pragma mark - GKWYMusicListViewDelegate
@@ -1002,11 +1077,12 @@
     return _bgImageView;
 }
 
-- (GKWYMusicCoverView *)coverImgView {
-    if (!_coverImgView) {
-        _coverImgView = [GKWYMusicCoverView new];
+- (GKWYMusicCoverView *)coverView {
+    if (!_coverView) {
+        _coverView = [GKWYMusicCoverView new];
+        _coverView.delegate = self;
     }
-    return _coverImgView;
+    return _coverView;
 }
 
 - (GKWYMusicLyricView *)lyricView {
@@ -1014,10 +1090,10 @@
         _lyricView = [GKWYMusicLyricView new];
         _lyricView.backgroundColor = [UIColor clearColor];
         
-        __weak typeof(self) weakSelf = self;
+//        __weak typeof(self) weakSelf = self;
         
         _lyricView.volumeViewSliderBlock = ^(BOOL isBegan) {
-            weakSelf.gk_fullScreenPopDisabled = isBegan;
+//            weakSelf.gk_fullScreenPopDisabled = isBegan;
         };
         
         _lyricView.hidden = YES;

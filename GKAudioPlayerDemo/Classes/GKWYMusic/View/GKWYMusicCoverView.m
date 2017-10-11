@@ -7,21 +7,40 @@
 //
 
 #import "GKWYMusicCoverView.h"
+#import "GKWYDiskView.h"
 
-@interface GKWYMusicCoverView()
+@interface GKWYMusicCoverView()<UIScrollViewDelegate>
 
+/** 顶部分割线 */
 @property (nonatomic, strong) UIView *sepLineView;
 
-@property (nonatomic, strong) UIImageView *imageView;
+/** 唱片背景 */
+@property (nonatomic, strong) UIView *diskBgView;
 
-@property (nonatomic, strong) UIView *coverView;
+/** 切换唱片的scrollview */
+@property (nonatomic, strong) UIScrollView *diskScrollView;
 
+/** 唱片视图 */
+@property (nonatomic, strong) GKWYDiskView *leftDiskView;
+@property (nonatomic, strong) GKWYDiskView *centerDiskView;
+@property (nonatomic, strong) GKWYDiskView *rightDiskView;
+
+@property (nonatomic, assign) NSInteger currentIndex;
+
+/** 指针 */
 @property (nonatomic, strong) UIImageView *needleView;
 
+/** 定时器 */
 @property (nonatomic, strong) CADisplayLink *displayLink;
 
 /** 是否正在动画 */
 @property (nonatomic, assign) BOOL isAnimation;
+
+@property (nonatomic, strong) NSArray *musics;
+
+@property (nonatomic, copy) finished finished;
+/** 是否是由用户点击切换歌曲 */
+@property (nonatomic, assign) BOOL isChanged;
 
 @end
 
@@ -33,8 +52,10 @@
         self.clipsToBounds = YES;
         
         [self addSubview:self.sepLineView];
-        [self addSubview:self.imageView];
-        [self addSubview:self.coverView];
+        
+        [self addSubview:self.diskBgView];
+        
+        [self addSubview:self.diskScrollView];
         
         [self addSubview:self.needleView];
         
@@ -43,33 +64,29 @@
             make.height.mas_equalTo(0.5);
         }];
         
-        [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.diskBgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self);
-//            make.centerY.equalTo(self).offset(-12);
-            make.top.equalTo(self).offset(66);
-            make.width.height.mas_equalTo(KScreenW - 80);
-        }];
-        
-        [self.coverView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self.imageView);
+            make.top.equalTo(self).offset(66 - 2.5);
             make.width.height.mas_equalTo(KScreenW - 75);
         }];
         
-        self.coverView.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2].CGColor;
-        self.coverView.layer.borderWidth = 10;
-        self.coverView.layer.cornerRadius = (KScreenW - 75) * 0.5;
+        self.diskBgView.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2].CGColor;
+        self.diskBgView.layer.borderWidth = 10;
+        self.diskBgView.layer.cornerRadius = (KScreenW - 75) * 0.5;
         
-        [self.imageView addSubview:self.imgView];
-        
-        CGFloat imgWH = KScreenW - 80 - 100;
-        
-        [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self.imageView);
-            make.width.height.mas_equalTo(imgWH);
+        [self.diskScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self);
         }];
+
+        self.isAnimation = YES;
         
-        self.imgView.layer.cornerRadius = imgWH * 0.5;
-        self.imgView.layer.masksToBounds = YES;
+        [self.diskScrollView addSubview:self.leftDiskView];
+        [self.diskScrollView addSubview:self.centerDiskView];
+        [self.diskScrollView addSubview:self.rightDiskView];
+        
+        self.diskScrollView.contentSize = CGSizeMake(KScreenW * 3, 0);
+        
+        [self setScrollViewContentOffsetCenter];
     }
     return self;
 }
@@ -82,6 +99,73 @@
     self.needleView.gk_y       = -25;
     
     [self pausedWithAnimated:NO];
+    
+    CGFloat diskW = CGRectGetWidth(self.diskScrollView.frame);
+    CGFloat diskH = CGRectGetHeight(self.diskScrollView.frame);
+    
+    // 设置frame
+    self.leftDiskView.frame   = CGRectMake(0, 0, diskW, diskH);
+    self.centerDiskView.frame = CGRectMake(diskW, 0, diskW, diskH);
+    self.rightDiskView.frame  = CGRectMake(2 * diskW, 0, diskW, diskH);
+}
+
+- (void)setupMusicList:(NSArray *)musics idx:(NSInteger)currentIndex {
+   
+    [self resetCover];
+    
+    self.musics = musics;
+    
+    self.currentIndex = currentIndex;
+}
+
+// 滑动切换歌曲
+- (void)scrollChangeIsNext:(BOOL)isNext Finished:(finished)finished {
+    
+    self.isChanged = YES;
+    
+    self.finished = finished;
+    
+    CGFloat pointX = isNext ? 2 * KScreenW : 0;
+    
+    CGPoint offset = CGPointMake(pointX, 0);
+    
+    [self pausedWithAnimated:YES];
+    
+    [self.diskScrollView setContentOffset:offset animated:YES];
+}
+
+- (void)setCurrentIndex:(NSInteger)currentIndex {
+    if (_currentIndex >= 0) {
+        _currentIndex = currentIndex;
+        
+        NSInteger count      = self.musics.count;
+        NSInteger leftIndex  = (currentIndex + count - 1) % count;
+        NSInteger rightIndex = (currentIndex + 1) % count;
+        
+        GKWYMusicModel *leftM   = self.musics[leftIndex];
+        GKWYMusicModel *centerM = self.musics[currentIndex];
+        GKWYMusicModel *rightM  = self.musics[rightIndex];
+        
+        // 设置图片
+        self.centerDiskView.imgurl = centerM.music_cover;
+        
+        // 每次设置后，移到中间
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self setScrollViewContentOffsetCenter];
+            
+            self.leftDiskView.imgurl   = leftM.music_cover;
+            self.rightDiskView.imgurl  = rightM.music_cover;
+            
+            if (self.isChanged) {
+                !self.finished ? : self.finished();
+                self.isChanged = NO;
+            }
+        });
+    }
+}
+
+- (void)setScrollViewContentOffsetCenter {
+    [self.diskScrollView setContentOffset:CGPointMake(KScreenW, 0)];
 }
 
 // 播放音乐时，指针恢复，图片旋转
@@ -121,15 +205,25 @@
             self.needleView.transform = CGAffineTransformMakeRotation(-M_PI_2 / 3);
         }];
     }else {
-        self.needleView.transform = CGAffineTransformMakeRotation(-M_PI_4);
+        self.needleView.transform = CGAffineTransformMakeRotation(-M_PI_2 / 3);
     }
     
     [self.displayLink invalidate];
+    self.displayLink = nil;
+}
+
+// 重置封面
+- (void)resetCover {
+    // 恢复转盘
+    self.centerDiskView.diskImgView.transform = CGAffineTransformIdentity;
+    
+    [self.displayLink invalidate];
+    self.displayLink = nil;
 }
 
 // 图片旋转
 - (void)animation {
-    self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, M_PI_4 / 100);
+    self.centerDiskView.diskImgView.transform = CGAffineTransformRotate(self.centerDiskView.diskImgView.transform, M_PI_4 / 100);
 }
 
 - (void)setAnchorPoint:(CGPoint)anchorPoint forView:(UIView *)view
@@ -145,6 +239,92 @@
     view.center = CGPointMake (view.center.x - transition.x, view.center.y - transition.y);
 }
 
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    [self caculateCurIndex];
+    
+    if ([self.delegate respondsToSelector:@selector(scrollDidScroll)]) {
+        [self.delegate scrollDidScroll];
+    }
+    
+    CGFloat scrollW = CGRectGetWidth(scrollView.frame);
+    
+    if (scrollW == 0) return;
+    // 滚动超过一半时
+    CGFloat offsetX = scrollView.contentOffset.x;
+    
+    if (offsetX == 2 * scrollW) {
+//        self.currentIndex = (self.currentIndex + 1) % self.musics.count;
+    }else if (offsetX == 0) {
+//        self.currentIndex = (self.currentIndex - 1 + self.musics.count) % self.musics.count;
+//        NSLog(@"滑动中，当前索引%zd", self.currentIndex);
+    }else if (offsetX <= 0.5 * scrollW) { // 左滑
+        NSInteger idx = (self.currentIndex - 1 + self.musics.count) % self.musics.count;
+        GKWYMusicModel *model = self.musics[idx];
+        
+        if ([self.delegate respondsToSelector:@selector(scrollWillChangeModel:)]) {
+            [self.delegate scrollWillChangeModel:model];
+        }
+    }else if (offsetX >= 1.5 * scrollW) { // 右滑
+        NSInteger idx = (self.currentIndex + 1) % self.musics.count;
+        GKWYMusicModel *model = self.musics[idx];
+        
+        if ([self.delegate respondsToSelector:@selector(scrollWillChangeModel:)]) {
+            [self.delegate scrollWillChangeModel:model];
+        }
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self pausedWithAnimated:YES];
+}
+
+// scrollview拖动时结束减速时调用
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSLog(@"滑动结束，当前索引%zd", self.currentIndex);
+    
+    // 获取结束时，获取索引
+    CGFloat scrollW = CGRectGetWidth(scrollView.frame);
+    CGFloat offsetX = scrollView.contentOffset.x;
+    
+    if (offsetX == 2 * scrollW) {
+        self.currentIndex = (self.currentIndex + 1) % self.musics.count;
+    }else if (offsetX == 0) {
+        self.currentIndex = (self.currentIndex - 1 + self.musics.count) % self.musics.count;
+    }else {
+        [self setScrollViewContentOffsetCenter];
+    }
+    
+    GKWYMusicModel *model = self.musics[self.currentIndex];
+    
+    if ([self.delegate respondsToSelector:@selector(scrollDidChangeModel:)]) {
+        [self.delegate scrollDidChangeModel:model];
+    }
+}
+
+// scrollview结束动画时调用
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    NSLog(@"滑动结束，当前索引%zd", self.currentIndex);
+    
+    // 获取结束时，获取索引
+    CGFloat scrollW = CGRectGetWidth(scrollView.frame);
+    CGFloat offsetX = scrollView.contentOffset.x;
+    
+    if (offsetX == 2 * scrollW) {
+        self.currentIndex = (self.currentIndex + 1) % self.musics.count;
+    }else if (offsetX == 0) {
+        self.currentIndex = (self.currentIndex - 1 + self.musics.count) % self.musics.count;
+    }else {
+        [self setScrollViewContentOffsetCenter];
+    }
+    
+    GKWYMusicModel *model = self.musics[self.currentIndex];
+    
+    if ([self.delegate respondsToSelector:@selector(scrollDidChangeModel:)]) {
+        [self.delegate scrollDidChangeModel:model];
+    }
+}
+
 #pragma mark - 懒加载
 - (UIView *)sepLineView {
     if (!_sepLineView) {
@@ -154,20 +334,44 @@
     return _sepLineView;
 }
 
-- (UIImageView *)imageView {
-    if (!_imageView) {
-        _imageView = [UIImageView new];
-        _imageView.image = [UIImage imageNamed:@"cm2_play_disc-ip6"];
+- (UIView *)diskBgView {
+    if (!_diskBgView) {
+        _diskBgView = [UIView new];
+        _diskBgView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
     }
-    return _imageView;
+    return _diskBgView;
 }
 
-- (UIView *)coverView {
-    if (!_coverView) {
-        _coverView = [UIView new];
-        _coverView.backgroundColor = [UIColor clearColor];
+- (UIScrollView *)diskScrollView {
+    if (!_diskScrollView) {
+        _diskScrollView = [[UIScrollView alloc] init];
+        _diskScrollView.delegate        = self;
+        _diskScrollView.pagingEnabled   = YES;
+        _diskScrollView.backgroundColor = [UIColor clearColor];
+        _diskScrollView.showsHorizontalScrollIndicator = NO;
     }
-    return _coverView;
+    return _diskScrollView;
+}
+
+- (GKWYDiskView *)leftDiskView {
+    if (!_leftDiskView) {
+        _leftDiskView = [GKWYDiskView new];
+    }
+    return _leftDiskView;
+}
+
+- (GKWYDiskView *)centerDiskView {
+    if (!_centerDiskView) {
+        _centerDiskView = [GKWYDiskView new];
+    }
+    return _centerDiskView;
+}
+
+- (GKWYDiskView *)rightDiskView {
+    if (!_rightDiskView) {
+        _rightDiskView = [GKWYDiskView new];
+    }
+    return _rightDiskView;
 }
 
 - (UIImageView *)needleView {
@@ -177,13 +381,6 @@
         [_needleView sizeToFit];
     }
     return _needleView;
-}
-
-- (UIImageView *)imgView {
-    if (!_imgView) {
-        _imgView = [UIImageView new];
-    }
-    return _imgView;
 }
 
 @end

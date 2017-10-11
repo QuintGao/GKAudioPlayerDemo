@@ -1,16 +1,49 @@
 {
   "images" : [
     {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1
+        },
+        "cap-insets" : {
+          "right" : 1,
+          "left" : 1
+        }
+      },
       "idiom" : "universal",
       "filename" : "cm2_fm_playbar_ready.png",
       "scale" : "1x"
     },
     {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1
+        },
+        "cap-insets" : {
+          "right" : 1,
+          "left" : 1
+        }
+      },
       "idiom" : "universal",
       "filename" : "cm2_fm_playbar_ready@2x.png",
       "scale" : "2x"
     },
     {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1
+        },
+        "cap-insets" : {
+          "right" : 1,
+          "left" : 1
+        }
+      },
       "idiom" : "universal",
       "filename" : "cm2_fm_playbar_ready@3x.png",
       "scale" : "3x"

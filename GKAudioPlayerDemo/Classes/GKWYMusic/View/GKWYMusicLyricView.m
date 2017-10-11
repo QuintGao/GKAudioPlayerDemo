@@ -124,6 +124,14 @@
     }
 }
 
+- (void)hideSystemVolumeView {
+    [self.volumeView hideSystemVolumeView];
+}
+
+- (void)showSystemVolumeView {
+    [self.volumeView showSystemVolumeView];
+}
+
 #pragma mark - 代理
 #pragma mark - GKWYMusicVolumeViewDelegate
 - (void)volumeSlideTouchBegan {

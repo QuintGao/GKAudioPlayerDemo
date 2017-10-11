@@ -224,31 +224,31 @@
 }
 
 #pragma mark - 懒加载
-- (UIView *)bgProgressView {
+- (UIImageView *)bgProgressView {
     if (!_bgProgressView) {
         _bgProgressView = [UIImageView new];
         _bgProgressView.backgroundColor = [UIColor grayColor];
-        _bgProgressView.contentMode = UIViewContentModeScaleAspectFill;
+//        _bgProgressView.contentMode = UIViewContentModeScaleAspectFill;
         _bgProgressView.clipsToBounds = YES;
     }
     return _bgProgressView;
 }
 
-- (UIView *)bufferProgressView {
+- (UIImageView *)bufferProgressView {
     if (!_bufferProgressView) {
         _bufferProgressView = [UIImageView new];
         _bufferProgressView.backgroundColor = [UIColor whiteColor];
-        _bufferProgressView.contentMode = UIViewContentModeScaleAspectFill;
+//        _bufferProgressView.contentMode = UIViewContentModeScaleAspectFill;
         _bufferProgressView.clipsToBounds = YES;
     }
     return _bufferProgressView;
 }
 
-- (UIView *)sliderProgressView {
+- (UIImageView *)sliderProgressView {
     if (!_sliderProgressView) {
         _sliderProgressView = [UIImageView new];
         _sliderProgressView.backgroundColor = [UIColor redColor];
-        _sliderProgressView.contentMode = UIViewContentModeScaleAspectFill;
+//        _sliderProgressView.contentMode = UIViewContentModeScaleAspectFill;
         _sliderProgressView.clipsToBounds = YES;
     }
     return _sliderProgressView;
