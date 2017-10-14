@@ -15,9 +15,10 @@
 #import <YYModel/YYModel.h>
 #import <GKCover/GKCover.h>
 #import <Masonry/Masonry.h>
+#import <GKMessageTool/GKMessageTool.h>
 
 #import "UIViewController+GKWYCategory.h"
-#import "GKMessageTool.h"
+//#import "GKMessageTool.h"
 #import "GKWYMusicTool.h"
 
 

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "GKWYMusicViewController.h"
 #import "GKWYPlayerViewController.h"
+#import "GKWYNavigationController.h"
 #import <AVFoundation/AVFoundation.h>
 
 @interface AppDelegate ()
@@ -28,7 +29,7 @@
     
     self.window.backgroundColor = [UIColor whiteColor];
     
-    self.window.rootViewController = [UINavigationController rootVC:[GKWYMusicViewController new] translationScale:NO];
+    self.window.rootViewController = [GKWYNavigationController rootVC:[GKWYMusicViewController new] translationScale:NO];
     
     [self.window makeKeyAndVisible];
     
@@ -53,7 +54,9 @@
         // 导航栏风格
         configure.statusBarStyle    = UIStatusBarStyleLightContent;
         // 返回按钮
-        configure.backStyle         = GKNavigationBarBackStyleWhite;
+        configure.backStyle         = GKNavigationBarBackStyleNone;
+        
+        configure.navItem_space     = 4;
     }];
     
     // 适配iOS11
@@ -83,9 +86,9 @@
     CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
     
     [self.playBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.window).offset(statusBarFrame.size.height + 8);
-        make.right.equalTo(self.window).offset(-12);
-        make.width.height.mas_equalTo(28);
+        make.top.equalTo(self.window).offset(statusBarFrame.size.height);
+        make.right.equalTo(self.window).offset(-4);
+        make.width.height.mas_equalTo(44);
     }];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playStatusChanged:) name:@"WYMusicPlayStateChanged" object:nil];

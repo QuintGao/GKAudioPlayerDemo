@@ -1,4 +1,34 @@
- [
+[
+ {
+  "id": 274841326,
+  "name": "成都",
+  "artist": "赵雷",
+  "cover": "http://musicdata.baidu.com/data2/pic/cd8dcc4f40cbb37c7dcf0e6c151fbcc6/275347355/275347355.jpg@s_1,w_300,h_300"
+  },
+  {
+  "id": 31363638,
+  "name": "南方姑娘",
+  "artist": "赵雷",
+  "cover": "http://musicdata.baidu.com/data2/pic/f959183168dc332748f1677f4c996e08/31363614/31363614.jpg@s_1,w_300,h_300"
+  },
+  {
+  "id": 31363626,
+  "name": "画",
+  "artist": "赵雷",
+  "cover": "http://musicdata.baidu.com/data2/pic/f959183168dc332748f1677f4c996e08/31363614/31363614.jpg@s_1,w_300,h_300"
+  },
+  {
+  "id": 124575402,
+  "name": "少年锦时",
+  "artist": "赵雷",
+  "cover": "http://musicdata.baidu.com/data2/pic/113cc096bef2e1907eed36e00388d947/123196634/123196634.jpg@s_1,w_300,h_300"
+  },
+  {
+  "id": 124575611,
+  "name": "三十岁的女人",
+  "artist": "赵雷",
+  "cover": "http://musicdata.baidu.com/data2/pic/113cc096bef2e1907eed36e00388d947/123196634/123196634.jpg@s_1,w_300,h_300"
+  },
   {
   "id": 266069,
   "name": "不要说话",

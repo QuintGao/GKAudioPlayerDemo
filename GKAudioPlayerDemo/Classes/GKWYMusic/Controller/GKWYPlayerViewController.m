@@ -127,6 +127,27 @@
     self.gk_fullScreenPopDisabled = YES;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [GKWYMusicTool hidePlayBtn];
+    
+    // 解决边缘滑动与UIScrollView滑动的冲突
+    NSArray *gestures = self.navigationController.view.gestureRecognizers;
+    
+    for (UIGestureRecognizer *gesture in gestures) {
+        if ([gesture isKindOfClass:[UIScreenEdgePanGestureRecognizer class]]) {
+            [self.coverView.diskScrollView.panGestureRecognizer requireGestureRecognizerToFail:gesture];
+        }
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [GKWYMusicTool showPlayBtn];
+}
+
 - (void)dealloc {
     [self removeNotifications];
 }
@@ -308,6 +329,8 @@
     self.gk_navBackgroundColor = [UIColor clearColor];
 //    self.gk_navBarAlpha = 0.0;
     
+    self.gk_navRightBarButtonItem = [UIBarButtonItem itemWithImageName:@"cm2_topbar_icn_share" target:self action:@selector(shareAction)];
+    
     // 获取播放方式，并设置
     self.playStyle = [[NSUserDefaults standardUserDefaults] integerForKey:kPlayerPlayStyleKey];
     self.controlView.style = self.playStyle;
@@ -379,6 +402,10 @@
     self.lyricView.lyrics = nil;
     
     [self.controlView setupInitialData];
+    if (self.ifNowPlay) {
+        [self.controlView showLoadingAnim];
+    }
+    
     self.controlView.is_love = self.model.isLike;
     
     // 重新设置锁屏控制界面
@@ -450,6 +477,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object:nil];
 }
 
+- (void)shareAction {
+    [GKMessageTool showText:@"点击分享"];
+}
+
 - (void)setupLockScreenControlInfo {
     MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
     // 锁屏播放
@@ -458,8 +489,6 @@
         if (!self.isPlaying) {
             [self playMusic];
         }
-        
-        [self playMusic];
         return MPRemoteCommandHandlerStatusSuccess;
     }];
     // 锁屏暂停
@@ -779,9 +808,10 @@
     switch (status) {
         case GKPlayerStatusBuffering:
         {
-            [self.controlView setupPauseBtn];
+            [self.controlView hideLoadingAnim];
+            [self.controlView setupPlayBtn];
             
-            self.isPlaying = NO;
+            self.isPlaying = YES;
             
             [self.coverView playedWithAnimated:YES];
         }

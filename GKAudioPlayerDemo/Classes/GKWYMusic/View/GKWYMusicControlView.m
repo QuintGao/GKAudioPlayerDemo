@@ -201,7 +201,7 @@
     self.currentTime = @"00:00";
     self.totalTime   = @"00:00";
     
-    [self showLoadingAnim];
+//    [self showLoadingAnim];
 }
 
 - (void)showLoadingAnim {

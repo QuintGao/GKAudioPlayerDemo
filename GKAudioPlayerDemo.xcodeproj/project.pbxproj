@@ -13,6 +13,7 @@
 		7902D9591F619C6F00EDDA40 /* GKWYMusicListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7902D9561F619C6F00EDDA40 /* GKWYMusicListView.m */; };
 		7902D9931F623EDD00EDDA40 /* UIViewController+GKWYCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7902D9921F623EDD00EDDA40 /* UIViewController+GKWYCategory.m */; };
 		7913CC8E1F8DEAC20000FDF9 /* GKVolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7913CC8D1F8DEAC10000FDF9 /* GKVolumeView.m */; };
+		7913CCD91F8F571B0000FDF9 /* GKWYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7913CCD81F8F571B0000FDF9 /* GKWYNavigationController.m */; };
 		79219BCD1F60E3F00009A781 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 79219BCC1F60E3F00009A781 /* main.m */; };
 		79219BD01F60E3F00009A781 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 79219BCF1F60E3F00009A781 /* AppDelegate.m */; };
 		79219BD81F60E3F00009A781 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79219BD71F60E3F00009A781 /* Assets.xcassets */; };
@@ -35,8 +36,6 @@
 		7985A53D1F8B56A900E08FE0 /* GKWYDiskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985A53C1F8B56A900E08FE0 /* GKWYDiskView.m */; };
 		799FF3411F628D20004F132B /* GKWYMusicVolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 799FF3401F628D20004F132B /* GKWYMusicVolumeView.m */; };
 		79CB4E7B1F616BC500A3E496 /* GKWYMusicTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CB4E7A1F616BC500A3E496 /* GKWYMusicTool.m */; };
-		79E89A101F78B23700CAD6BD /* GKMessageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E89A0F1F78B18300CAD6BD /* GKMessageTool.m */; };
-		79E89A111F78B24D00CAD6BD /* GKMessageTool.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 79E89A0D1F78B18300CAD6BD /* GKMessageTool.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +66,8 @@
 		7902D9921F623EDD00EDDA40 /* UIViewController+GKWYCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+GKWYCategory.m"; sourceTree = "<group>"; };
 		7913CC8C1F8DEAC10000FDF9 /* GKVolumeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKVolumeView.h; sourceTree = "<group>"; };
 		7913CC8D1F8DEAC10000FDF9 /* GKVolumeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GKVolumeView.m; sourceTree = "<group>"; };
+		7913CCD71F8F571B0000FDF9 /* GKWYNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKWYNavigationController.h; sourceTree = "<group>"; };
+		7913CCD81F8F571B0000FDF9 /* GKWYNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GKWYNavigationController.m; sourceTree = "<group>"; };
 		79219BC81F60E3F00009A781 /* GKAudioPlayerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GKAudioPlayerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79219BCC1F60E3F00009A781 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		79219BCE1F60E3F00009A781 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -112,9 +113,6 @@
 		799FF3401F628D20004F132B /* GKWYMusicVolumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicVolumeView.m; sourceTree = "<group>"; };
 		79CB4E791F616BC500A3E496 /* GKWYMusicTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYMusicTool.h; sourceTree = "<group>"; };
 		79CB4E7A1F616BC500A3E496 /* GKWYMusicTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicTool.m; sourceTree = "<group>"; };
-		79E89A0D1F78B18300CAD6BD /* GKMessageTool.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GKMessageTool.bundle; sourceTree = "<group>"; };
-		79E89A0E1F78B18300CAD6BD /* GKMessageTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKMessageTool.h; sourceTree = "<group>"; };
-		79E89A0F1F78B18300CAD6BD /* GKMessageTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GKMessageTool.m; sourceTree = "<group>"; };
 		7A586AF8F9B22A8DF98D6CF6 /* Pods-GKAudioPlayerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GKAudioPlayerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-GKAudioPlayerDemo/Pods-GKAudioPlayerDemo.release.xcconfig"; sourceTree = "<group>"; };
 		C3FA0734EFFC9EF90AC73814 /* Pods-GKAudioPlayerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GKAudioPlayerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GKAudioPlayerDemo/Pods-GKAudioPlayerDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -169,6 +167,15 @@
 				7902D9921F623EDD00EDDA40 /* UIViewController+GKWYCategory.m */,
 			);
 			path = Category;
+			sourceTree = "<group>";
+		};
+		7913CCD61F8F57090000FDF9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7913CCD71F8F571B0000FDF9 /* GKWYNavigationController.h */,
+				7913CCD81F8F571B0000FDF9 /* GKWYNavigationController.m */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		79219BBF1F60E3F00009A781 = {
@@ -242,7 +249,6 @@
 				7944862F1F6113B60062F1C4 /* GKWYMusic */,
 				79219C001F60FB690009A781 /* GKPlayer */,
 				7902D9901F623ECC00EDDA40 /* Category */,
-				79E89A0C1F78B18300CAD6BD /* GKMessageTool */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -290,6 +296,7 @@
 		7944862E1F6113910062F1C4 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				7913CCD61F8F57090000FDF9 /* Controller */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -359,16 +366,6 @@
 				794486441F611E3A0062F1C4 /* GKSliderView.m */,
 			);
 			path = GKSliderView;
-			sourceTree = "<group>";
-		};
-		79E89A0C1F78B18300CAD6BD /* GKMessageTool */ = {
-			isa = PBXGroup;
-			children = (
-				79E89A0D1F78B18300CAD6BD /* GKMessageTool.bundle */,
-				79E89A0E1F78B18300CAD6BD /* GKMessageTool.h */,
-				79E89A0F1F78B18300CAD6BD /* GKMessageTool.m */,
-			);
-			path = GKMessageTool;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -488,7 +485,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79E89A111F78B24D00CAD6BD /* GKMessageTool.bundle in Resources */,
 				7902D9581F619C6F00EDDA40 /* GKWYMusicListViewCell.xib in Resources */,
 				79219BDB1F60E3F00009A781 /* LaunchScreen.storyboard in Resources */,
 				79219BD81F60E3F00009A781 /* Assets.xcassets in Resources */,
@@ -555,6 +551,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-GKAudioPlayerDemo/Pods-GKAudioPlayerDemo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/GKCover/GKCover.framework",
+				"${BUILT_PRODUCTS_DIR}/GKMessageTool/GKMessageTool.framework",
 				"${BUILT_PRODUCTS_DIR}/GKNavigationBarViewController/GKNavigationBarViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
@@ -565,6 +562,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GKCover.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GKMessageTool.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GKNavigationBarViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
@@ -583,11 +581,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79E89A101F78B23700CAD6BD /* GKMessageTool.m in Sources */,
 				7902D9931F623EDD00EDDA40 /* UIViewController+GKWYCategory.m in Sources */,
 				794486451F611E3A0062F1C4 /* GKSliderView.m in Sources */,
 				799FF3411F628D20004F132B /* GKWYMusicVolumeView.m in Sources */,
 				794486411F61173E0062F1C4 /* GKWYMusicModel.m in Sources */,
+				7913CCD91F8F571B0000FDF9 /* GKWYNavigationController.m in Sources */,
 				794780701F70F4C700705AC9 /* GKWYMusicLyricView.m in Sources */,
 				794486221F6109FD0062F1C4 /* GKLyricParser.m in Sources */,
 				79219BD01F60E3F00009A781 /* AppDelegate.m in Sources */,
@@ -759,11 +757,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_STRICT_PROTOTYPES = NO;
 				DEVELOPMENT_TEAM = 9J2ZLU6Z7U;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = GKAudioPlayerDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = GKAudioPlayerDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jvtalking.wymusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -778,11 +777,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_STRICT_PROTOTYPES = NO;
 				DEVELOPMENT_TEAM = 9J2ZLU6Z7U;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = GKAudioPlayerDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = GKAudioPlayerDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jvtalking.wymusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";

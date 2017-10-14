@@ -26,6 +26,9 @@ typedef void(^finished)(void);
 
 @property (nonatomic, weak) id<GKWYMusicCoverViewDelegate> delegate;
 
+/** 切换唱片的scrollview */
+@property (nonatomic, strong) UIScrollView *diskScrollView;
+
 //@property (nonatomic, strong) NSArray *musics;
 - (void)setupMusicList:(NSArray *)musics idx:(NSInteger)currentIndex;
 

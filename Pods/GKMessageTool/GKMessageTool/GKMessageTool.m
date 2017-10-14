@@ -19,7 +19,15 @@ static MBProgressHUD *_hud;
 @implementation GKMessageTool
 
 + (void)load {
-    UIActivityIndicatorView *indicatorView = [UIActivityIndicatorView appearanceWhenContainedIn:[MBProgressHUD class], nil];
+    
+    CGFloat systemVersion = [UIDevice currentDevice].systemVersion.floatValue;
+    
+    UIActivityIndicatorView *indicatorView = nil;
+    if (systemVersion >= 9.0) {
+        indicatorView = [UIActivityIndicatorView appearanceWhenContainedInInstancesOfClasses:@[[MBProgressHUD class]]];
+    }else {
+        indicatorView = [UIActivityIndicatorView appearanceWhenContainedIn:[MBProgressHUD class], nil];
+    }
     // 设置指示器颜色
     indicatorView.color = [UIColor whiteColor];
 }

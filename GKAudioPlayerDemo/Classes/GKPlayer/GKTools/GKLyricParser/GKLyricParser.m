@@ -66,11 +66,15 @@
     // [ti:如果没有你]
     // [00:00.64]歌词
     // [00:01.89][03:01.23][05:03.43]歌词
+    // [00:00.8]
     // 这样的歌词形式，所以最好的方法是用正则表达式匹配 [00:00.00] 来获取时间
     
     for (NSString *line in linesArray) {
         // 正则表达式 [00:01.78], \\ 转义,  @"\\[\\d{2}:\\d{2}.\\d{2}\\]"
-        NSString *pattern = @"\\[[0-9][0-9]:[0-9][0-9].[0-9][0-9]\\]";
+        
+//        NSString *pattern = @"\\[[0-9][0-9]:[0-9][0-9].[0-9][0-9]\\]";
+        
+        NSString *pattern = @"\\[[0-9][0-9]:[0-9][0-9].[0-9]{1,}\\]";
         
         NSRegularExpression *regular = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:nil];
         // 进行匹配
@@ -88,12 +92,21 @@
         // 获取时间部分[00:00.00]
         for (NSTextCheckingResult *match in matchesArray) {
             NSString *timeStr = [line substringWithRange:match.range];
+            
             // 去掉开头和结尾的[],得到时间00:00.00
-            timeStr = [timeStr substringWithRange:NSMakeRange(1, 8)];
+//            timeStr = [timeStr substringWithRange:NSMakeRange(1, 8)];
+            // 去掉[
+            timeStr = [timeStr substringFromIndex:1];
+            // 去掉]
+            timeStr = [timeStr substringToIndex:(timeStr.length - 1)];
+//            NSLog(@"%@", timeStr);
+            
             // 分、秒、毫秒
             NSString *minStr = [timeStr substringWithRange:NSMakeRange(0, 2)];
             NSString *secStr = [timeStr substringWithRange:NSMakeRange(3, 2)];
-            NSString *mseStr = [timeStr substringWithRange:NSMakeRange(6, 2)];
+            
+            // 由于毫秒有一位或者两位，所以应从小数点（第六位）后获取
+            NSString *mseStr = [timeStr substringFromIndex:6];
             
             // 转换成以毫秒秒为单位的时间 1秒 = 1000毫秒
             NSTimeInterval time = [minStr floatValue] * 60 * 1000 + [secStr floatValue] * 1000 + [mseStr floatValue];

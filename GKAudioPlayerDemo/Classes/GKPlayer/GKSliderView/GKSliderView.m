@@ -80,6 +80,8 @@
     self.sliderProgressView.frame = self.bgProgressView.frame;
     
     self.sliderBtn.frame = CGRectMake(0, 0, kSliderBtnWH, kSliderBtnWH);
+    
+    [self.sliderBtn hideActivityAnim];
 }
 
 - (void)setMaximumTrackTintColor:(UIColor *)maximumTrackTintColor {

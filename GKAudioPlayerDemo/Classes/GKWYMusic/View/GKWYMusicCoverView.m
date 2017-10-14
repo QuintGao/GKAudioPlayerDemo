@@ -17,8 +17,8 @@
 /** 唱片背景 */
 @property (nonatomic, strong) UIView *diskBgView;
 
-/** 切换唱片的scrollview */
-@property (nonatomic, strong) UIScrollView *diskScrollView;
+///** 切换唱片的scrollview */
+//@property (nonatomic, strong) UIScrollView *diskScrollView;
 
 /** 唱片视图 */
 @property (nonatomic, strong) GKWYDiskView *leftDiskView;

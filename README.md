@@ -11,12 +11,14 @@
     * 锁屏控制（播放、暂停、喜欢、上一曲、下一曲、播放条拖动）
     * 耳机线控（播放、暂停、上一曲、下一曲、快进、快退）
     * 通知监听（插拔耳机、播放打断）
+    * 唱片转盘
+    * 左右滑动切换歌曲
+    * 支持AirPlay
    
    不足：
     
     * 不能获取缓冲进度（播放库的问题）
-    * 暂停后继续播放声音不准确（播放库的问题）
-    * airplay暂未支持
+    * 暂停后继续播放声音不准确（播放库的问题)
 
    demo中的音乐文件来自百度音乐，仅供学习使用，请勿在商业中使用
 
@@ -151,4 +153,6 @@ if ([UIDevice currentDevice].systemVersion.doubleValue >= 9.0) {
 ![锁屏控制](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_lock_control.png)
 
 ![转盘唱片](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_disk.gif)
+
+![滑动切歌](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_toggle.gif)
 
