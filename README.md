@@ -142,17 +142,17 @@ if ([UIDevice currentDevice].systemVersion.doubleValue >= 9.0) {
 
 ## 部分界面截图
 
-![我的音乐](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_home.png)
+![我的音乐](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/imgs/img_home.png)
 
-![播放界面](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_player.png)
+![播放界面](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/imgs/img_player.png)
 
-![播放列表](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_list.png)
+![播放列表](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/imgs/img_list.png)
 
-![锁屏图片](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_lock.png)
+![锁屏图片](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/imgs/img_lock.png)
 
-![锁屏控制](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_lock_control.png)
+![锁屏控制](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/imgs/img_lock_control.png)
 
-![转盘唱片](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_disk.gif)
+![转盘唱片](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/imgs/img_disk.gif)
 
-![滑动切歌](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/img_toggle.gif)
+![滑动切歌](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/imgs/img_toggle.gif)
 
