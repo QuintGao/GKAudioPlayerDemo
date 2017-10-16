@@ -70,10 +70,7 @@
     // 这样的歌词形式，所以最好的方法是用正则表达式匹配 [00:00.00] 来获取时间
     
     for (NSString *line in linesArray) {
-        // 正则表达式 [00:01.78], \\ 转义,  @"\\[\\d{2}:\\d{2}.\\d{2}\\]"
-        
-//        NSString *pattern = @"\\[[0-9][0-9]:[0-9][0-9].[0-9][0-9]\\]";
-        
+        // 正则表达式
         NSString *pattern = @"\\[[0-9][0-9]:[0-9][0-9].[0-9]{1,}\\]";
         
         NSRegularExpression *regular = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:nil];
@@ -94,12 +91,11 @@
             NSString *timeStr = [line substringWithRange:match.range];
             
             // 去掉开头和结尾的[],得到时间00:00.00
-//            timeStr = [timeStr substringWithRange:NSMakeRange(1, 8)];
+            
             // 去掉[
             timeStr = [timeStr substringFromIndex:1];
             // 去掉]
             timeStr = [timeStr substringToIndex:(timeStr.length - 1)];
-//            NSLog(@"%@", timeStr);
             
             // 分、秒、毫秒
             NSString *minStr = [timeStr substringWithRange:NSMakeRange(0, 2)];

@@ -96,6 +96,13 @@
     }
 }
 
+
+/**
+ 根据当前时间及总时间滚动歌词
+
+ @param currentTime 当前时间
+ @param totalTime 总时间
+ */
 - (void)scrollLyricWithCurrentTime:(NSTimeInterval)currentTime totalTime:(NSTimeInterval)totalTime {
     if (self.lyrics.count == 0) self.lyricIndex = 0;
     
