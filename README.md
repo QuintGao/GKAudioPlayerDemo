@@ -6,6 +6,8 @@
 
 ![转盘滚动](https://github.com/QuintGao/GKAudioPlayerDemo/tree/master/imgs/img_toggle.gif)
 
+![转盘滚动](https://user-gold-cdn.xitu.io/2017/10/16/61705a2cfa4198e1268214f7e3dd4c8d)
+
 ![歌词](https://github.com/QuintGao/GKAudioPlayerDemo/tree/master/imgs/img_player.png)
 
 ![首页](https://github.com/QuintGao/GKAudioPlayerDemo/tree/master/imgs/img_home.png)
