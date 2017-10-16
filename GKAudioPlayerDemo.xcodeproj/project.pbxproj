@@ -24,7 +24,6 @@
 		794486221F6109FD0062F1C4 /* GKLyricParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486211F6109FD0062F1C4 /* GKLyricParser.m */; };
 		794486251F610A070062F1C4 /* GKLyricModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486241F610A070062F1C4 /* GKLyricModel.m */; };
 		794486281F610BCC0062F1C4 /* GKTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486271F610BCC0062F1C4 /* GKTool.m */; };
-		7944862D1F61112B0062F1C4 /* audio.json in Resources */ = {isa = PBXBuildFile; fileRef = 7944862C1F61112B0062F1C4 /* audio.json */; };
 		794486381F6113E70062F1C4 /* GKWYMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486371F6113E70062F1C4 /* GKWYMusicViewController.m */; };
 		7944863B1F6113F00062F1C4 /* GKWYPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7944863A1F6113F00062F1C4 /* GKWYPlayerViewController.m */; };
 		7944863E1F6116020062F1C4 /* GKWYMusicListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7944863D1F6116020062F1C4 /* GKWYMusicListCell.m */; };
@@ -34,6 +33,7 @@
 		794780701F70F4C700705AC9 /* GKWYMusicLyricView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7947806F1F70F4C700705AC9 /* GKWYMusicLyricView.m */; };
 		794780731F7110F800705AC9 /* GKWYMusicCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 794780721F7110F800705AC9 /* GKWYMusicCoverView.m */; };
 		7985A53D1F8B56A900E08FE0 /* GKWYDiskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985A53C1F8B56A900E08FE0 /* GKWYDiskView.m */; };
+		799F02DC1F920D4C00010603 /* GKHttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 799F02DB1F920D4C00010603 /* GKHttpManager.m */; };
 		799FF3411F628D20004F132B /* GKWYMusicVolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 799FF3401F628D20004F132B /* GKWYMusicVolumeView.m */; };
 		79CB4E7B1F616BC500A3E496 /* GKWYMusicTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CB4E7A1F616BC500A3E496 /* GKWYMusicTool.m */; };
 /* End PBXBuildFile section */
@@ -90,7 +90,6 @@
 		794486241F610A070062F1C4 /* GKLyricModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLyricModel.m; sourceTree = "<group>"; };
 		794486261F610BCC0062F1C4 /* GKTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKTool.h; sourceTree = "<group>"; };
 		794486271F610BCC0062F1C4 /* GKTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKTool.m; sourceTree = "<group>"; };
-		7944862C1F61112B0062F1C4 /* audio.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = audio.json; sourceTree = "<group>"; };
 		794486361F6113E70062F1C4 /* GKWYMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYMusicViewController.h; sourceTree = "<group>"; };
 		794486371F6113E70062F1C4 /* GKWYMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicViewController.m; sourceTree = "<group>"; };
 		794486391F6113F00062F1C4 /* GKWYPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYPlayerViewController.h; sourceTree = "<group>"; };
@@ -109,6 +108,8 @@
 		794780721F7110F800705AC9 /* GKWYMusicCoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicCoverView.m; sourceTree = "<group>"; };
 		7985A53B1F8B56A900E08FE0 /* GKWYDiskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKWYDiskView.h; sourceTree = "<group>"; };
 		7985A53C1F8B56A900E08FE0 /* GKWYDiskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GKWYDiskView.m; sourceTree = "<group>"; };
+		799F02DA1F920D4C00010603 /* GKHttpManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKHttpManager.h; sourceTree = "<group>"; };
+		799F02DB1F920D4C00010603 /* GKHttpManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GKHttpManager.m; sourceTree = "<group>"; };
 		799FF33F1F628D20004F132B /* GKWYMusicVolumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYMusicVolumeView.h; sourceTree = "<group>"; };
 		799FF3401F628D20004F132B /* GKWYMusicVolumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKWYMusicVolumeView.m; sourceTree = "<group>"; };
 		79CB4E791F616BC500A3E496 /* GKWYMusicTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKWYMusicTool.h; sourceTree = "<group>"; };
@@ -214,7 +215,6 @@
 		79219BCB1F60E3F00009A781 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7944862C1F61112B0062F1C4 /* audio.json */,
 				79219BCC1F60E3F00009A781 /* main.m */,
 				79219BD71F60E3F00009A781 /* Assets.xcassets */,
 				79219BD91F60E3F00009A781 /* LaunchScreen.storyboard */,
@@ -297,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				7913CCD61F8F57090000FDF9 /* Controller */,
+				799F02D91F920D2300010603 /* Tool */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -366,6 +367,15 @@
 				794486441F611E3A0062F1C4 /* GKSliderView.m */,
 			);
 			path = GKSliderView;
+			sourceTree = "<group>";
+		};
+		799F02D91F920D2300010603 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				799F02DA1F920D4C00010603 /* GKHttpManager.h */,
+				799F02DB1F920D4C00010603 /* GKHttpManager.m */,
+			);
+			path = Tool;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -488,7 +498,6 @@
 				7902D9581F619C6F00EDDA40 /* GKWYMusicListViewCell.xib in Resources */,
 				79219BDB1F60E3F00009A781 /* LaunchScreen.storyboard in Resources */,
 				79219BD81F60E3F00009A781 /* Assets.xcassets in Resources */,
-				7944862D1F61112B0062F1C4 /* audio.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,6 +602,7 @@
 				794486251F610A070062F1C4 /* GKLyricModel.m in Sources */,
 				7944863B1F6113F00062F1C4 /* GKWYPlayerViewController.m in Sources */,
 				7985A53D1F8B56A900E08FE0 /* GKWYDiskView.m in Sources */,
+				799F02DC1F920D4C00010603 /* GKHttpManager.m in Sources */,
 				7944863E1F6116020062F1C4 /* GKWYMusicListCell.m in Sources */,
 				79CB4E7B1F616BC500A3E496 /* GKWYMusicTool.m in Sources */,
 				7913CC8E1F8DEAC20000FDF9 /* GKVolumeView.m in Sources */,

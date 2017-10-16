@@ -20,6 +20,7 @@
 #import "UIViewController+GKWYCategory.h"
 //#import "GKMessageTool.h"
 #import "GKWYMusicTool.h"
+#import "GKHttpManager.h"
 
 
 #define kScreenW [UIScreen mainScreen].bounds.size.width

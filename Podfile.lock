@@ -17,7 +17,7 @@ PODS:
   - GKCover (2.4.4)
   - GKMessageTool (1.0.3):
     - MBProgressHUD
-  - GKNavigationBarViewController (1.3.3)
+  - GKNavigationBarViewController (1.3.4)
   - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
   - MobileVLCKit-unstable (3.0.0a42)
@@ -30,7 +30,7 @@ DEPENDENCIES:
   - AFNetworking
   - GKCover (~> 2.4.4)
   - GKMessageTool
-  - GKNavigationBarViewController (~> 1.3.3)
+  - GKNavigationBarViewController (~> 1.3.4)
   - Masonry
   - MobileVLCKit-unstable (~> 3.0.0a42)
   - SDWebImage
@@ -40,13 +40,13 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   GKCover: 84488071ab847509df7c109c268c0ad6a96b6890
   GKMessageTool: 89ea6e0ecc60e36609c3e5e0c47eb7b6e81fde03
-  GKNavigationBarViewController: 47fb75e98dacdc3582ea34b2d0292793d8c73336
+  GKNavigationBarViewController: 74c60ad3d03f6a8cd26d38030ed8bb682f31f2a5
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MobileVLCKit-unstable: 077bf4ee2cf2487bbcae2b2412fc44b6a51a6fb0
   SDWebImage: caf91ee75671c95eb7b3073cd90649d25f852a88
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: fc39453b51be01298ec1774d379f15dc403bcbee
+PODFILE CHECKSUM: cf6249b664dd09bfefda40d7e9dd7a01a511c3dd
 
 COCOAPODS: 1.4.0.beta.1

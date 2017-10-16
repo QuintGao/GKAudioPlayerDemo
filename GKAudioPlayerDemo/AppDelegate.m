@@ -11,6 +11,7 @@
 #import "GKWYPlayerViewController.h"
 #import "GKWYNavigationController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "GKWYMusicModel.h"
 
 @interface AppDelegate ()
 
@@ -69,11 +70,22 @@
 }
 
 - (void)loadMusicList {
-    NSString *currentMusicID = [[NSUserDefaults standardUserDefaults] objectForKey:kPlayerLastPlayIDKey];
-    
-    NSInteger index = [GKWYMusicTool indexFromID:currentMusicID];
-    
-    [kWYPlayerVC loadMusicWithIndex:index list:[GKWYMusicTool musicList]];
+
+    [GKHttpManager getRequestWithApi:@"gkMustic" params:nil successBlock:^(id responseObject) {
+        
+        NSArray *musics = [NSArray yy_modelArrayWithClass:[GKWYMusicModel class] json:responseObject];
+        
+        [GKWYMusicTool saveMusicList:musics];
+        
+        NSString *currentMusicID = [[NSUserDefaults standardUserDefaults] objectForKey:kPlayerLastPlayIDKey];
+        
+        NSInteger index = [GKWYMusicTool indexFromID:currentMusicID];
+        
+        [kWYPlayerVC loadMusicWithIndex:index list:[GKWYMusicTool musicList]];
+        
+    } failureBlock:^(NSError *error) {
+        NSLog(@"%@", error);
+    }];
 }
 
 - (void)setupPlayBtn {

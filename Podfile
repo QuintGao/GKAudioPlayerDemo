@@ -6,7 +6,7 @@ target 'GKAudioPlayerDemo' do
   use_frameworks!
 
   pod 'MobileVLCKit-unstable', '~> 3.0.0a42'
-  pod 'GKNavigationBarViewController', '~> 1.3.3'
+  pod 'GKNavigationBarViewController', '~> 1.3.5'
   pod 'YYModel'
   pod 'AFNetworking'
   pod 'GKCover', '~> 2.4.4'

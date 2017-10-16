@@ -417,18 +417,12 @@
         [self.coverView playedWithAnimated:YES];
     }
     
+    NSDictionary *params = @{@"id": self.model.music_id};
     // 获取歌曲信息
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer     = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer    = [AFHTTPResponseSerializer serializer];
-    
-//    NSString *url = [NSString stringWithFormat:@"http://music.baidu.com/data/music/links?songIds={%@}", self.model.music_id];
-    NSString *url = @"http://music.baidu.com/data/music/links";
-    
-    [manager GET:url parameters:@{@"songIds": self.model.music_id} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [GKHttpManager getRequestWithApi:@"gkMusticInfo" params:params successBlock:^(id responseObject) {
         
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
-        NSDictionary *songDic = [dic[@"data"][@"songList"] firstObject];
+        NSDictionary *songDic = [responseObject[@"songList"] firstObject];
+        
         self.songDic = songDic;
         
         // 背景图
@@ -446,7 +440,7 @@
         // 解析歌词
         self.lyricView.lyrics = [GKLyricParser lyricParserWithUrl:songDic[@"lrcLink"] isDelBlank:YES];
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } failureBlock:^(NSError *error) {
         NSLog(@"请求失败");
     }];
 }
@@ -1041,6 +1035,8 @@
 - (void)scrollDidChangeModel:(GKWYMusicModel *)model {
 //    NSLog(@"%@", model.music_name);
     self.isCoverScroll = NO;
+    
+    NSLog(@"结束");
     
     if (self.isChanged) return;
     

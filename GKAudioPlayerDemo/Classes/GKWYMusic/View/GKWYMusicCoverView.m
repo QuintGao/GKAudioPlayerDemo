@@ -243,10 +243,6 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 //    [self caculateCurIndex];
     
-    if ([self.delegate respondsToSelector:@selector(scrollDidScroll)]) {
-        [self.delegate scrollDidScroll];
-    }
-    
     CGFloat scrollW = CGRectGetWidth(scrollView.frame);
     
     if (scrollW == 0) return;
@@ -277,11 +273,15 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self pausedWithAnimated:YES];
+    
+    if ([self.delegate respondsToSelector:@selector(scrollDidScroll)]) {
+        [self.delegate scrollDidScroll];
+    }
 }
 
 // scrollview拖动时结束减速时调用
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSLog(@"滑动结束，当前索引%zd", self.currentIndex);
+//    NSLog(@"滑动结束，当前索引%zd", self.currentIndex);
     
     // 获取结束时，获取索引
     CGFloat scrollW = CGRectGetWidth(scrollView.frame);
@@ -304,7 +304,7 @@
 
 // scrollview结束动画时调用
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    NSLog(@"滑动结束，当前索引%zd", self.currentIndex);
+//    NSLog(@"滑动结束，当前索引%zd", self.currentIndex);
     
     // 获取结束时，获取索引
     CGFloat scrollW = CGRectGetWidth(scrollView.frame);
