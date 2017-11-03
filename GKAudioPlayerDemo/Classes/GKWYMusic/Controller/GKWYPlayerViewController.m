@@ -785,12 +785,14 @@
         // 收到播放中断的通知，暂停播放
         if (self.isPlaying) {
             [self pauseMusic];
+            self.isPlaying = NO;
         }
     }else {
         // 中断结束，判断是否需要恢复播放
         if (interruptionOption == AVAudioSessionInterruptionOptionShouldResume) {
             if (!self.isPlaying) {
                 [self playMusic];
+                self.isPlaying = YES;
             }
         }
     }
