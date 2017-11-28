@@ -8,8 +8,7 @@
 
 #import "GKHttpManager.h"
 
-//#define kBaseUrl @"http://192.168.18.236/api/"
-#define kBaseUrl @"http://m.aystfm.com/"
+#define kBaseUrl @"http://192.168.18.236/api/"
 
 @implementation GKHttpManager
 

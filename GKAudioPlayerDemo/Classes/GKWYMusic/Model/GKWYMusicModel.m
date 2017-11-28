@@ -13,9 +13,9 @@
 
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{@"music_id"       : @"id",
-             @"music_name"     : @"songName",
-             @"music_artist"   : @"artistName",
-             @"music_cover"    : @"songCover"
+             @"music_name"     : @"name",
+             @"music_artist"   : @"artist",
+             @"music_cover"    : @"cover"
              };
 }
 

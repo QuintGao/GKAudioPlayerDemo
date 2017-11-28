@@ -21,6 +21,7 @@
 		79219BE61F60E3F00009A781 /* GKAudioPlayerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79219BE51F60E3F00009A781 /* GKAudioPlayerDemoTests.m */; };
 		79219BF11F60E3F00009A781 /* GKAudioPlayerDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79219BF01F60E3F00009A781 /* GKAudioPlayerDemoUITests.m */; };
 		79219C041F60FC3C0009A781 /* GKPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79219C031F60FC3C0009A781 /* GKPlayer.m */; };
+		793B2DA71FCD660700A2A7E6 /* audio.json in Resources */ = {isa = PBXBuildFile; fileRef = 793B2DA61FCD660700A2A7E6 /* audio.json */; };
 		794486221F6109FD0062F1C4 /* GKLyricParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486211F6109FD0062F1C4 /* GKLyricParser.m */; };
 		794486251F610A070062F1C4 /* GKLyricModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486241F610A070062F1C4 /* GKLyricModel.m */; };
 		794486281F610BCC0062F1C4 /* GKTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 794486271F610BCC0062F1C4 /* GKTool.m */; };
@@ -84,6 +85,7 @@
 		79219C011F60FB750009A781 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		79219C021F60FC3C0009A781 /* GKPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKPlayer.h; sourceTree = "<group>"; };
 		79219C031F60FC3C0009A781 /* GKPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKPlayer.m; sourceTree = "<group>"; };
+		793B2DA61FCD660700A2A7E6 /* audio.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = audio.json; sourceTree = "<group>"; };
 		794486201F6109FD0062F1C4 /* GKLyricParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLyricParser.h; sourceTree = "<group>"; };
 		794486211F6109FD0062F1C4 /* GKLyricParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLyricParser.m; sourceTree = "<group>"; };
 		794486231F610A070062F1C4 /* GKLyricModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLyricModel.h; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 		79219BCB1F60E3F00009A781 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				793B2DA61FCD660700A2A7E6 /* audio.json */,
 				79219BCC1F60E3F00009A781 /* main.m */,
 				79219BD71F60E3F00009A781 /* Assets.xcassets */,
 				79219BD91F60E3F00009A781 /* LaunchScreen.storyboard */,
@@ -495,6 +498,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				793B2DA71FCD660700A2A7E6 /* audio.json in Resources */,
 				7902D9581F619C6F00EDDA40 /* GKWYMusicListViewCell.xib in Resources */,
 				79219BDB1F60E3F00009A781 /* LaunchScreen.storyboard in Resources */,
 				79219BD81F60E3F00009A781 /* Assets.xcassets in Resources */,

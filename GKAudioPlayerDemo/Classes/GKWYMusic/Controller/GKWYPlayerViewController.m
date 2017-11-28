@@ -91,7 +91,7 @@
         
         [self.controlView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.bottom.equalTo(self.view);
-//            make.height.mas_equalTo(150);
+            //            make.height.mas_equalTo(150);
             make.height.mas_equalTo(170);
         }];
         
@@ -115,7 +115,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self setupUI];
     
     [self addNotifications];
@@ -327,7 +327,7 @@
     self.view.backgroundColor  = [UIColor redColor];
     
     self.gk_navBackgroundColor = [UIColor clearColor];
-//    self.gk_navBarAlpha = 0.0;
+    //    self.gk_navBarAlpha = 0.0;
     
     self.gk_navRightBarButtonItem = [UIBarButtonItem itemWithImageName:@"cm2_topbar_icn_share" target:self action:@selector(shareAction)];
     
@@ -397,7 +397,7 @@
     }
     
     self.bgImageView.image = [UIImage imageNamed:@"cm2_fm_bg-ip6"];
-        
+    
     // 初始化数据
     self.lyricView.lyrics = nil;
     
@@ -417,12 +417,18 @@
         [self.coverView playedWithAnimated:YES];
     }
     
-    NSDictionary *params = @{@"id": self.model.music_id};
     // 获取歌曲信息
-    [GKHttpManager getRequestWithApi:@"gkMusticInfo" params:params successBlock:^(id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer     = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer    = [AFHTTPResponseSerializer serializer];
+    
+    //    NSString *url = [NSString stringWithFormat:@"http://music.baidu.com/data/music/links?songIds={%@}", self.model.music_id];
+    NSString *url = @"http://music.baidu.com/data/music/links";
+    
+    [manager GET:url parameters:@{@"songIds": self.model.music_id} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSDictionary *songDic = [responseObject[@"songList"] firstObject];
-        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        NSDictionary *songDic = [dic[@"data"][@"songList"] firstObject];
         self.songDic = songDic;
         
         // 背景图
@@ -440,9 +446,36 @@
         // 解析歌词
         self.lyricView.lyrics = [GKLyricParser lyricParserWithUrl:songDic[@"lrcLink"] isDelBlank:YES];
         
-    } failureBlock:^(NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求失败");
     }];
+    
+    //    NSDictionary *params = @{@"id": self.model.music_id};
+    //    // 获取歌曲信息
+    //    [GKHttpManager getRequestWithApi:@"gkMusticInfo" params:params successBlock:^(id responseObject) {
+    //
+    //        NSDictionary *songDic = [responseObject[@"songList"] firstObject];
+    //
+    //        self.songDic = songDic;
+    //
+    //        // 背景图
+    //        [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:songDic[@"songPicRadio"]] placeholderImage:[UIImage imageNamed:@"cm2_fm_bg-ip6"]];
+    //
+    //        // 设置播放地址
+    //        kPlayer.playUrlStr = songDic[@"songLink"];
+    //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //
+    //            if (self.ifNowPlay) {
+    //                [kPlayer play];
+    //            }
+    //        });
+    //
+    //        // 解析歌词
+    //        self.lyricView.lyrics = [GKLyricParser lyricParserWithUrl:songDic[@"lrcLink"] isDelBlank:YES];
+    //
+    //    } failureBlock:^(NSError *error) {
+    //        NSLog(@"请求失败");
+    //    }];
 }
 
 - (void)setupTitleWithModel:(GKWYMusicModel *)model {
@@ -527,7 +560,7 @@
     MPRemoteCommand *playPauseCommand = commandCenter.togglePlayPauseCommand;
     playPauseCommand.enabled = YES;
     [playPauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-       
+        
         if (self.isPlaying) {
             NSLog(@"暂停哦哦哦");
             [self pauseMusic];
@@ -914,11 +947,11 @@
 
 #pragma mark - GKWYMusicVolumeViewDelegate
 - (void)volumeSlideTouchBegan {
-//    self.gk_fullScreenPopDisabled = YES;
+    //    self.gk_fullScreenPopDisabled = YES;
 }
 
 - (void)volumeSlideTouchEnded {
-//    self.gk_fullScreenPopDisabled = NO;
+    //    self.gk_fullScreenPopDisabled = NO;
 }
 
 #pragma mark - GKWYMusicControlViewDelegate
@@ -998,14 +1031,14 @@
 
 - (void)controlView:(GKWYMusicControlView *)controlView didSliderTouchBegan:(float)value {
     self.isDraging = YES;
-//    // 防止手势冲突
-//    self.gk_fullScreenPopDisabled = YES;
+    //    // 防止手势冲突
+    //    self.gk_fullScreenPopDisabled = YES;
 }
 
 - (void)controlView:(GKWYMusicControlView *)controlView didSliderTouchEnded:(float)value {
     self.isDraging = NO;
     kPlayer.progress = value;
-//    self.gk_fullScreenPopDisabled = NO;
+    //    self.gk_fullScreenPopDisabled = NO;
     
     // 滚动歌词到对应位置
     [self.lyricView scrollLyricWithCurrentTime:(self.duration * value) totalTime:self.duration];
@@ -1030,12 +1063,12 @@
 }
 
 - (void)scrollWillChangeModel:(GKWYMusicModel *)model {
-//    NSLog(@"%@", model.music_name);
+    //    NSLog(@"%@", model.music_name);
     [self setupTitleWithModel:model];
 }
 
 - (void)scrollDidChangeModel:(GKWYMusicModel *)model {
-//    NSLog(@"%@", model.music_name);
+    //    NSLog(@"%@", model.music_name);
     self.isCoverScroll = NO;
     
     NSLog(@"结束");
@@ -1118,10 +1151,10 @@
         _lyricView = [GKWYMusicLyricView new];
         _lyricView.backgroundColor = [UIColor clearColor];
         
-//        __weak typeof(self) weakSelf = self;
+        //        __weak typeof(self) weakSelf = self;
         
         _lyricView.volumeViewSliderBlock = ^(BOOL isBegan) {
-//            weakSelf.gk_fullScreenPopDisabled = isBegan;
+            //            weakSelf.gk_fullScreenPopDisabled = isBegan;
         };
         
         _lyricView.hidden = YES;
@@ -1146,3 +1179,4 @@
 }
 
 @end
+
