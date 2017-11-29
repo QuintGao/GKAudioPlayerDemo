@@ -1,5 +1,14 @@
 # GKAudioPlayerDemo
 
+## 问题
+    1、如果遇到编译工程时找不到pod里面的文件怎么办？
+    
+    解决办法：先删除工程目录下的pods文件夹，然后重新pod install即可
+    
+    2、如果pod install安装时找不到对应的库怎么办？
+    
+    解决办法：请先pod repo update更新本地仓库缓存，再pod install即可
+
 ## Demo效果图
 
 ![转盘旋转](https://github.com/QuintGao/GKAudioPlayerDemo/blob/master/imgs/img_disk.gif)
