@@ -10,7 +10,6 @@
 #define PrefixHeader_pch
 
 #import <GKNavigationBarViewController/GKNavigationBarViewController.h>
-//#import "GKNavigationBarViewController.h"
 #import <AFNetworking/AFNetworking.h>
 #import <YYModel/YYModel.h>
 #import <GKCover/GKCover.h>
@@ -18,7 +17,6 @@
 #import <GKMessageTool/GKMessageTool.h>
 
 #import "UIViewController+GKWYCategory.h"
-//#import "GKMessageTool.h"
 #import "GKWYMusicTool.h"
 #import "GKHttpManager.h"
 
