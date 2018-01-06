@@ -12,6 +12,7 @@
 #import "GKWYNavigationController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "GKWYMusicModel.h"
+#import <AFNetworking/AFNetworkReachabilityManager.h>
 
 @interface AppDelegate ()
 
@@ -39,6 +40,33 @@
     [self setupPlayBtn];
     
     [self loadMusicList];
+    
+    // 网络监测
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    
+    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                [GKWYMusicTool setNetworkState:@"wwan"];
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                [GKWYMusicTool setNetworkState:@"wifi"];
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                [GKWYMusicTool setNetworkState:@"none"];
+                break;
+            case AFNetworkReachabilityStatusUnknown:
+                [GKWYMusicTool setNetworkState:@"none"];
+                break;
+                
+            default:
+                break;
+        }
+        // 发送网络状态改变的通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NetworkStateChangedNotification" object:nil];
+    }];
+    
+    [manager startMonitoring];
     
     return YES;
 }

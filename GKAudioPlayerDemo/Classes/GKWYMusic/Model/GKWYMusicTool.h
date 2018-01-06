@@ -24,4 +24,7 @@
 + (UIImage *)imageWithColor:(UIColor *)color;
 + (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size;
 
++ (NSString *)networkState;
++ (void)setNetworkState:(NSString *)state;
+
 @end

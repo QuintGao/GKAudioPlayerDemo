@@ -86,4 +86,14 @@
     return image;
 }
 
++ (NSString *)networkState {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"networkState"];
+}
+
++ (void)setNetworkState:(NSString *)state {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:state forKey:@"networkState"];
+    [defaults synchronize];
+}
+
 @end

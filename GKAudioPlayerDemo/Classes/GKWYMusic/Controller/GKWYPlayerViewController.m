@@ -187,6 +187,11 @@
         }
         
         if (self.model) {
+            NSString *networkState = [GKWYMusicTool networkState];
+            
+            if ([networkState isEqualToString:@"none"]) {
+                return;
+            }
             [kPlayer play];
         }
     }
@@ -216,6 +221,22 @@
 }
 
 - (void)playMusic {
+    // 首先检查网络状态
+    NSString *networkState = [GKWYMusicTool networkState];
+    if ([networkState isEqualToString:@"none"]) {
+        [GKMessageTool showError:@"网络连接失败"];
+        // 设置播放状态为暂停
+        [self.controlView setupPauseBtn];
+        return;
+    }else {
+        if (!kPlayer.playUrlStr) { // 没有播放地址
+            // 需要重新请求
+            [self getMusicInfo];
+        }
+        return;
+    }
+    
+    
     if (kPlayer.status != GKPlayerStatusPaused) {
         [kPlayer play];
     }else {
@@ -259,7 +280,8 @@
     }else if (self.playStyle == GKWYPlayerPlayStyleOne) {
         if (self.isAutoPlay) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [kPlayer play];
+//                [kPlayer play];
+                [self playMusic];
             });
         }else {
             __block NSUInteger currentPlayIdx = 0;
@@ -355,7 +377,6 @@
 }
 
 - (void)showLyricView {
-    
     self.lyricView.hidden = NO;
     [self.lyricView hideSystemVolumeView];
     
@@ -402,6 +423,7 @@
     self.lyricView.lyrics = nil;
     
     [self.controlView setupInitialData];
+    
     if (self.ifNowPlay) {
         [self.controlView showLoadingAnim];
     }
@@ -424,6 +446,13 @@
     
     //    NSString *url = [NSString stringWithFormat:@"http://music.baidu.com/data/music/links?songIds={%@}", self.model.music_id];
     NSString *url = @"http://music.baidu.com/data/music/links";
+    
+    NSString *networkState = [GKWYMusicTool networkState];
+    if ([networkState isEqualToString:@"none"]) {
+        [GKMessageTool showTips:@"网络连接失败"];
+        
+        return;
+    }
     
     [manager GET:url parameters:@{@"songIds": self.model.music_id} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -448,6 +477,7 @@
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求失败");
+        [GKMessageTool showError:@"数据请求失败，请检查网络后重试！"];
     }];
     
     //    NSDictionary *params = @{@"id": self.model.music_id};

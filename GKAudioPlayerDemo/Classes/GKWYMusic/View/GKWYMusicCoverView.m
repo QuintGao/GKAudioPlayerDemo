@@ -87,6 +87,8 @@
         self.diskScrollView.contentSize = CGSizeMake(KScreenW * 3, 0);
         
         [self setScrollViewContentOffsetCenter];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkStateChanged:) name:@"NetworkStateChangedNotification" object:nil];
     }
     return self;
 }
@@ -107,6 +109,10 @@
     self.leftDiskView.frame   = CGRectMake(0, 0, diskW, diskH);
     self.centerDiskView.frame = CGRectMake(diskW, 0, diskW, diskH);
     self.rightDiskView.frame  = CGRectMake(2 * diskW, 0, diskW, diskH);
+}
+
+- (void)networkStateChanged:(NSNotification *)notify {
+    self.currentIndex = self.currentIndex;
 }
 
 - (void)setupMusicList:(NSArray *)musics idx:(NSInteger)currentIndex {
