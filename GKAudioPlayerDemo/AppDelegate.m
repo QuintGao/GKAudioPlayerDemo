@@ -123,8 +123,11 @@
     
     NSInteger index = [GKWYMusicTool indexFromID:currentMusicID];
     
-    [kWYPlayerVC loadMusicWithIndex:index list:[GKWYMusicTool musicList]];
+    GKWYPlayerViewController *playerVC = kWYPlayerVC;
     
+    [playerVC setupMusicList:[GKWYMusicTool musicList]];
+    
+    [playerVC loadMusicWithIndex:index list:[GKWYMusicTool musicList]];
 }
 
 - (void)setupPlayBtn {

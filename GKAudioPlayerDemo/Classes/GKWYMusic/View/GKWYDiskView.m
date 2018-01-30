@@ -44,7 +44,11 @@
 - (void)setImgurl:(NSString *)imgurl {
     _imgurl = imgurl;
     
-    [self.imgView sd_setImageWithURL:[NSURL URLWithString:imgurl] placeholderImage:[UIImage imageNamed:@"cm2_fm_bg-ip6"]];
+    if (imgurl) {
+        [self.imgView sd_setImageWithURL:[NSURL URLWithString:imgurl] placeholderImage:[UIImage imageNamed:@"cm2_fm_bg-ip6"]];
+    }else {
+        self.imgView.image = nil;
+    }
 }
 
 - (UIImageView *)diskImgView {

@@ -24,6 +24,14 @@ typedef NS_ENUM(NSUInteger, GKWYPlayerPlayStyle) {
 
 + (instancetype)sharedInstance;
 
+
+/**
+ 数组原始播放列表
+
+ @param list 原始播放列表
+ */
+- (void)setupMusicList:(NSArray *)list;
+
 /**
  根据索引及列表播放音乐
 

@@ -32,6 +32,8 @@ typedef void(^finished)(void);
 //@property (nonatomic, strong) NSArray *musics;
 - (void)setupMusicList:(NSArray *)musics idx:(NSInteger)currentIndex;
 
+- (void)resetMusicList:(NSArray *)musics idx:(NSInteger)currentIndex;
+
 // 滑动切换歌曲
 - (void)scrollChangeIsNext:(BOOL)isNext Finished:(finished)finished;
 

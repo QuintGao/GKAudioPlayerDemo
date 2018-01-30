@@ -45,17 +45,21 @@
 /**********************data*************************/
 
 @property (nonatomic, strong) UIImage *coverImage;
-/** 音乐播放列表 */
+/** 音乐原始播放列表 */
 @property (nonatomic, strong) NSArray *musicList;
+/** 当前播放的列表 */
+@property (nonatomic, strong) NSArray *playList;
 @property (nonatomic, strong) GKWYMusicModel *model;
 @property (nonatomic, strong) NSDictionary *songDic;
+/** 乱序后的列表 */
+@property (nonatomic, strong) NSArray *outOrderList;
 
 @property (nonatomic, assign) GKWYPlayerPlayStyle playStyle; // 循环类型
 
-@property (nonatomic, assign) BOOL isAutoPlay;   // 是否自动播放
-@property (nonatomic, assign) BOOL isDraging;    // 是否正在拖拽
-@property (nonatomic, assign) BOOL isSeeking;    // 是否在快进快退
-@property (nonatomic, assign) BOOL isChanged;    // 是否正在切换歌曲
+@property (nonatomic, assign) BOOL isAutoPlay;    // 是否自动播放
+@property (nonatomic, assign) BOOL isDraging;     // 是否正在拖拽
+@property (nonatomic, assign) BOOL isSeeking;     // 是否在快进快退
+@property (nonatomic, assign) BOOL isChanged;     // 是否正在切换歌曲
 @property (nonatomic, assign) BOOL isCoverScroll; // 是否转盘在滑动
 
 @property (nonatomic, assign) NSTimeInterval duration;      // 总时间
@@ -157,9 +161,36 @@
 }
 
 #pragma mark - Public Methods
+- (void)setupMusicList:(NSArray *)list {
+    self.musicList = list;
+    
+    switch (self.playStyle) {
+        case GKWYPlayerPlayStyleLoop:
+        {
+            self.outOrderList = nil;
+            [self setCoverList:list];
+        }
+            break;
+        case GKWYPlayerPlayStyleOne:
+        {
+            self.outOrderList = nil;
+            [self setCoverList:list];
+        }
+            break;
+        case GKWYPlayerPlayStyleRandom:
+        {
+            self.outOrderList = [self randomArray:list];
+            [self setCoverList:self.outOrderList];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
 
 - (void)playMusicWithIndex:(NSInteger)index list:(NSArray *)list {
-    self.musicList = list;
+    self.playList = list;
     
     GKWYMusicModel *model = list[index];
     
@@ -232,15 +263,13 @@
         if (!kPlayer.playUrlStr) { // 没有播放地址
             // 需要重新请求
             [self getMusicInfo];
+        }else {
+            if (kPlayer.status != GKPlayerStatusPaused) {
+                [kPlayer play];
+            }else {
+                [kPlayer resume];
+            }
         }
-        return;
-    }
-    
-    
-    if (kPlayer.status != GKPlayerStatusPaused) {
-        [kPlayer play];
-    }else {
-        [kPlayer resume];
     }
 }
 
@@ -253,95 +282,171 @@
 }
 
 - (void)playNextMusic {
-    if (self.isPlaying) {
-        [kPlayer stop];
-    }
-    
     // 重置封面
     [self.coverView resetCover];
     
     // 播放
     if (self.playStyle == GKWYPlayerPlayStyleLoop) {
-        __block NSUInteger currentPlayIdx = 0;
-        [self.musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSArray *musicList = self.musicList;
+        
+        __block NSUInteger currentIndex = 0;
+        [musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj.music_id isEqualToString:self.model.music_id]) {
-                currentPlayIdx = idx;
+                currentIndex = idx;
                 *stop = YES;
             }
         }];
         
-        if (currentPlayIdx < self.musicList.count - 1) {
-            currentPlayIdx ++;
-        }else {
-            currentPlayIdx = 0;
-        }
-        
-        [self playMusicWithIndex:currentPlayIdx list:self.musicList];
+        [self playNextMusicWithList:musicList index:currentIndex];
     }else if (self.playStyle == GKWYPlayerPlayStyleOne) {
-        if (self.isAutoPlay) {
+        if (self.isAutoPlay) {  // 循环播放自动播放完毕
+            NSArray *musicList = self.musicList;
+            __block NSUInteger currentIndex = 0;
+            [musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj.music_id isEqualToString:self.model.music_id]) {
+                    currentIndex = idx;
+                    *stop = YES;
+                }
+            }];
+            
+            // 重置列表
+            [self.coverView resetMusicList:musicList idx:currentIndex];
+            
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //                [kPlayer play];
                 [self playMusic];
             });
-        }else {
-            __block NSUInteger currentPlayIdx = 0;
-            [self.musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        }else {  // 循环播放切换歌曲
+            NSArray *musicList = self.musicList;
+            
+            __block NSUInteger currentIndex = 0;
+            [musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([obj.music_id isEqualToString:self.model.music_id]) {
-                    currentPlayIdx = idx;
+                    currentIndex = idx;
                     *stop = YES;
                 }
             }];
-            [self playMusicWithIndex:currentPlayIdx list:self.musicList];
+            
+            [self playNextMusicWithList:musicList index:currentIndex];
         }
     }else {
-        // 获取随机数
-        NSInteger random = arc4random() % self.musicList.count;
+        if (!self.outOrderList) {
+            self.outOrderList = [self randomArray:self.musicList];
+        }
+        NSArray *musicList = self.outOrderList;
         
-        [self playMusicWithIndex:random list:self.musicList];
+        // 找出乱序后当前播放歌曲的索引
+        __block NSInteger currentIndex = 0;
+        [musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj.music_id isEqualToString:self.model.music_id]) {
+                currentIndex = idx;
+                *stop = YES;
+            }
+        }];
+        
+        [self playNextMusicWithList:musicList index:currentIndex];
     }
 }
 
-- (void)playPrevMusic {
-    // 首先停止上一曲
-    if (self.isPlaying) {
-        [kPlayer stop];
+
+- (void)playNextMusicWithList:(NSArray *)musicList index:(NSInteger)currentIndex {
+    // 列表已经打乱顺序，直接播放下一首即可
+    if (currentIndex < musicList.count - 1) {
+        currentIndex ++;
+    }else {
+        currentIndex = 0;
     }
     
+    // 切换到下一首
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.coverView scrollChangeIsNext:YES Finished:^{
+            [self playMusicWithIndex:currentIndex list:musicList];
+        }];
+    });
+}
+
+- (void)playPrevMusic {
     // 重置封面
     [self.coverView resetCover];
     
     // 播放
     if (self.playStyle == GKWYPlayerPlayStyleLoop) {
-        __block NSUInteger currentPlayIdx = 0;
-        [self.musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSArray *musicList = self.musicList;
+        
+        __block NSUInteger currentIndex = 0;
+        [musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj.music_id isEqualToString:self.model.music_id]) {
-                currentPlayIdx = idx;
+                currentIndex = idx;
                 *stop = YES;
             }
         }];
         
-        if (currentPlayIdx > 0) {
-            currentPlayIdx --;
-        }else if (currentPlayIdx == 0) {
-            currentPlayIdx = self.musicList.count - 1;
+        if (currentIndex > 0) {
+            currentIndex --;
+        }else if (currentIndex == 0) {
+            currentIndex = musicList.count - 1;
         }
         
-        [self playMusicWithIndex:currentPlayIdx list:self.musicList];
+        [self playPrevMusicWithList:musicList index:currentIndex];
+        
     }else if (self.playStyle == GKWYPlayerPlayStyleOne) {
-        __block NSUInteger currentPlayIdx = 0;
-        [self.musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSArray *musicList = self.musicList;
+        
+        __block NSUInteger currentIndex = 0;
+        [musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj.music_id isEqualToString:self.model.music_id]) {
-                currentPlayIdx = idx;
+                currentIndex = idx;
                 *stop = YES;
             }
         }];
-        [self playMusicWithIndex:currentPlayIdx list:self.musicList];
-    }else {
-        // 获取随机数
-        NSInteger random = arc4random() % self.musicList.count;
         
-        [self playMusicWithIndex:random list:self.musicList];
+        [self playPrevMusicWithList:musicList index:currentIndex];
+    }else {
+        if (!self.outOrderList) {
+            self.outOrderList = [self randomArray:self.musicList];
+        }
+        NSArray *musicList = self.outOrderList;
+        
+        // 找出乱序后当前播放歌曲的索引
+        __block NSInteger currentIndex = 0;
+        [musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj.music_id isEqualToString:self.model.music_id]) {
+                currentIndex = idx;
+                *stop = YES;
+            }
+        }];
+        
+        [self playPrevMusicWithList:musicList index:currentIndex];
     }
+}
+
+- (void)playPrevMusicWithList:(NSArray *)musicList index:(NSInteger)currentIndex {
+    // 列表已经打乱顺序，直接播放上一首一首即可
+    if (currentIndex > 0) {
+        currentIndex --;
+    }else if (currentIndex == 0) {
+        currentIndex = self.musicList.count - 1;
+    }
+    
+    // 切换到下一首
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.coverView scrollChangeIsNext:NO Finished:^{
+            [self playMusicWithIndex:currentIndex list:musicList];
+        }];
+    });
+}
+
+- (NSArray *)randomArray:(NSArray *)arr {
+    NSArray *randomArr = [arr sortedArrayUsingComparator:^NSComparisonResult(GKWYMusicModel *obj1, GKWYMusicModel *obj2) {
+        int seed = arc4random_uniform(2);
+        if (seed) {
+            return [obj1.music_id compare:obj2.music_id];
+        }else {
+            return [obj2.music_id compare:obj1.music_id];
+        }
+    }];
+    
+    return randomArr;
 }
 
 #pragma mark - Private Methods
@@ -865,7 +970,7 @@
 #pragma mark - GKPlayerDelegate
 - (void)gkPlayer:(GKPlayer *)player statusChanged:(GKPlayerStatus)status {
     switch (status) {
-        case GKPlayerStatusBuffering:
+        case GKPlayerStatusBuffering:       
         {
             [self.controlView hideLoadingAnim];
             [self.controlView setupPlayBtn];
@@ -1009,24 +1114,49 @@
 - (void)controlView:(GKWYMusicControlView *)controlView didClickLoop:(UIButton *)loopBtn {
     if (self.playStyle == GKWYPlayerPlayStyleLoop) {  // 循环->单曲
         self.playStyle = GKWYPlayerPlayStyleOne;
+        self.outOrderList = nil;
+        
+        [self setCoverList:self.musicList];
     }else if (self.playStyle == GKWYPlayerPlayStyleOne) { // 单曲->随机
         self.playStyle = GKWYPlayerPlayStyleRandom;
+        self.outOrderList = [self randomArray:self.musicList];
+        
+        [self setCoverList:self.outOrderList];
     }else { // 随机-> 循环
         self.playStyle = GKWYPlayerPlayStyleLoop;
+        self.outOrderList = nil;
+        
+        [self setCoverList:self.musicList];
     }
     self.controlView.style = self.playStyle;
     
     [[NSUserDefaults standardUserDefaults] setInteger:self.playStyle forKey:kPlayerPlayStyleKey];
 }
 
+- (void)setCoverList:(NSArray *)musicList {
+    __block NSUInteger currentIndex = 0;
+    [musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.music_id isEqualToString:self.model.music_id]) {
+            currentIndex = idx;
+            *stop = YES;
+        }
+    }];
+    
+    // 重置列表
+    [self.coverView resetMusicList:musicList idx:currentIndex];
+}
+
 - (void)controlView:(GKWYMusicControlView *)controlView didClickPrev:(UIButton *)prevBtn {
     if (self.isCoverScroll) return;
     self.isChanged = YES;
     
-    // 点击按钮切换歌曲时，先动画显示上一首
-    [self.coverView scrollChangeIsNext:NO Finished:^{
+    if (self.isPlaying) {
+        [kPlayer stop];
+    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self playPrevMusic];
-    }];
+    });
 }
 
 - (void)controlView:(GKWYMusicControlView *)controlView didClickPlay:(UIButton *)playBtn {
@@ -1039,12 +1169,19 @@
 
 - (void)controlView:(GKWYMusicControlView *)controlView didClickNext:(UIButton *)nextBtn {
     if (self.isCoverScroll) return;
+    
     self.isAutoPlay = NO;
-    self.isChanged  = YES;
-    // 点击按钮切换歌曲时，先动画显示下一首
-    [self.coverView scrollChangeIsNext:YES Finished:^{
+    
+    if (self.isPlaying) {
+        [kPlayer stop];
+    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        self.isChanged  = YES;
+        
         [self playNextMusic];
-    }];
+    });
 }
 
 - (void)controlView:(GKWYMusicControlView *)controlView didClickList:(UIButton *)listBtn {
@@ -1113,16 +1250,16 @@
         }
     }else {
         __block NSInteger index = 0;
-        
-        [self.musicList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+
+        [self.playList enumerateObjectsUsingBlock:^(GKWYMusicModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj.music_id isEqualToString:model.music_id]) {
                 index = idx;
             }
         }];
-        
+
         self.isChanged = YES;
-        
-        [self playMusicWithIndex:index list:self.musicList];
+
+        [self playMusicWithIndex:index list:self.playList];
     }
 }
 

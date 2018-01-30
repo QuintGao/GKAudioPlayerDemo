@@ -119,9 +119,16 @@
    
     [self resetCover];
     
-    self.musics = musics;
+    self.musics         = musics;
     
-    self.currentIndex = currentIndex;
+    [self setCurrentIndex:currentIndex needChange:YES];
+}
+
+// 重置列表顺序
+- (void)resetMusicList:(NSArray *)musics idx:(NSInteger)currentIndex {
+    self.musics          = musics;
+    
+    [self setCurrentIndex:currentIndex needChange:NO];
 }
 
 // 滑动切换歌曲
@@ -140,9 +147,9 @@
     [self.diskScrollView setContentOffset:offset animated:YES];
 }
 
-- (void)setCurrentIndex:(NSInteger)currentIndex {
-    if (_currentIndex >= 0) {
-        _currentIndex = currentIndex;
+- (void)setCurrentIndex:(NSInteger)currentIndex needChange:(BOOL)needChange {
+    if (currentIndex >= 0) {
+        self.currentIndex    = currentIndex;
         
         NSInteger count      = self.musics.count;
         NSInteger leftIndex  = (currentIndex + count - 1) % count;
@@ -155,18 +162,23 @@
         // 设置图片
         self.centerDiskView.imgurl = centerM.music_cover;
         
-        // 每次设置后，移到中间
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self setScrollViewContentOffsetCenter];
-            
-            self.leftDiskView.imgurl   = leftM.music_cover;
-            self.rightDiskView.imgurl  = rightM.music_cover;
-            
-            if (self.isChanged) {
-                !self.finished ? : self.finished();
-                self.isChanged = NO;
-            }
-        });
+        if (needChange) {
+            // 每次设置后，移到中间
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self setScrollViewContentOffsetCenter];
+                
+                self.leftDiskView.imgurl   = leftM.music_cover;
+                self.rightDiskView.imgurl  = rightM.music_cover;
+                
+                if (self.isChanged) {
+                    !self.finished ? : self.finished();
+                    self.isChanged = NO;
+                }
+            });
+        }else {
+            self.leftDiskView.imgurl  = leftM.music_cover;
+            self.rightDiskView.imgurl = rightM.music_cover;
+        }
     }
 }
 
@@ -289,37 +301,30 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
 //    NSLog(@"滑动结束，当前索引%zd", self.currentIndex);
     
-    // 获取结束时，获取索引
-    CGFloat scrollW = CGRectGetWidth(scrollView.frame);
-    CGFloat offsetX = scrollView.contentOffset.x;
-    
-    if (offsetX == 2 * scrollW) {
-        self.currentIndex = (self.currentIndex + 1) % self.musics.count;
-    }else if (offsetX == 0) {
-        self.currentIndex = (self.currentIndex - 1 + self.musics.count) % self.musics.count;
-    }else {
-        [self setScrollViewContentOffsetCenter];
-    }
-    
-    GKWYMusicModel *model = self.musics[self.currentIndex];
-    
-    if ([self.delegate respondsToSelector:@selector(scrollDidChangeModel:)]) {
-        [self.delegate scrollDidChangeModel:model];
-    }
+    [self scrollViewDidEnd:scrollView];
 }
 
 // scrollview结束动画时调用
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
 //    NSLog(@"滑动结束，当前索引%zd", self.currentIndex);
     
+    [self scrollViewDidEnd:scrollView];
+}
+
+- (void)scrollViewDidEnd:(UIScrollView *)scrollView {
     // 获取结束时，获取索引
     CGFloat scrollW = CGRectGetWidth(scrollView.frame);
     CGFloat offsetX = scrollView.contentOffset.x;
     
     if (offsetX == 2 * scrollW) {
-        self.currentIndex = (self.currentIndex + 1) % self.musics.count;
+        NSInteger currentIndex = (self.currentIndex + 1) % self.musics.count;
+        
+        [self setCurrentIndex:currentIndex needChange:YES];
+        
     }else if (offsetX == 0) {
-        self.currentIndex = (self.currentIndex - 1 + self.musics.count) % self.musics.count;
+        NSInteger currentIndex = (self.currentIndex - 1 + self.musics.count) % self.musics.count;
+        
+        [self setCurrentIndex:currentIndex needChange:YES];
     }else {
         [self setScrollViewContentOffsetCenter];
     }
