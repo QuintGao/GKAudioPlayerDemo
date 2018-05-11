@@ -1,5 +1,8 @@
 # GKAudioPlayerDemo
 
+## 说明
+本demo不支持播放本地音乐，如果有需要请移至[GKWYMusic](https://github.com/QuintGao/GKWYMusic)
+
 ## 问题
     1、如果遇到编译工程时找不到pod里面的文件怎么办？
     

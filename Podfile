@@ -5,11 +5,11 @@ inhibit_all_warnings!
 target 'GKAudioPlayerDemo' do
   use_frameworks!
 
-  pod 'MobileVLCKit-unstable', '~> 3.0.0a54'
-  pod 'GKNavigationBarViewController', '~> 1.3.8'
+  pod 'MobileVLCKit-unstable', '~> 3.0.0a59'
+  pod 'GKNavigationBarViewController', '~> 2.0.3'
   pod 'YYModel'
   pod 'AFNetworking'
-  pod 'GKCover', '~> 2.4.4'
+  pod 'GKCover'
   pod 'SDWebImage'
   pod 'Masonry'
   
