@@ -396,7 +396,6 @@
 				79219BC51F60E3F00009A781 /* Frameworks */,
 				79219BC61F60E3F00009A781 /* Resources */,
 				B61B13438DD48B7AD39C0F04 /* [CP] Embed Pods Frameworks */,
-				6C2181CF9525F774BE9123F8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -526,21 +525,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6C2181CF9525F774BE9123F8 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GKAudioPlayerDemo/Pods-GKAudioPlayerDemo-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9EBFE19F107F13DBC2A626D5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
